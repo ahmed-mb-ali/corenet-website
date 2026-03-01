@@ -1,0 +1,211 @@
+@import "tailwindcss";
+
+/* Stolzl – try local first, then web (place .otf files in public/fonts/) */
+@font-face {
+  font-family: "Stolzl";
+  src:
+    local("Stolzl Regular"),
+    local("Stolzl-Regular"),
+    url("/fonts/stolzl_regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Stolzl";
+  src:
+    local("Stolzl Book"),
+    local("Stolzl-Book"),
+    url("/fonts/stolzl_book.otf") format("opentype");
+  font-weight: 450;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Stolzl";
+  src:
+    local("Stolzl Medium"),
+    local("Stolzl-Medium"),
+    url("/fonts/stolzl_medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Stolzl";
+  src:
+    local("Stolzl Bold"),
+    local("Stolzl-Bold"),
+    url("/fonts/stolzl_bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme inline {
+  /* Fonts – use Next.js Inter variable when available */
+  --font-sans: var(--font-inter, "Inter"), ui-sans-serif, system-ui, sans-serif;
+  --font-stolzl: "Stolzl", var(--font-inter, "Inter"), ui-sans-serif, sans-serif;
+
+  /* Colors */
+  --color-navy: #02022c;
+  --color-navy-dark: #020227;
+  --color-navy-deep: #050535;
+  --color-blue-brand: #335cff;
+  --color-blue-accent: #333ed8;
+  --color-blue-product: #4154f2;
+  --color-green-cta: #3ab874;
+  --color-green-light: #85d3a9;
+  --color-text-primary: #02022c;
+  --color-text-secondary: #5c5c5c;
+  --color-text-muted: rgba(92, 92, 92, 0.73);
+  --color-bg-light: #fafbfc;
+  --color-hero-muted: #c3c3ca;
+  --color-border-soft: #e0e0e0;
+  --color-border-subtle: #ebebeb;
+
+  /* Typography scale – size / line-height / letter-spacing */
+  --text-display: 61px;
+  --text-display-leading: 69px;
+  --text-display-tracking: -2.44px;
+
+  --text-h1: 48px;
+  --text-h1-leading: 56px;
+  --text-h1-tracking: -1.92px;
+
+  --text-h2: 38px;
+  --text-h2-leading: 46px;
+  --text-h2-tracking: -1.52px;
+
+  --text-h3: 24px;
+  --text-h3-leading: 32px;
+  --text-h3-tracking: -0.48px;
+
+  --text-h4: 21px;
+  --text-h4-leading: 28px;
+  --text-h4-tracking: -0.315px;
+
+  --text-body-lg: 21px;
+  --text-body-lg-leading: 30px;
+  --text-body-lg-tracking: -0.23px;
+
+  --text-body: 17px;
+  --text-body-leading: 26px;
+  --text-body-tracking: -0.187px;
+
+  --text-body-sm: 16px;
+  --text-body-sm-leading: 24px;
+  --text-body-sm-tracking: -0.176px;
+
+  --text-caption: 14px;
+  --text-caption-leading: 20px;
+  --text-caption-tracking: -0.084px;
+
+  /* Spacing & layout */
+  --section-padding-x: 5rem;
+  --section-padding-y: 5rem;
+  --container-max: 1440px;
+  --radius-card: 20px;
+  --radius-button: 10px;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: #ffffff;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* Crisp rendering for Stolzl headings */
+.font-stolzl {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Typography utilities – use font-stolzl for headings */
+.text-display {
+  font-size: var(--text-display);
+  line-height: var(--text-display-leading);
+  letter-spacing: var(--text-display-tracking);
+}
+.text-h1 {
+  font-size: var(--text-h1);
+  line-height: var(--text-h1-leading);
+  letter-spacing: var(--text-h1-tracking);
+}
+.text-h2 {
+  font-size: var(--text-h2);
+  line-height: var(--text-h2-leading);
+  letter-spacing: var(--text-h2-tracking);
+}
+.text-h3 {
+  font-size: var(--text-h3);
+  line-height: var(--text-h3-leading);
+  letter-spacing: var(--text-h3-tracking);
+}
+.text-h4 {
+  font-size: var(--text-h4);
+  line-height: var(--text-h4-leading);
+  letter-spacing: var(--text-h4-tracking);
+}
+.text-body-lg {
+  font-size: var(--text-body-lg);
+  line-height: var(--text-body-lg-leading);
+  letter-spacing: var(--text-body-lg-tracking);
+}
+.text-body {
+  font-size: var(--text-body);
+  line-height: var(--text-body-leading);
+  letter-spacing: var(--text-body-tracking);
+}
+.text-body-sm {
+  font-size: var(--text-body-sm);
+  line-height: var(--text-body-sm-leading);
+  letter-spacing: var(--text-body-sm-tracking);
+}
+.text-caption {
+  font-size: var(--text-caption);
+  line-height: var(--text-caption-leading);
+  letter-spacing: var(--text-caption-tracking);
+}
+
+/* ── Product showcase – progress bar fill animation ── */
+@keyframes fill-progress {
+  from { width: 0% }
+  to   { width: 100% }
+}
+.bar-fill {
+  animation: fill-progress var(--bar-duration) linear forwards;
+}
+
+/* ── Savings Calculator – invisible range input over custom track ── */
+.calc-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+.calc-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  opacity: 0;
+}
+.calc-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  opacity: 0;
+  border: none;
+  background: transparent;
+}
