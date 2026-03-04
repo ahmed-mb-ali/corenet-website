@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "../context/LanguageContext";
@@ -54,13 +55,15 @@ export default function Navbar() {
         }}
       >
         {/* Logo */}
-        <Image
-          src="/images/logo.png"
-          alt="Corenet Logo"
-          width={scrolled ? 76 : 88}
-          height={scrolled ? 42 : 48}
-          className="object-contain transition-all duration-300 shrink-0"
-        />
+        <Link href="/">
+          <Image
+            src="/images/logo.png"
+            alt="Corenet Logo"
+            width={scrolled ? 76 : 88}
+            height={scrolled ? 42 : 48}
+            className="object-contain transition-all duration-300 shrink-0"
+          />
+        </Link>
 
         {/* Desktop nav links */}
         <div className="hidden lg:flex items-center gap-10 xl:gap-16 font-stolzl text-body-sm text-navy">
@@ -81,9 +84,9 @@ export default function Navbar() {
             <span className="text-base leading-none">{lang === "en" ? "🇸🇦" : "🇬🇧"}</span>
             <span className="font-medium">{lang === "en" ? "العربية" : "English"}</span>
           </button>
-          <button className="bg-blue-brand text-white font-stolzl font-medium text-caption px-5 py-2.5 rounded-[var(--radius-button)] hover:opacity-90 transition-opacity whitespace-nowrap">
+          <Link href="/talk-to-sales" className="bg-blue-brand text-white font-stolzl font-medium text-caption px-5 py-2.5 rounded-[var(--radius-button)] hover:opacity-90 transition-opacity whitespace-nowrap">
             {t.nav.cta}
-          </button>
+          </Link>
         </div>
 
         {/* Mobile / Tablet: lang flag + hamburger */}
@@ -172,9 +175,9 @@ export default function Navbar() {
 
                 {/* CTA */}
                 <div className="p-3">
-                  <button className="w-full bg-blue-brand text-white font-stolzl font-medium text-body-sm px-5 py-3.5 rounded-[12px] hover:opacity-90 transition-opacity">
+                  <Link href="/talk-to-sales" className="block w-full bg-blue-brand text-white font-stolzl font-medium text-body-sm px-5 py-3.5 rounded-[12px] hover:opacity-90 transition-opacity text-center">
                     {t.nav.cta}
-                  </button>
+                  </Link>
                 </div>
               </div>
             </motion.div>

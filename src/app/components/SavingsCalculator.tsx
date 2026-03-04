@@ -12,7 +12,7 @@ function formatSR(n: number) {
 }
 
 export default function SavingsCalculator() {
-  const { t } = useLanguage();
+  const { t, isRTL } = useLanguage();
   const c = t.calculator;
   const [hires, setHires] = useState(750);
 
@@ -55,7 +55,7 @@ export default function SavingsCalculator() {
               </div>
 
               {/* Slider */}
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-3" dir="ltr">
                 <div className="relative h-[6px] rounded-full bg-white/10">
                   <div
                     className="absolute left-0 top-0 h-full rounded-full bg-blue-brand transition-all duration-100"
