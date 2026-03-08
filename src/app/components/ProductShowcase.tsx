@@ -224,12 +224,12 @@ export default function ProductShowcase() {
                   opacity: animating ? 0 : 1,
                 }}
               >
-                <div className="absolute top-[12px] bottom-0 left-[12px] right-0 rounded-tl-[10px] overflow-hidden">
+                <div className="absolute top-[16px] bottom-0 left-[16px] right-0 rounded-tl-[20px] overflow-hidden">
                   <Image
                     src={feature.screenshot}
                     alt={`${feature.label} screenshot`}
                     fill
-                    className="object-cover object-left-top"
+                    className="object-cover object-left-top rounded-tl-[20px]"
                   />
                 </div>
               </div>

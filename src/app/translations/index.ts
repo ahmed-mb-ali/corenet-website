@@ -94,7 +94,10 @@ export const translations = {
     },
     footer: {
       desc: "Corenet is a technology holding company building and scaling platforms that power modern workforce solutions across the region and beyond.",
-      location: "Riyadh, Saudi Arabia",
+      location: "Othman ibn Affan Road, Riyadh",
+      email: "info@corenet.sa",
+      phone: "+966 53 111 1098",
+      subsidiary: "A subsidiary of",
       copy: "2026 Corenet — All rights reserved",
     },
     talkToSales: {
@@ -227,7 +230,10 @@ export const translations = {
     },
     footer: {
       desc: "كورنت شركة قابضة تقنية تبني وتطوّر منصات تدعم حلول القوى العاملة الحديثة في المنطقة وما بعدها.",
-      location: "الرياض، المملكة العربية السعودية",
+      location: "طريق عثمان بن عفان، الرياض",
+      email: "info@corenet.sa",
+      phone: "+966 53 111 1098",
+      subsidiary: "شركة تابعة لـ",
       copy: "2026 كورنت — جميع الحقوق محفوظة",
     },
     talkToSales: {
