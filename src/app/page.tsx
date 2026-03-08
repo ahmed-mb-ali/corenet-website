@@ -245,7 +245,7 @@ export default function Home() {
                 className="absolute top-[145px] w-[176px] h-[102px] bg-white rounded-[70px] flex items-center justify-center"
                 style={{ [isRTL ? "right" : "left"]: 205 }}
               >
-                <Image src={isRTL ? "/images/corenet-blue-green.png" : "/images/logo.png"} alt="Corenet" width={isRTL ? 130 : 94} height={isRTL ? 70 : 51} className="object-contain" />
+                <Image src={isRTL ? "/images/corenet-blue-green.png" : "/images/logo.png"} alt="Corenet" width={94} height={51} className="object-contain" />
               </div>
             </motion.div>
 
@@ -293,9 +293,9 @@ export default function Home() {
           transition={{ duration: 0.7, ease }}
           className="relative max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-16 xl:px-20 pt-10 sm:pt-16 lg:pt-[260px] pb-8 sm:pb-16 lg:pb-20"
         >
-          <div className="mb-5 sm:mb-12 -mt-4">
-            <div className={isRTL ? "mb-2 overflow-hidden h-[60px] sm:h-[78px]" : "mb-2"}>
-              <Image src={isRTL ? "/images/corenet-white.png" : "/images/logo.png"} alt="Corenet" width={isRTL ? 300 : 134} height={isRTL ? 300 : 78} className={`object-contain ${isRTL ? "max-w-[90px] sm:max-w-[134px] -mt-[15px] sm:-mt-[28px]" : "max-w-[90px] sm:max-w-none brightness-0 invert"}`} />
+          <div className={`mb-5 sm:mb-12 -mt-4 ${isRTL ? "text-right" : ""}`} dir={isRTL ? "rtl" : "ltr"}>
+            <div className="mb-2">
+              <Image src={isRTL ? "/images/corenet-white.png" : "/images/logo.png"} alt="Corenet" width={134} height={78} className={`object-contain max-w-[90px] sm:max-w-none ${isRTL ? "ml-auto" : "brightness-0 invert"}`} />
             </div>
             <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-5 mt-3 sm:mt-6">
               <span className="font-stolzl text-caption sm:text-body-sm text-white/50">{t.footer.subsidiary}</span>

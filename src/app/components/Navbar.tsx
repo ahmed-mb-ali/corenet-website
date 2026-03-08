@@ -59,9 +59,9 @@ export default function Navbar() {
           <Image
             src={lang === "ar" ? "/images/corenet-blue-green.png" : "/images/logo.png"}
             alt="Corenet Logo"
-            width={lang === "ar" ? (scrolled ? 100 : 116) : (scrolled ? 76 : 88)}
-            height={lang === "ar" ? (scrolled ? 56 : 64) : (scrolled ? 42 : 48)}
-            className="object-contain transition-all duration-300 shrink-0 max-w-[72px] sm:max-w-[80px] lg:max-w-none"
+            width={scrolled ? 76 : 88}
+            height={scrolled ? 42 : 48}
+            className="object-contain transition-all duration-300 shrink-0 max-w-[56px] sm:max-w-[60px] lg:max-w-none"
           />
         </Link>
 
