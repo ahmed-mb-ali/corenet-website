@@ -295,7 +295,7 @@ export default function Home() {
         >
           <div className="mb-5 sm:mb-12 -mt-4">
             <div className="mb-2">
-              <Image src={isRTL ? "/images/corenet-white.png" : "/images/logo.png"} alt="Corenet" width={isRTL ? 180 : 134} height={isRTL ? 104 : 78} className={`object-contain max-w-[120px] sm:max-w-none ${isRTL ? "" : "brightness-0 invert"}`} />
+              <Image src={isRTL ? "/images/corenet-white.png" : "/images/logo.png"} alt="Corenet" width={isRTL ? 240 : 134} height={isRTL ? 140 : 78} className={`object-contain ${isRTL ? "max-w-[140px] sm:max-w-none" : "max-w-[90px] sm:max-w-none brightness-0 invert"}`} />
             </div>
             <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-5 mt-3 sm:mt-6">
               <span className="font-stolzl text-caption sm:text-body-sm text-white/50">{t.footer.subsidiary}</span>
