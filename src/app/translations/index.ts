@@ -98,7 +98,7 @@ export const translations = {
       email: "info@corenet.sa",
       phone: "+966 53 111 1098",
       subsidiary: "A subsidiary of",
-      copy: "2026 Corenet — All rights reserved",
+      copy: "© 2026 corenet. All rights reserved.",
     },
     talkToSales: {
       heading: "Let's talk about your hiring goals",
@@ -234,7 +234,7 @@ export const translations = {
       email: "info@corenet.sa",
       phone: "+966 53 111 1098",
       subsidiary: "شركة تابعة لـ",
-      copy: "2026 كورنت — جميع الحقوق محفوظة",
+      copy: "© 2026 corenet. جميع الحقوق محفوظة.",
     },
     talkToSales: {
       heading: "لنتحدث عن أهداف التوظيف لديك",
