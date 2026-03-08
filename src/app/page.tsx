@@ -307,7 +307,7 @@ export default function Home() {
                 alt="360 Human Resources"
                 width={100}
                 height={34}
-                className="object-contain opacity-40"
+                className="object-contain"
               />
             </div>
           </div>
