@@ -299,12 +299,10 @@ body {
     gap: 12px !important;
   }
   .whatwedo-card .whatwedo-icon {
-    width: 64px !important;
-    height: 65px !important;
-  }
-  .whatwedo-card .whatwedo-icon img {
-    width: 178px !important;
-    height: 178px !important;
+    transform: scale(0.7);
+    transform-origin: center center;
+    margin-top: -12px;
+    margin-bottom: -12px;
   }
   .whatwedo-section {
     padding-top: 40px !important;
@@ -336,6 +334,50 @@ body {
   }
   .calc-section .calc-header {
     margin-bottom: 28px !important;
+  }
+}
+
+/* Mission/Vision: compact on mobile */
+@media (max-width: 639px) {
+  .mission-section {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+  }
+  .mission-section .mission-tabs {
+    flex-direction: row !important;
+    gap: 4px !important;
+  }
+  .mission-section .mission-tabs button {
+    padding: 10px 14px !important;
+    flex: 1;
+    text-align: center !important;
+  }
+  .mission-section .mission-tabs button span.font-stolzl.text-h1 {
+    font-size: 22px !important;
+    line-height: 28px !important;
+  }
+  .mission-section .mission-body {
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+  }
+  .mission-section .mission-items {
+    margin-top: 28px !important;
+    gap: 16px !important;
+  }
+  .mission-section .mission-items .mission-icon {
+    width: 40px !important;
+    height: 40px !important;
+  }
+  .mission-section .mission-items .mission-icon img {
+    width: 20px !important;
+    height: 20px !important;
+  }
+}
+
+/* CTA: add spacing before footer on mobile */
+@media (max-width: 639px) {
+  .cta-section {
+    padding-bottom: 24px !important;
   }
 }
 

@@ -60,7 +60,7 @@ export default function MissionVision() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full bg-bg-light py-16 sm:py-20 lg:py-32 overflow-hidden"
+      className="mission-section relative w-full bg-bg-light py-16 sm:py-20 lg:py-32 overflow-hidden"
     >
       {/* Left accent stripe */}
       <div
@@ -77,7 +77,7 @@ export default function MissionVision() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
 
           {/* ── Left: clickable tabs ── */}
-          <div className="lg:col-span-4 shrink-0 lg:sticky lg:top-28 lg:self-start flex flex-col gap-2">
+          <div className="mission-tabs lg:col-span-4 shrink-0 lg:sticky lg:top-28 lg:self-start flex flex-col gap-2">
             {TABS.map((tab) => {
               const isActive = active === tab;
               return (
@@ -137,11 +137,11 @@ export default function MissionVision() {
                 transform: animating ? "translateY(10px)" : "translateY(0)",
               }}
             >
-              <p className="font-stolzl text-h3 text-text-muted leading-[1.55] max-w-[720px]">
+              <p className="mission-body font-stolzl text-h3 text-text-muted leading-[1.55] max-w-[720px]">
                 {content.body}
               </p>
 
-              <ul className="mt-12 sm:mt-14 flex flex-col gap-6 max-w-[520px]">
+              <ul className="mission-items mt-12 sm:mt-14 flex flex-col gap-6 max-w-[520px]">
                 {content.items.map((item, i) => (
                   <li
                     key={item.title}
@@ -154,7 +154,7 @@ export default function MissionVision() {
                     }}
                   >
                     <div
-                      className="w-14 h-14 rounded-full flex items-center justify-center shrink-0 transition-colors duration-500"
+                      className="mission-icon w-14 h-14 rounded-full flex items-center justify-center shrink-0 transition-colors duration-500"
                       style={{
                         background:
                           active === "mission"

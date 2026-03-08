@@ -175,7 +175,7 @@ export default function Home() {
       <motion.section
         {...fadeUp(0)}
         id="contact"
-        className="relative z-10 w-full pt-10 pb-0 lg:-mb-[205px]"
+        className="cta-section relative z-10 w-full pt-10 pb-0 lg:-mb-[205px]"
       >
         <div className="w-full max-w-[min(1287px,calc(100%-40px))] mx-auto">
 

@@ -61,7 +61,7 @@ export default function Navbar() {
             alt="Corenet Logo"
             width={scrolled ? 76 : 88}
             height={scrolled ? 42 : 48}
-            className="object-contain transition-all duration-300 shrink-0 max-w-[48px] sm:max-w-[60px] lg:max-w-none"
+            className="object-contain transition-all duration-300 shrink-0 max-w-[56px] sm:max-w-[60px] lg:max-w-none"
           />
         </Link>
 
