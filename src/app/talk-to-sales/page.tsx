@@ -135,8 +135,8 @@ export default function TalkToSales() {
           <Image
             src={isRTL ? "/images/corenet-blue-green.png" : "/images/logo.png"}
             alt="Corenet"
-            width={80}
-            height={46}
+            width={isRTL ? 110 : 80}
+            height={isRTL ? 64 : 46}
             className="object-contain mx-auto mb-5"
           />
           <h1 className="font-stolzl text-h2 sm:text-h1 font-bold text-navy mb-2">

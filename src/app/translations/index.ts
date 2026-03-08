@@ -93,7 +93,7 @@ export const translations = {
       pills: ["Manage", "Hire", "Analyze"],
     },
     footer: {
-      desc: "Corenet is a technology company building and scaling platforms that power modern workforce solutions across the region and beyond.",
+      desc: "Corenet is a technology company under 360 Solutions Group, specializing in building and developing digital platforms that enable modern workforce solutions, serving regional markets and expanding globally.",
       location: "Othman ibn Affan Road, Riyadh",
       email: "info@corenet.sa",
       phone: "+966 53 111 1098",
@@ -229,7 +229,7 @@ export const translations = {
       pills: ["إدارة", "توظيف", "تحليل"],
     },
     footer: {
-      desc: "كورنت شركة تقنية تبني وتطوّر منصات تدعم حلول القوى العاملة الحديثة في المنطقة وما بعدها.",
+      desc: "كورنت شركة تقنية تابعة لمجموعة حلول 360، متخصصة في بناء وتطوير المنصات الرقمية التي تمكّن حلول القوى العاملة الحديثة، لخدمة أسواق المنطقة والتوسع عالميًا",
       location: "طريق عثمان بن عفان، الرياض",
       email: "info@corenet.sa",
       phone: "+966 53 111 1098",
