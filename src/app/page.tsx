@@ -84,7 +84,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.75, ease, delay: 0.2 }}
-            className="font-stolzl text-display sm:text-[96px] sm:leading-[100px] sm:tracking-[-3.84px] font-bold text-white"
+            className="font-stolzl text-display sm:text-[61px] sm:leading-[69px] sm:tracking-[-2.44px] lg:text-[96px] lg:leading-[100px] lg:tracking-[-3.84px] font-bold text-white"
           >
             {t.hero.headline1}{" "}
             <span className="bg-blue-brand px-1.5 pb-1 pt-0.5 rounded-[6px] inline-block">
@@ -291,23 +291,23 @@ export default function Home() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.7, ease }}
-          className="relative max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-16 xl:px-20 pt-14 sm:pt-16 lg:pt-[260px] pb-12 sm:pb-16 lg:pb-20"
+          className="relative max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-16 xl:px-20 pt-10 sm:pt-16 lg:pt-[260px] pb-8 sm:pb-16 lg:pb-20"
         >
-          <div className="mb-10 sm:mb-12">
-            <div className="mb-3">
-              <Image src="/images/logo.png" alt="Corenet" width={134} height={78} className="object-contain brightness-0 invert" />
+          <div className="mb-5 sm:mb-12 -mt-4">
+            <div className="mb-2">
+              <Image src="/images/logo.png" alt="Corenet" width={134} height={78} className="object-contain brightness-0 invert max-w-[90px] sm:max-w-none" />
             </div>
-            <div className="flex items-center gap-3 mb-5">
-              <span className="font-stolzl text-body-sm text-white/50">{t.footer.subsidiary}</span>
+            <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-5 mt-3 sm:mt-6">
+              <span className="font-stolzl text-caption sm:text-body-sm text-white/50">{t.footer.subsidiary}</span>
               <Image
                 src={isRTL ? "/images/360-logo-ar.png" : "/images/360-logo-en.png"}
                 alt="360 Human Resources"
-                width={130}
-                height={44}
-                className="object-contain"
+                width={155}
+                height={52}
+                className="object-contain max-w-[100px] sm:max-w-none"
               />
             </div>
-            <p className="font-stolzl text-body text-white/95 max-w-[465px] mb-5">
+            <p className="font-stolzl text-body text-white/95 max-w-[465px] mb-5 mt-4 sm:mt-12">
               {t.footer.desc}
             </p>
           </div>

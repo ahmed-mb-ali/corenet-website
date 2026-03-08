@@ -133,51 +133,100 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Typography utilities – use font-stolzl for headings */
+/* Typography utilities – mobile-first, scale up on sm+ */
 .text-display {
-  font-size: var(--text-display);
-  line-height: var(--text-display-leading);
-  letter-spacing: var(--text-display-tracking);
+  font-size: 32px;
+  line-height: 38px;
+  letter-spacing: -1.2px;
 }
 .text-h1 {
-  font-size: var(--text-h1);
-  line-height: var(--text-h1-leading);
-  letter-spacing: var(--text-h1-tracking);
+  font-size: 28px;
+  line-height: 34px;
+  letter-spacing: -1px;
 }
 .text-h2 {
-  font-size: var(--text-h2);
-  line-height: var(--text-h2-leading);
-  letter-spacing: var(--text-h2-tracking);
+  font-size: 24px;
+  line-height: 30px;
+  letter-spacing: -0.8px;
 }
 .text-h3 {
-  font-size: var(--text-h3);
-  line-height: var(--text-h3-leading);
-  letter-spacing: var(--text-h3-tracking);
+  font-size: 20px;
+  line-height: 26px;
+  letter-spacing: -0.4px;
 }
 .text-h4 {
-  font-size: var(--text-h4);
-  line-height: var(--text-h4-leading);
-  letter-spacing: var(--text-h4-tracking);
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: -0.27px;
 }
 .text-body-lg {
-  font-size: var(--text-body-lg);
-  line-height: var(--text-body-lg-leading);
-  letter-spacing: var(--text-body-lg-tracking);
+  font-size: 17px;
+  line-height: 25px;
+  letter-spacing: -0.18px;
 }
 .text-body {
-  font-size: var(--text-body);
-  line-height: var(--text-body-leading);
-  letter-spacing: var(--text-body-tracking);
+  font-size: 15px;
+  line-height: 22px;
+  letter-spacing: -0.15px;
 }
 .text-body-sm {
-  font-size: var(--text-body-sm);
-  line-height: var(--text-body-sm-leading);
-  letter-spacing: var(--text-body-sm-tracking);
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -0.14px;
 }
 .text-caption {
-  font-size: var(--text-caption);
-  line-height: var(--text-caption-leading);
-  letter-spacing: var(--text-caption-tracking);
+  font-size: 12px;
+  line-height: 17px;
+  letter-spacing: -0.06px;
+}
+
+/* Desktop sizes from sm (640px) */
+@media (min-width: 640px) {
+  .text-display {
+    font-size: var(--text-display);
+    line-height: var(--text-display-leading);
+    letter-spacing: var(--text-display-tracking);
+  }
+  .text-h1 {
+    font-size: var(--text-h1);
+    line-height: var(--text-h1-leading);
+    letter-spacing: var(--text-h1-tracking);
+  }
+  .text-h2 {
+    font-size: var(--text-h2);
+    line-height: var(--text-h2-leading);
+    letter-spacing: var(--text-h2-tracking);
+  }
+  .text-h3 {
+    font-size: var(--text-h3);
+    line-height: var(--text-h3-leading);
+    letter-spacing: var(--text-h3-tracking);
+  }
+  .text-h4 {
+    font-size: var(--text-h4);
+    line-height: var(--text-h4-leading);
+    letter-spacing: var(--text-h4-tracking);
+  }
+  .text-body-lg {
+    font-size: var(--text-body-lg);
+    line-height: var(--text-body-lg-leading);
+    letter-spacing: var(--text-body-lg-tracking);
+  }
+  .text-body {
+    font-size: var(--text-body);
+    line-height: var(--text-body-leading);
+    letter-spacing: var(--text-body-tracking);
+  }
+  .text-body-sm {
+    font-size: var(--text-body-sm);
+    line-height: var(--text-body-sm-leading);
+    letter-spacing: var(--text-body-sm-tracking);
+  }
+  .text-caption {
+    font-size: var(--text-caption);
+    line-height: var(--text-caption-leading);
+    letter-spacing: var(--text-caption-tracking);
+  }
 }
 
 /* ── Product showcase – progress bar fill animation ── */

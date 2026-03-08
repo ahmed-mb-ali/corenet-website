@@ -10,7 +10,7 @@ export const translations = {
       headline1: "Building the",
       highlight: "Modern Workforce",
       headline2: "Technology",
-      sub: "Corenet is a technology holding company building and scaling platforms that power modern workforce solutions across the region and beyond.",
+      sub: "Corenet is a technology company building and scaling platforms that power modern workforce solutions across the region and beyond.",
       cta: "Talk to sales",
     },
     whatWeDo: {
@@ -93,7 +93,7 @@ export const translations = {
       pills: ["Manage", "Hire", "Analyze"],
     },
     footer: {
-      desc: "Corenet is a technology holding company building and scaling platforms that power modern workforce solutions across the region and beyond.",
+      desc: "Corenet is a technology company building and scaling platforms that power modern workforce solutions across the region and beyond.",
       location: "Othman ibn Affan Road, Riyadh",
       email: "info@corenet.sa",
       phone: "+966 53 111 1098",
@@ -146,7 +146,7 @@ export const translations = {
       headline1: "بناء",
       highlight: "القوى العاملة الحديثة",
       headline2: "بالتكنولوجيا",
-      sub: "كورنت شركة قابضة تقنية تبني وتطوّر منصات تدعم حلول القوى العاملة الحديثة في المنطقة وما بعدها.",
+      sub: "كورنت شركة تقنية تبني وتطوّر منصات تدعم حلول القوى العاملة الحديثة في المنطقة وما بعدها.",
       cta: "تحدث مع المبيعات",
     },
     whatWeDo: {
@@ -229,7 +229,7 @@ export const translations = {
       pills: ["إدارة", "توظيف", "تحليل"],
     },
     footer: {
-      desc: "كورنت شركة قابضة تقنية تبني وتطوّر منصات تدعم حلول القوى العاملة الحديثة في المنطقة وما بعدها.",
+      desc: "كورنت شركة تقنية تبني وتطوّر منصات تدعم حلول القوى العاملة الحديثة في المنطقة وما بعدها.",
       location: "طريق عثمان بن عفان، الرياض",
       email: "info@corenet.sa",
       phone: "+966 53 111 1098",
