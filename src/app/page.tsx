@@ -294,22 +294,22 @@ export default function Home() {
           className="relative max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-16 xl:px-20 pt-14 sm:pt-16 lg:pt-[260px] pb-12 sm:pb-16 lg:pb-20"
         >
           <div className="mb-10 sm:mb-12">
-            <div className="mb-6">
+            <div className="mb-3">
               <Image src="/images/logo.png" alt="Corenet" width={134} height={78} className="object-contain brightness-0 invert" />
+            </div>
+            <div className="flex items-center gap-3 mb-5">
+              <span className="font-stolzl text-body-sm text-white/50">{t.footer.subsidiary}</span>
+              <Image
+                src={isRTL ? "/images/360-logo-ar.png" : "/images/360-logo-en.png"}
+                alt="360 Human Resources"
+                width={130}
+                height={44}
+                className="object-contain"
+              />
             </div>
             <p className="font-stolzl text-body text-white/95 max-w-[465px] mb-5">
               {t.footer.desc}
             </p>
-            <div className="flex items-center gap-3">
-              <span className="font-stolzl text-caption text-white/40">{t.footer.subsidiary}</span>
-              <Image
-                src={isRTL ? "/images/360-logo-ar.png" : "/images/360-logo-en.png"}
-                alt="360 Human Resources"
-                width={100}
-                height={34}
-                className="object-contain"
-              />
-            </div>
           </div>
 
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
