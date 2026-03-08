@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useLanguage } from "../context/LanguageContext";
 
 const MIN = 50;
@@ -85,12 +86,12 @@ export default function SavingsCalculator() {
               {/* CTA */}
               <div className="pt-2 border-t border-white/[0.07]">
                 <p className="font-stolzl text-caption text-hero-muted mb-4">{c.expertSub}</p>
-                <button className="flex items-center gap-2 bg-white text-navy font-stolzl text-body-sm font-medium px-5 py-3 rounded-[var(--radius-button)] hover:bg-blue-brand hover:text-white transition-colors">
+                <Link href="/talk-to-sales" className="flex items-center gap-2 bg-white text-navy font-stolzl text-body-sm font-medium px-5 py-3 rounded-[var(--radius-button)] hover:bg-blue-brand hover:text-white transition-colors">
                   {c.expertCta}
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                     <path d="M2.917 7h8.166M7.583 4l3.5 3-3.5 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
-                </button>
+                </Link>
               </div>
             </div>
 
