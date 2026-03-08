@@ -295,7 +295,7 @@ export default function Home() {
         >
           <div className="mb-10 sm:mb-12">
             <div className="mb-6">
-              <Image src="/images/logo.png" alt="Corenet" width={134} height={78} className="object-contain" />
+              <Image src="/images/logo.png" alt="Corenet" width={134} height={78} className="object-contain brightness-0 invert" />
             </div>
             <p className="font-stolzl text-body text-white/95 max-w-[465px] mb-5">
               {t.footer.desc}
@@ -307,7 +307,7 @@ export default function Home() {
                 alt="360 Human Resources"
                 width={100}
                 height={34}
-                className="object-contain brightness-0 invert opacity-40"
+                className="object-contain opacity-40"
               />
             </div>
           </div>
