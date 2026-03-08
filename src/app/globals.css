@@ -295,21 +295,40 @@ body {
 /* What we do cards: compact on mobile */
 @media (max-width: 639px) {
   .whatwedo-card {
-    padding: 20px !important;
-    gap: 12px !important;
+    padding: 14px !important;
+    gap: 8px !important;
   }
   .whatwedo-card .whatwedo-icon {
-    transform: scale(0.55);
+    transform: scale(0.42);
     transform-origin: center center;
-    margin-top: -18px;
-    margin-bottom: -18px;
+    margin-top: -24px;
+    margin-bottom: -24px;
+  }
+  .whatwedo-card h3 {
+    font-size: 14px !important;
+    line-height: 20px !important;
+  }
+  .whatwedo-card p {
+    font-size: 11px !important;
+    line-height: 16px !important;
   }
   .whatwedo-section {
-    padding-top: 40px !important;
-    padding-bottom: 48px !important;
+    padding-top: 32px !important;
+    padding-bottom: 36px !important;
   }
   .whatwedo-section .whatwedo-grid {
-    gap: 16px !important;
+    gap: 12px !important;
+  }
+  .whatwedo-section header {
+    margin-bottom: 24px !important;
+  }
+  .whatwedo-section header h2 {
+    font-size: 22px !important;
+    line-height: 28px !important;
+  }
+  .whatwedo-section header p {
+    font-size: 13px !important;
+    line-height: 18px !important;
   }
 }
 
