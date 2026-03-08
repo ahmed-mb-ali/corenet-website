@@ -93,7 +93,7 @@ export const translations = {
       pills: ["Manage", "Hire", "Analyze"],
     },
     footer: {
-      desc: "Corenet is a technology company under 360 Solutions Group, specializing in building and developing digital platforms that enable modern workforce solutions, serving regional markets and expanding globally.",
+      desc: "Corenet is a technology company by 360 Solutions Group, specializing in building and developing digital platforms that enable modern workforce solutions, serving regional markets and expanding globally.",
       location: "Othman ibn Affan Road, Riyadh",
       email: "info@corenet.sa",
       phone: "+966 53 111 1098",
