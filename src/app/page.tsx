@@ -283,7 +283,7 @@ export default function Home() {
       {/* ========== FOOTER ========== */}
       <footer className="relative w-full bg-navy-deep rounded-[28px] sm:rounded-[40px] overflow-hidden">
         <div className="absolute inset-0">
-          <Image src="/images/hero-bg.png" alt="" fill className="object-cover opacity-30" />
+          <Image src="/images/hero-bg.png" alt="" fill className="object-cover object-left opacity-30" />
         </div>
 
         <motion.div
@@ -294,23 +294,47 @@ export default function Home() {
           className="relative max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-16 xl:px-20 pt-14 sm:pt-16 lg:pt-[260px] pb-12 sm:pb-16 lg:pb-20"
         >
           <div className="mb-10 sm:mb-12">
-            <Image src="/images/logo.png" alt="Corenet" width={134} height={78} className="object-contain brightness-0 invert" />
+            <div className="mb-6">
+              <Image src="/images/logo.png" alt="Corenet" width={134} height={78} className="object-contain brightness-0 invert" />
+            </div>
+            <p className="font-stolzl text-body text-white/95 max-w-[465px] mb-5">
+              {t.footer.desc}
+            </p>
+            <div className="flex items-center gap-3">
+              <span className="font-stolzl text-caption text-white/40">{t.footer.subsidiary}</span>
+              <Image
+                src={isRTL ? "/images/360-logo-ar.png" : "/images/360-logo-en.png"}
+                alt="360 Human Resources"
+                width={100}
+                height={34}
+                className="object-contain brightness-0 invert opacity-60"
+              />
+            </div>
           </div>
 
-          <p className="font-stolzl text-body text-white/95 max-w-[465px] mb-6">
-            {t.footer.desc}
-          </p>
-
-          <div className="flex items-center gap-2 mb-12 sm:mb-14">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0 opacity-60">
-              <path d="M8 1.5C5.515 1.5 3.5 3.515 3.5 6c0 3.75 4.5 8.5 4.5 8.5s4.5-4.75 4.5-8.5c0-2.485-2.015-4.5-4.5-4.5Z" stroke="white" strokeWidth="1.3" strokeLinejoin="round"/>
-              <circle cx="8" cy="6" r="1.5" stroke="white" strokeWidth="1.3"/>
-            </svg>
-            <span className="font-stolzl text-caption text-white/60">{t.footer.location}</span>
-          </div>
-
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
-            <p className="text-white font-medium text-caption">{t.footer.copy}</p>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+              <div className="flex items-center gap-2">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0 opacity-60">
+                  <path d="M8 1.5C5.515 1.5 3.5 3.515 3.5 6c0 3.75 4.5 8.5 4.5 8.5s4.5-4.75 4.5-8.5c0-2.485-2.015-4.5-4.5-4.5Z" stroke="white" strokeWidth="1.3" strokeLinejoin="round"/>
+                  <circle cx="8" cy="6" r="1.5" stroke="white" strokeWidth="1.3"/>
+                </svg>
+                <span className="font-stolzl text-caption text-white/60">{t.footer.location}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0 opacity-60">
+                  <path d="M2.5 4.5l5.5 4 5.5-4" stroke="white" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+                  <rect x="1.5" y="3" width="13" height="10" rx="1.5" stroke="white" strokeWidth="1.3"/>
+                </svg>
+                <a href="mailto:info@corenet.sa" className="font-stolzl text-caption text-white/60 hover:text-white/80 transition-colors">{t.footer.email}</a>
+              </div>
+              <div className="flex items-center gap-2">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0 opacity-60">
+                  <path d="M6.2 7.4a6.5 6.5 0 0 0 2.4 2.4l.8-.8a.75.75 0 0 1 .77-.18c.85.28 1.76.43 2.7.43a.75.75 0 0 1 .75.75v2.6a.75.75 0 0 1-.75.75A11.38 11.38 0 0 1 1.5 2.13a.75.75 0 0 1 .75-.75h2.6a.75.75 0 0 1 .75.75c0 .94.15 1.85.43 2.7a.75.75 0 0 1-.18.77l-.8.8z" stroke="white" strokeWidth="1.3" strokeLinejoin="round"/>
+                </svg>
+                <a href="tel:+966531111098" className="font-stolzl text-caption text-white/60 hover:text-white/80 transition-colors">{t.footer.phone}</a>
+              </div>
+            </div>
             <div className="flex items-center gap-2">
               {[
                 { href: "#", label: "Facebook", src: "/images/facebook.svg", size: 18 },
@@ -330,6 +354,8 @@ export default function Home() {
               ))}
             </div>
           </div>
+
+          <p className="text-white font-medium text-caption">{t.footer.copy}</p>
         </motion.div>
       </footer>
 
