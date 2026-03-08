@@ -61,7 +61,7 @@ export default function Navbar() {
             alt="Corenet Logo"
             width={scrolled ? 76 : 88}
             height={scrolled ? 42 : 48}
-            className="object-contain transition-all duration-300 shrink-0"
+            className="object-contain transition-all duration-300 shrink-0 max-w-[60px] sm:max-w-none"
           />
         </Link>
 
@@ -93,11 +93,10 @@ export default function Navbar() {
         <div className="flex lg:hidden items-center gap-2">
           <button
             onClick={() => setLang(lang === "en" ? "ar" : "en")}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-[8px] border border-[#e0e0e0] font-stolzl text-navy hover:bg-gray-50 transition-colors"
+            className="flex items-center gap-1 px-2 py-1 rounded-[6px] border border-[#e0e0e0] font-stolzl text-navy hover:bg-gray-50 transition-colors"
             aria-label="Switch language"
           >
-            <span className="text-sm leading-none">{lang === "en" ? "🇸🇦" : "🇬🇧"}</span>
-            <span className="text-[12px] font-medium">{lang === "en" ? "AR" : "EN"}</span>
+            <span className="text-[11px] font-medium">{lang === "en" ? "عربي" : "EN"}</span>
           </button>
 
           <button
