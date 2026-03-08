@@ -245,7 +245,7 @@ export default function Home() {
                 className="absolute top-[145px] w-[176px] h-[102px] bg-white rounded-[70px] flex items-center justify-center"
                 style={{ [isRTL ? "right" : "left"]: 205 }}
               >
-                <Image src="/images/logo.png" alt="Corenet" width={94} height={51} className="object-contain" />
+                <Image src={isRTL ? "/images/corenet-blue-green.png" : "/images/logo.png"} alt="Corenet" width={94} height={51} className="object-contain" />
               </div>
             </motion.div>
 
@@ -295,7 +295,7 @@ export default function Home() {
         >
           <div className="mb-5 sm:mb-12 -mt-4">
             <div className="mb-2">
-              <Image src="/images/logo.png" alt="Corenet" width={134} height={78} className="object-contain brightness-0 invert max-w-[90px] sm:max-w-none" />
+              <Image src={isRTL ? "/images/corenet-white.png" : "/images/logo.png"} alt="Corenet" width={134} height={78} className={`object-contain max-w-[90px] sm:max-w-none ${isRTL ? "" : "brightness-0 invert"}`} />
             </div>
             <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-5 mt-3 sm:mt-6">
               <span className="font-stolzl text-caption sm:text-body-sm text-white/50">{t.footer.subsidiary}</span>

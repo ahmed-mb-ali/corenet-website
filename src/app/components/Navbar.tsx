@@ -57,7 +57,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/">
           <Image
-            src="/images/logo.png"
+            src={lang === "ar" ? "/images/corenet-blue-green.png" : "/images/logo.png"}
             alt="Corenet Logo"
             width={scrolled ? 76 : 88}
             height={scrolled ? 42 : 48}

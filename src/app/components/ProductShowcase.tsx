@@ -185,7 +185,7 @@ export default function ProductShowcase() {
 
               {/* Logo */}
               <Image
-                src="/images/hires-logo.png"
+                src={isRTL ? "/images/hires-logo-ar.png" : "/images/hires-logo.png"}
                 alt="Hires HR"
                 width={112}
                 height={40}

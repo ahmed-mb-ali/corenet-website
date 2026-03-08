@@ -133,7 +133,7 @@ export default function TalkToSales() {
           className="text-center mb-8 sm:mb-10"
         >
           <Image
-            src="/images/logo.png"
+            src={isRTL ? "/images/corenet-blue-green.png" : "/images/logo.png"}
             alt="Corenet"
             width={80}
             height={46}
