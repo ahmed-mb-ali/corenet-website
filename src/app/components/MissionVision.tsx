@@ -74,7 +74,7 @@ export default function MissionVision() {
       />
 
       <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-16 xl:px-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+        <div className="mission-grid grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
 
           {/* ── Left: clickable tabs ── */}
           <div className="mission-tabs lg:col-span-4 shrink-0 lg:sticky lg:top-28 lg:self-start flex flex-col gap-2">
@@ -177,7 +177,7 @@ export default function MissionVision() {
               </ul>
 
               {/* Dot indicators */}
-              <div className="flex items-center gap-2 mt-10">
+              <div className="mission-dots flex items-center gap-2 mt-10">
                 {TABS.map((tab) => (
                   <button
                     key={tab}

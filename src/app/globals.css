@@ -299,10 +299,10 @@ body {
     gap: 12px !important;
   }
   .whatwedo-card .whatwedo-icon {
-    transform: scale(0.7);
+    transform: scale(0.55);
     transform-origin: center center;
-    margin-top: -12px;
-    margin-bottom: -12px;
+    margin-top: -18px;
+    margin-bottom: -18px;
   }
   .whatwedo-section {
     padding-top: 40px !important;
@@ -337,40 +337,79 @@ body {
   }
 }
 
-/* Mission/Vision: compact on mobile */
+/* Mission/Vision: redesigned for mobile */
 @media (max-width: 639px) {
   .mission-section {
-    padding-top: 40px !important;
-    padding-bottom: 40px !important;
+    padding-top: 36px !important;
+    padding-bottom: 36px !important;
   }
+  /* Tabs: pill-style toggle row */
   .mission-section .mission-tabs {
     flex-direction: row !important;
-    gap: 4px !important;
+    gap: 0 !important;
+    background: #eef0f4;
+    border-radius: 12px !important;
+    padding: 3px !important;
+    margin-bottom: 4px;
   }
   .mission-section .mission-tabs button {
-    padding: 10px 14px !important;
+    padding: 8px 0 !important;
     flex: 1;
     text-align: center !important;
+    border-radius: 10px !important;
   }
   .mission-section .mission-tabs button span.font-stolzl.text-h1 {
-    font-size: 22px !important;
-    line-height: 28px !important;
+    font-size: 15px !important;
+    line-height: 20px !important;
   }
+  /* Hide the left accent bar on active tab */
+  .mission-section .mission-tabs button > span:first-child {
+    display: none !important;
+  }
+  /* Hide subtitle under tab on mobile */
+  .mission-section .mission-tabs button span.text-caption {
+    display: none !important;
+  }
+  /* Grid gap reduced */
+  .mission-section .mission-grid {
+    gap: 20px !important;
+  }
+  /* Body text */
   .mission-section .mission-body {
-    font-size: 16px !important;
+    font-size: 15px !important;
     line-height: 1.5 !important;
   }
+  /* Items: card style */
   .mission-section .mission-items {
-    margin-top: 28px !important;
-    gap: 16px !important;
+    margin-top: 20px !important;
+    gap: 12px !important;
+  }
+  .mission-section .mission-items li {
+    background: white;
+    border-radius: 14px;
+    padding: 14px;
+    gap: 12px !important;
+    box-shadow: 0 2px 8px rgba(2, 2, 44, 0.05);
   }
   .mission-section .mission-items .mission-icon {
-    width: 40px !important;
-    height: 40px !important;
+    width: 36px !important;
+    height: 36px !important;
   }
   .mission-section .mission-items .mission-icon img {
-    width: 20px !important;
-    height: 20px !important;
+    width: 18px !important;
+    height: 18px !important;
+  }
+  .mission-section .mission-items h4 {
+    font-size: 14px !important;
+    line-height: 20px !important;
+  }
+  .mission-section .mission-items p {
+    font-size: 12px !important;
+    line-height: 1.45 !important;
+  }
+  /* Dot indicators closer */
+  .mission-section .mission-dots {
+    margin-top: 20px !important;
   }
 }
 
