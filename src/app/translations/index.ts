@@ -10,7 +10,7 @@ export const translations = {
       headline1: "Building the",
       highlight: "Modern Workforce",
       headline2: "Technology",
-      sub: "Corenet is a technology company building and scaling platforms that power modern workforce solutions across the region and beyond.",
+      sub: "Corenet is a technology company by 360 Solutions Group, specializing in building and developing digital platforms that enable modern workforce solutions, serving regional markets and expanding globally.",
       cta: "Talk to sales",
     },
     whatWeDo: {
@@ -146,7 +146,7 @@ export const translations = {
       headline1: "بناء",
       highlight: "القوى العاملة الحديثة",
       headline2: "بالتكنولوجيا",
-      sub: "كورنت شركة تقنية تبني وتطوّر منصات تدعم حلول القوى العاملة الحديثة في المنطقة وما بعدها.",
+      sub: "كورنت شركة تقنية تابعة لمجموعة حلول 360، متخصصة في بناء وتطوير المنصات الرقمية التي تمكّن حلول القوى العاملة الحديثة، لخدمة أسواق المنطقة والتوسع عالميًا",
       cta: "تحدث مع المبيعات",
     },
     whatWeDo: {
