@@ -122,10 +122,13 @@ export default function HeroBackground() {
     const uTime = gl.getUniformLocation(prog, "u_time");
     const uRes  = gl.getUniformLocation(prog, "u_res");
 
+    // Render at half resolution to reduce GPU load
+    const SCALE = 0.5;
+
     // Resize handler
     const resize = () => {
-      canvas.width  = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
+      canvas.width  = canvas.offsetWidth  * SCALE;
+      canvas.height = canvas.offsetHeight * SCALE;
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.uniform2f(uRes, canvas.width, canvas.height);
     };
@@ -133,15 +136,20 @@ export default function HeroBackground() {
     const ro = new ResizeObserver(resize);
     ro.observe(canvas);
 
-    // Render loop
+    // Render loop — throttled to 30fps, paused when tab is hidden
     let rafId: number;
+    let lastTime = 0;
     const start = performance.now();
-    const render = () => {
+    const FPS_INTERVAL = 1000 / 30;
+    const render = (now: number) => {
+      rafId = requestAnimationFrame(render);
+      if (document.hidden) return;
+      if (now - lastTime < FPS_INTERVAL) return;
+      lastTime = now;
       gl.uniform1f(uTime, (performance.now() - start) / 1000);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-      rafId = requestAnimationFrame(render);
     };
-    render();
+    rafId = requestAnimationFrame(render);
 
     return () => {
       cancelAnimationFrame(rafId);
