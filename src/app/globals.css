@@ -260,6 +260,92 @@ body {
   background: transparent;
 }
 
+/* ── Mobile-only overrides ── */
+
+/* Navbar: restore desktop dimensions on lg+ (mobile values are set inline) */
+@media (min-width: 1024px) {
+  .nav-bar {
+    top: 16px !important;
+    height: 64px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    border-radius: 18px !important;
+  }
+}
+
+/* Hero: full viewport height on mobile so blue fills entire first screen */
+@media (max-width: 639px) {
+  .hero-section {
+    width: 100% !important;
+    margin-top: 0 !important;
+    min-height: 100svh !important;
+    border-radius: 0 0 32px 32px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+  }
+  .hero-section .hero-content {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+}
+
+/* What we do cards: compact on mobile */
+@media (max-width: 639px) {
+  .whatwedo-card {
+    padding: 20px !important;
+    gap: 12px !important;
+  }
+  .whatwedo-card .whatwedo-icon {
+    width: 64px !important;
+    height: 65px !important;
+  }
+  .whatwedo-card .whatwedo-icon img {
+    width: 178px !important;
+    height: 178px !important;
+  }
+  .whatwedo-section {
+    padding-top: 40px !important;
+    padding-bottom: 48px !important;
+  }
+  .whatwedo-section .whatwedo-grid {
+    gap: 16px !important;
+  }
+}
+
+/* Calculator: compact on mobile */
+@media (max-width: 639px) {
+  .calc-card {
+    border-radius: 20px !important;
+  }
+  .calc-card .calc-side {
+    padding: 20px !important;
+    gap: 24px !important;
+  }
+  .calc-card .calc-big-number {
+    font-size: 40px !important;
+  }
+  .calc-card .calc-savings-number {
+    font-size: 32px !important;
+  }
+  .calc-section {
+    padding-top: 48px !important;
+    padding-bottom: 48px !important;
+  }
+  .calc-section .calc-header {
+    margin-bottom: 28px !important;
+  }
+}
+
+/* Mobile menu positioning adjustment for thinner nav */
+@media (max-width: 1023px) {
+  .nav-menu-panel {
+    top: 52px !important;
+  }
+}
+
 /* Arabic / RTL — IBM Plex Sans Arabic */
 :root[dir="rtl"],
 :root[dir="rtl"] body {

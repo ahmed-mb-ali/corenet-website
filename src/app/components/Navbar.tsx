@@ -38,14 +38,14 @@ export default function Navbar() {
         initial={{ y: -40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease }}
-        className="fixed left-1/2 -translate-x-1/2 z-50 flex items-center justify-between transition-all duration-300 ease-out"
+        className="nav-bar fixed left-1/2 -translate-x-1/2 z-50 flex items-center justify-between transition-all duration-300 ease-out"
         style={{
-          top: scrolled ? 8 : 16,
-          height: scrolled ? 52 : 64,
+          top: scrolled ? 6 : 8,
+          height: scrolled ? 40 : 44,
           width: scrolled ? "min(1200px, calc(100% - 24px))" : "min(1440px, calc(100% - 16px))",
-          paddingLeft: 20,
-          paddingRight: 20,
-          borderRadius: scrolled ? 14 : 18,
+          paddingLeft: 14,
+          paddingRight: 14,
+          borderRadius: scrolled ? 12 : 14,
           background: scrolled ? "rgba(255,255,255,0.95)" : "#ffffff",
           backdropFilter: scrolled ? "blur(12px)" : "none",
           WebkitBackdropFilter: scrolled ? "blur(12px)" : "none",
@@ -61,7 +61,7 @@ export default function Navbar() {
             alt="Corenet Logo"
             width={scrolled ? 76 : 88}
             height={scrolled ? 42 : 48}
-            className="object-contain transition-all duration-300 shrink-0 max-w-[60px] sm:max-w-none"
+            className="object-contain transition-all duration-300 shrink-0 max-w-[48px] sm:max-w-[60px] lg:max-w-none"
           />
         </Link>
 
@@ -90,34 +90,34 @@ export default function Navbar() {
         </div>
 
         {/* Mobile / Tablet: lang flag + hamburger */}
-        <div className="flex lg:hidden items-center gap-2">
+        <div className="flex lg:hidden items-center gap-1.5">
           <button
             onClick={() => setLang(lang === "en" ? "ar" : "en")}
-            className="flex items-center gap-1 px-2 py-1 rounded-[6px] border border-[#e0e0e0] font-stolzl text-navy hover:bg-gray-50 transition-colors"
+            className="flex items-center gap-1 px-1.5 py-0.5 rounded-[5px] border border-[#e0e0e0] font-stolzl text-navy hover:bg-gray-50 transition-colors"
             aria-label="Switch language"
           >
-            <span className="text-[11px] font-medium">{lang === "en" ? "عربي" : "EN"}</span>
+            <span className="text-[10px] font-medium">{lang === "en" ? "عربي" : "EN"}</span>
           </button>
 
           <button
             onClick={() => setMenuOpen((v) => !v)}
             aria-label="Toggle menu"
-            className="w-9 h-9 flex flex-col items-center justify-center gap-[5px] rounded-[8px] hover:bg-gray-50 transition-colors"
+            className="w-7 h-7 flex flex-col items-center justify-center gap-[4px] rounded-[6px] hover:bg-gray-50 transition-colors"
           >
             <motion.span
-              animate={menuOpen ? { rotate: 45, y: 6.5 } : { rotate: 0, y: 0 }}
+              animate={menuOpen ? { rotate: 45, y: 5.5 } : { rotate: 0, y: 0 }}
               transition={{ duration: 0.2 }}
-              className="block w-[18px] h-[1.5px] bg-navy origin-center"
+              className="block w-[15px] h-[1.5px] bg-navy origin-center"
             />
             <motion.span
               animate={menuOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
               transition={{ duration: 0.2 }}
-              className="block w-[18px] h-[1.5px] bg-navy"
+              className="block w-[15px] h-[1.5px] bg-navy"
             />
             <motion.span
-              animate={menuOpen ? { rotate: -45, y: -6.5 } : { rotate: 0, y: 0 }}
+              animate={menuOpen ? { rotate: -45, y: -5.5 } : { rotate: 0, y: 0 }}
               transition={{ duration: 0.2 }}
-              className="block w-[18px] h-[1.5px] bg-navy origin-center"
+              className="block w-[15px] h-[1.5px] bg-navy origin-center"
             />
           </button>
         </div>
@@ -143,8 +143,8 @@ export default function Navbar() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.98 }}
               transition={{ duration: 0.2, ease }}
-              className="fixed inset-x-3 z-40 lg:hidden"
-              style={{ top: scrolled ? 68 : 84 }}
+              className="nav-menu-panel fixed inset-x-3 z-40 lg:hidden"
+              style={{ top: scrolled ? 54 : 60 }}
             >
               <div
                 className="rounded-[20px] overflow-hidden"

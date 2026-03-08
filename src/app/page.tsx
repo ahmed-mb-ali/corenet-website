@@ -46,7 +46,7 @@ export default function Home() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, ease }}
-        className="relative w-[98%] mx-auto mt-[10px] min-h-[580px] sm:min-h-[640px] lg:h-[867px] bg-navy-dark rounded-[32px] sm:rounded-[40px] lg:rounded-[50px] overflow-hidden flex flex-col lg:block"
+        className="hero-section relative w-[98%] mx-auto mt-[10px] min-h-[580px] sm:min-h-[640px] lg:h-[867px] bg-navy-dark rounded-[32px] sm:rounded-[40px] lg:rounded-[50px] overflow-hidden flex flex-col lg:block"
       >
         {/* WebGL animated background */}
         <HeroBackground />
@@ -78,7 +78,7 @@ export default function Home() {
 
         {/* Hero content */}
         <div
-          className={`relative z-10 flex flex-col gap-5 sm:gap-6 px-6 sm:px-10 pt-28 sm:pt-32 pb-14 items-center text-center lg:absolute lg:px-0 lg:pt-0 lg:pb-0 lg:top-1/2 lg:-translate-y-1/2 lg:mt-[42px] lg:max-w-[675px] ${isRTL ? "lg:right-[92px] lg:items-start lg:text-right" : "lg:left-[92px] lg:items-start lg:text-left"}`}
+          className={`hero-content relative z-10 flex flex-col gap-5 sm:gap-6 px-6 sm:px-10 pt-28 sm:pt-32 pb-14 items-center text-center lg:absolute lg:px-0 lg:pt-0 lg:pb-0 lg:top-1/2 lg:-translate-y-1/2 lg:mt-[42px] lg:max-w-[675px] ${isRTL ? "lg:right-[92px] lg:items-start lg:text-right" : "lg:left-[92px] lg:items-start lg:text-left"}`}
         >
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
@@ -118,7 +118,7 @@ export default function Home() {
       </motion.section>
 
       {/* ========== WHAT WE DO SECTION ========== */}
-      <section id="about" className="relative w-full bg-white rounded-t-[60px] -mt-[60px] pt-16 pb-20 sm:pt-20 sm:pb-24">
+      <section id="about" className="whatwedo-section relative w-full bg-white rounded-t-[60px] -mt-[60px] pt-16 pb-20 sm:pt-20 sm:pb-24">
         <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-16 xl:px-20">
 
           <motion.header
@@ -134,7 +134,7 @@ export default function Home() {
             </p>
           </motion.header>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
+          <div className="whatwedo-grid grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
             {(["-top-[24px] -left-[22px]", "-top-[24px] -left-[147px]", "-top-[141px] -left-[23px]"] as const)
               .map((imgOffset, i) => ({ imgOffset, ...t.whatWeDo.cards[i] }))
               .map(({ imgOffset, title, desc }, i) => (
@@ -145,9 +145,9 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.65, ease, delay: i * 0.13 }}
                 whileHover={{ y: -4, boxShadow: "0 12px 36px rgba(2,2,44,0.09)" }}
-                className="flex flex-col items-center text-center gap-6 p-8 lg:p-10 rounded-[var(--radius-card)] bg-bg-light/50 border border-border-soft/80"
+                className="whatwedo-card flex flex-col items-center text-center gap-6 p-8 lg:p-10 rounded-[var(--radius-card)] bg-bg-light/50 border border-border-soft/80"
               >
-                <div className="w-[100px] h-[101px] relative overflow-hidden shrink-0">
+                <div className="whatwedo-icon w-[100px] h-[101px] relative overflow-hidden shrink-0">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src="/images/icons-sprite.png" alt={title} className={`absolute ${imgOffset} w-[278px] h-[278px] max-w-none`} />
                 </div>

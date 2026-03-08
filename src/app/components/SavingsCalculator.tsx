@@ -20,11 +20,11 @@ export default function SavingsCalculator() {
   const totalSavings = hires * SAVINGS_PER_HIRE;
 
   return (
-    <section className="relative w-full bg-white py-20 lg:py-28">
+    <section className="calc-section relative w-full bg-white py-20 lg:py-28">
       <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-16 xl:px-20">
 
         {/* Header */}
-        <header className="text-center max-w-[560px] mx-auto mb-14">
+        <header className="calc-header text-center max-w-[560px] mx-auto mb-14">
           <p className="font-stolzl text-caption font-medium text-blue-brand uppercase tracking-widest mb-3">
             {c.eyebrow}
           </p>
@@ -33,11 +33,11 @@ export default function SavingsCalculator() {
         </header>
 
         {/* Dark card */}
-        <div className="max-w-[1100px] mx-auto bg-navy-deep rounded-[32px] shadow-[0_24px_64px_rgba(2,2,44,0.18)] overflow-hidden">
+        <div className="calc-card max-w-[1100px] mx-auto bg-navy-deep rounded-[32px] shadow-[0_24px_64px_rgba(2,2,44,0.18)] overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-2">
 
             {/* ── Left: slider ── */}
-            <div className="flex flex-col justify-center gap-10 p-8 sm:p-12 lg:p-14 border-b lg:border-b-0 lg:border-r border-white/[0.07]">
+            <div className="calc-side flex flex-col justify-center gap-10 p-8 sm:p-12 lg:p-14 border-b lg:border-b-0 lg:border-r border-white/[0.07]">
 
               <div>
                 <p className="font-stolzl text-caption text-hero-muted uppercase tracking-widest mb-3">
@@ -45,7 +45,7 @@ export default function SavingsCalculator() {
                 </p>
                 <div className="flex items-end gap-3">
                   <span
-                    className="font-stolzl font-bold text-white tabular-nums"
+                    className="calc-big-number font-stolzl font-bold text-white tabular-nums"
                     style={{ fontSize: 60, lineHeight: 1, letterSpacing: "-2px" }}
                   >
                     {hires.toLocaleString()}
@@ -95,7 +95,7 @@ export default function SavingsCalculator() {
             </div>
 
             {/* ── Right: savings output ── */}
-            <div className="flex flex-col justify-center gap-8 p-8 sm:p-12 lg:p-14">
+            <div className="calc-side flex flex-col justify-center gap-8 p-8 sm:p-12 lg:p-14">
 
               {/* Big number */}
               <div>
@@ -103,7 +103,7 @@ export default function SavingsCalculator() {
                   {c.savingsLabel}
                 </p>
                 <p
-                  className="font-stolzl font-bold text-white tabular-nums"
+                  className="calc-savings-number font-stolzl font-bold text-white tabular-nums"
                   style={{ fontSize: 48, lineHeight: 1.1, letterSpacing: "-2px" }}
                 >
                   {formatSR(totalSavings)}
