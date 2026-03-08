@@ -307,7 +307,7 @@ export default function Home() {
                 className="object-contain max-w-[100px] sm:max-w-none"
               />
             </div>
-            <p className="font-stolzl text-body text-white/95 max-w-[465px] mb-5 mt-4 sm:mt-12">
+            <p className="font-stolzl text-caption sm:text-body text-white/95 max-w-[465px] mb-5 mt-4 sm:mt-12">
               {t.footer.desc}
             </p>
           </div>
