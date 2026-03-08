@@ -332,7 +332,7 @@ export default function Home() {
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0 opacity-60">
                   <path d="M6.2 7.4a6.5 6.5 0 0 0 2.4 2.4l.8-.8a.75.75 0 0 1 .77-.18c.85.28 1.76.43 2.7.43a.75.75 0 0 1 .75.75v2.6a.75.75 0 0 1-.75.75A11.38 11.38 0 0 1 1.5 2.13a.75.75 0 0 1 .75-.75h2.6a.75.75 0 0 1 .75.75c0 .94.15 1.85.43 2.7a.75.75 0 0 1-.18.77l-.8.8z" stroke="white" strokeWidth="1.3" strokeLinejoin="round"/>
                 </svg>
-                <a href="tel:+966531111098" className="font-stolzl text-caption text-white/60 hover:text-white/80 transition-colors">{t.footer.phone}</a>
+                <a href="tel:+966531111098" dir="ltr" className="font-stolzl text-caption text-white/60 hover:text-white/80 transition-colors">{t.footer.phone}</a>
               </div>
             </div>
             <div className="flex items-center gap-2">
