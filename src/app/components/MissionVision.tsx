@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { useLanguage } from "../context/LanguageContext";
 
 const TABS = ["mission", "vision"] as const;
@@ -20,46 +20,23 @@ export default function MissionVision() {
   };
   const [active, setActive] = useState<Tab>("mission");
   const [animating, setAnimating] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-  const activeRef = useRef<Tab>("mission");
 
   const switchTab = useCallback(
     (tab: Tab) => {
-      if (tab === activeRef.current || animating) return;
-      activeRef.current = tab;
+      if (tab === active || animating) return;
       setAnimating(true);
       setTimeout(() => {
         setActive(tab);
         setAnimating(false);
       }, 260);
     },
-    [animating]
+    [active, animating]
   );
-
-  // Position-based scroll: track how far the section has moved through the viewport.
-  // Switch at the midpoint so the transition feels natural as the user scrolls.
-  useEffect(() => {
-    const handleScroll = () => {
-      const el = sectionRef.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const vh = window.innerHeight;
-      // progress: 0 = section top at viewport bottom, 1 = section bottom at viewport top
-      const progress = (vh - rect.top) / (rect.height + vh);
-      if (progress >= 0.52) switchTab("vision");
-      else if (progress < 0.48) switchTab("mission");
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // run once on mount
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [switchTab]);
 
   const content = CONTENT[active];
 
   return (
     <section
-      ref={sectionRef}
       className="mission-section relative w-full bg-bg-light py-16 sm:py-20 lg:py-32 overflow-hidden"
     >
       {/* Left accent stripe */}
@@ -113,19 +90,6 @@ export default function MissionVision() {
               );
             })}
 
-            {/* Scroll hint */}
-            <p className="font-stolzl text-caption text-text-muted mt-4 pl-5 hidden lg:flex items-center gap-1.5">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                <path
-                  d="M6 2v8M3.5 7.5L6 10l2.5-2.5"
-                  stroke="currentColor"
-                  strokeWidth="1.2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              {t.mission.scrollHint}
-            </p>
           </div>
 
           {/* ── Right: animated content ── */}
@@ -176,21 +140,6 @@ export default function MissionVision() {
                 ))}
               </ul>
 
-              {/* Dot indicators */}
-              <div className="mission-dots flex items-center gap-2 mt-10">
-                {TABS.map((tab) => (
-                  <button
-                    key={tab}
-                    onClick={() => switchTab(tab)}
-                    aria-label={`Go to ${tab}`}
-                    className={`rounded-full transition-all duration-300 ${
-                      active === tab
-                        ? "w-6 h-2 bg-blue-brand"
-                        : "w-2 h-2 bg-navy/20 hover:bg-navy/40"
-                    }`}
-                  />
-                ))}
-              </div>
             </div>
           </div>
         </div>

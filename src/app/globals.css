@@ -407,10 +407,6 @@ body {
     font-size: 12px !important;
     line-height: 1.45 !important;
   }
-  /* Dot indicators closer */
-  .mission-section .mission-dots {
-    margin-top: 20px !important;
-  }
 }
 
 /* CTA: add spacing before footer on mobile */
