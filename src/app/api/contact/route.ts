@@ -12,6 +12,13 @@ const ses = new SESClient({
 const TO_EMAIL = process.env.SES_TO_EMAIL ?? "hires360s@gmail.com";
 const FROM_EMAIL = process.env.SES_FROM_EMAIL ?? "hires360s@gmail.com";
 
+export async function GET() {
+  const hasKey = !!process.env.SES_ACCESS_KEY_ID;
+  const hasSecret = !!process.env.SES_SECRET_ACCESS_KEY;
+  const region = process.env.SES_REGION ?? "not set";
+  return NextResponse.json({ hasKey, hasSecret, region, to: TO_EMAIL, from: FROM_EMAIL });
+}
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();
