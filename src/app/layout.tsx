@@ -18,7 +18,7 @@ const ibmPlexArabic = IBM_Plex_Sans_Arabic({
 
 export const metadata: Metadata = {
   title: {
-    default: "Corenet — Building the Modern Workforce Technology",
+    default: "Corenet - Building the Modern Workforce Technology",
     template: "%s | Corenet",
   },
   description:
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "Corenet — Building the Modern Workforce Technology",
+    title: "Corenet - Building the Modern Workforce Technology",
     description:
       "AI-powered hiring platforms that help companies recruit faster, screen smarter, and hire better. Trusted by businesses across Saudi Arabia and the MENA region.",
     type: "website",
@@ -63,13 +63,13 @@ export const metadata: Metadata = {
         url: "/images/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Corenet — Building the Modern Workforce Technology",
+        alt: "Corenet - Building the Modern Workforce Technology",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Corenet — Building the Modern Workforce Technology",
+    title: "Corenet - Building the Modern Workforce Technology",
     description:
       "AI-powered hiring platforms that help companies recruit faster, screen smarter, and hire better.",
     images: ["/images/og-image.png"],
