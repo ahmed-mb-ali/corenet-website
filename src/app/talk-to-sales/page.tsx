@@ -62,15 +62,26 @@ export default function TalkToSales() {
 
     setSubmitting(true);
     try {
-      await fetch(GOOGLE_SHEET_URL, {
+      const payload = { timestamp: new Date().toISOString(), ...form };
+
+      // Send to Google Sheet (data storage)
+      const sheetPromise = GOOGLE_SHEET_URL
+        ? fetch(GOOGLE_SHEET_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          }).catch(() => {})
+        : Promise.resolve();
+
+      // Send email notification via SES
+      const emailPromise = fetch("/api/contact", {
         method: "POST",
-        mode: "no-cors",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          timestamp: new Date().toISOString(),
-          ...form,
-        }),
-      });
+        body: JSON.stringify(form),
+      }).catch(() => {});
+
+      await Promise.all([sheetPromise, emailPromise]);
       setSubmitted(true);
     } catch {
       setSubmitted(true);
