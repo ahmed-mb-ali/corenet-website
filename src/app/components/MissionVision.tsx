@@ -39,8 +39,8 @@ export default function MissionVision() {
     <section
       className="mission-section relative w-full bg-bg-light py-16 sm:py-20 lg:py-32 overflow-hidden"
     >
-      <div className="max-w-[800px] mx-auto px-6 sm:px-8">
-        {/* Pill-style tabs */}
+      {/* ── Mobile: single column centered (< lg) ── */}
+      <div className="lg:hidden max-w-[800px] mx-auto px-6 sm:px-8">
         <div className="flex justify-center mb-10 sm:mb-14">
           <div className="inline-flex bg-[#eef0f4] rounded-[14px] p-1">
             {TABS.map((tab) => {
@@ -62,7 +62,6 @@ export default function MissionVision() {
           </div>
         </div>
 
-        {/* Content */}
         <div
           style={{
             transition: "opacity 0.26s ease, transform 0.26s ease",
@@ -70,11 +69,11 @@ export default function MissionVision() {
             transform: animating ? "translateY(10px)" : "translateY(0)",
           }}
         >
-          <p className="mission-body font-stolzl text-body-lg sm:text-h3 text-text-muted leading-[1.55] max-w-[720px] mx-auto text-center">
+          <p className="font-stolzl text-body-lg text-text-muted leading-[1.55] mx-auto text-center">
             {content.body}
           </p>
 
-          <ul className="mission-items mt-10 sm:mt-14 flex flex-col gap-5 max-w-[520px] mx-auto">
+          <ul className="mt-10 flex flex-col gap-5 max-w-[520px] mx-auto">
             {content.items.map((item, i) => (
               <li
                 key={item.title}
@@ -87,7 +86,7 @@ export default function MissionVision() {
                 }}
               >
                 <div
-                  className="mission-icon w-11 h-11 sm:w-14 sm:h-14 rounded-full flex items-center justify-center shrink-0 transition-colors duration-500"
+                  className="w-11 h-11 sm:w-14 sm:h-14 rounded-full flex items-center justify-center shrink-0 transition-colors duration-500"
                   style={{
                     background:
                       active === "mission"
@@ -102,6 +101,89 @@ export default function MissionVision() {
                     {item.title}
                   </h4>
                   <p className="font-stolzl text-caption text-text-secondary leading-[1.5]">
+                    {item.desc}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* ── Desktop: two-column layout (>= lg) ── */}
+      <div className="hidden lg:grid grid-cols-2 gap-16 xl:gap-24 max-w-[1200px] mx-auto px-16 xl:px-20 items-center">
+        {/* Left: tabs + body */}
+        <div>
+          <div className="flex mb-8">
+            <div className="inline-flex bg-[#eef0f4] rounded-[14px] p-1">
+              {TABS.map((tab) => {
+                const isActive = active === tab;
+                return (
+                  <button
+                    key={tab}
+                    onClick={() => switchTab(tab)}
+                    className={`relative px-10 py-3.5 rounded-[12px] font-stolzl font-medium text-body transition-all duration-300 ${
+                      isActive
+                        ? "bg-white text-navy shadow-[0_2px_12px_rgba(2,2,44,0.08)]"
+                        : "text-navy/40 hover:text-navy/60"
+                    }`}
+                  >
+                    {CONTENT[tab].heading}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div
+            style={{
+              transition: "opacity 0.26s ease, transform 0.26s ease",
+              opacity: animating ? 0 : 1,
+              transform: animating ? "translateY(10px)" : "translateY(0)",
+            }}
+          >
+            <p className="font-stolzl text-h3 text-text-muted leading-[1.6]">
+              {content.body}
+            </p>
+          </div>
+        </div>
+
+        {/* Right: items */}
+        <div
+          style={{
+            transition: "opacity 0.26s ease, transform 0.26s ease",
+            opacity: animating ? 0 : 1,
+            transform: animating ? "translateY(10px)" : "translateY(0)",
+          }}
+        >
+          <ul className="flex flex-col gap-5">
+            {content.items.map((item, i) => (
+              <li
+                key={item.title}
+                className="flex items-start gap-5 bg-white rounded-[20px] p-6 shadow-[0_2px_12px_rgba(2,2,44,0.06)]"
+                style={{
+                  transition: "opacity 0.35s ease, transform 0.35s ease",
+                  transitionDelay: animating ? "0ms" : `${i * 80}ms`,
+                  opacity: animating ? 0 : 1,
+                  transform: animating ? "translateY(8px)" : "translateY(0)",
+                }}
+              >
+                <div
+                  className="w-14 h-14 rounded-full flex items-center justify-center shrink-0 transition-colors duration-500"
+                  style={{
+                    background:
+                      active === "mission"
+                        ? "var(--color-blue-accent)"
+                        : "var(--color-green-cta)",
+                  }}
+                >
+                  <Image src={item.icon} alt={item.title} width={28} height={28} />
+                </div>
+                <div className="flex flex-col gap-1.5 pt-1">
+                  <h4 className="font-stolzl text-h4 font-medium text-navy">
+                    {item.title}
+                  </h4>
+                  <p className="font-stolzl text-body-sm text-text-secondary leading-[1.55]">
                     {item.desc}
                   </p>
                 </div>
