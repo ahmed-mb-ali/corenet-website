@@ -4,9 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "../context/LanguageContext";
 
-const MIN = 50;
+const MIN = 5;
 const MAX = 5000;
-const SAVINGS_PER_HIRE = 13301;
+const SAVINGS_PER_HIRE = 8500;
+const COST_PER_HIRE = 4000;
 
 function formatSR(n: number) {
   return "SR " + n.toLocaleString("en-US");
@@ -15,7 +16,7 @@ function formatSR(n: number) {
 export default function SavingsCalculator() {
   const { t, isRTL } = useLanguage();
   const c = t.calculator;
-  const [hires, setHires] = useState(750);
+  const [hires, setHires] = useState(10);
 
   const pct = ((hires - MIN) / (MAX - MIN)) * 100;
   const totalSavings = hires * SAVINGS_PER_HIRE;
@@ -66,7 +67,7 @@ export default function SavingsCalculator() {
                     type="range"
                     min={MIN}
                     max={MAX}
-                    step={10}
+                    step={5}
                     value={hires}
                     onChange={(e) => setHires(Number(e.target.value))}
                     className="calc-slider absolute inset-0 w-full h-full opacity-0 cursor-pointer"
@@ -120,7 +121,7 @@ export default function SavingsCalculator() {
               <div className="grid grid-cols-3 gap-3 pt-2 border-t border-white/[0.07]">
                 {[
                   { label: c.stats[0], value: formatSR(SAVINGS_PER_HIRE) },
-                  { label: c.stats[1], value: `${Math.round((totalSavings / (hires * 1699)) * 100)}%` },
+                  { label: c.stats[1], value: `${Math.round((totalSavings / (hires * COST_PER_HIRE)) * 100)}%` },
                   { label: c.stats[2], value: c.payback },
                 ].map((s) => (
                   <div key={s.label} className="flex flex-col gap-1">

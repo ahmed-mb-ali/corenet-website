@@ -81,7 +81,6 @@ export default function Navbar() {
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-[8px] border border-[#e0e0e0] font-stolzl text-caption text-navy hover:bg-gray-50 transition-colors"
             aria-label="Switch language"
           >
-            <span className="text-base leading-none">{lang === "en" ? "🇸🇦" : "🇬🇧"}</span>
             <span className="font-medium">{lang === "en" ? "العربية" : "English"}</span>
           </button>
           <Link href="/talk-to-sales" className="bg-blue-brand text-white font-stolzl font-medium text-caption px-5 py-2.5 rounded-[var(--radius-button)] hover:opacity-90 transition-opacity whitespace-nowrap">
