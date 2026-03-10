@@ -1,5 +1,9 @@
-import { redirect } from "next/navigation";
+"use client";
+import { useEffect } from "react";
 
 export default function ProductsPage() {
-  redirect("/#products");
+  useEffect(() => {
+    window.location.replace("/#products");
+  }, []);
+  return null;
 }

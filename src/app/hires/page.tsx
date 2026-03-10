@@ -1,5 +1,9 @@
-import { redirect } from "next/navigation";
+"use client";
+import { useEffect } from "react";
 
 export default function HiresPage() {
-  redirect("/#hires");
+  useEffect(() => {
+    window.location.replace("/#hires");
+  }, []);
+  return null;
 }
