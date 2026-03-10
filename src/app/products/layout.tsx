@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Hires - AI-Powered Hiring Platform",
   description:
-    "Explore Corenet's AI-powered hiring products. Smarter screening, candidate pipelines, career pages, and analytics — built for companies in Saudi Arabia and the MENA region.",
+    "Explore Corenet's AI-powered hiring products. Smarter screening, candidate pipelines, career pages, and analytics built for companies in Saudi Arabia and the MENA region.",
   openGraph: {
     title: "Hires - AI-Powered Hiring Platform",
     description:
