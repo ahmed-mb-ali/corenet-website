@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Hires - Smart Hiring Platform",
+  title: "Hires - AI-Powered Hiring Platform",
   description:
-    "Hires by Corenet is an AI-powered hiring platform that helps companies in Saudi Arabia screen smarter, manage candidate pipelines, and hire faster — saving up to SR 8,500 per hire.",
+    "Explore Corenet's AI-powered hiring products. Smarter screening, candidate pipelines, career pages, and analytics built for companies in Saudi Arabia and the MENA region.",
   openGraph: {
-    title: "Hires - Smart Hiring Platform by Corenet",
+    title: "Hires - AI-Powered Hiring Platform",
     description:
-      "AI-powered hiring platform for companies in Saudi Arabia. Screen smarter, hire faster, save up to SR 8,500 per hire.",
+      "Smarter screening, candidate pipelines, career pages, and analytics — built for companies in Saudi Arabia.",
     url: "https://www.corenet.sa/hires",
-    images: [{ url: "/images/og-hires.png?v=3", width: 1200, height: 630, alt: "Hires by Corenet" }],
+    images: [{ url: "/images/og-hires.png?v=4", width: 1200, height: 630, alt: "Hires by Corenet" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Hires - Smart Hiring Platform by Corenet",
-    description: "AI-powered hiring for Saudi Arabia. Screen smarter, hire faster.",
-    images: ["/images/og-hires.png?v=3"],
+    title: "Hires - AI-Powered Hiring Platform",
+    description: "Smarter screening, candidate pipelines, career pages, and analytics.",
+    images: ["/images/og-hires.png?v=4"],
   },
   alternates: { canonical: "/hires" },
 };
