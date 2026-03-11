@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
-import bcrypt
+import bcrypt as _bcrypt
 
 from ..database import get_db
 from ..models import User, Tenant, Pipeline, Stage, Availability
@@ -12,11 +12,11 @@ router = APIRouter()
 
 
 def hash_password(plain: str) -> str:
-    return bcrypt.hashpw(plain.encode(), bcrypt.gensalt()).decode()
+    return _bcrypt.hashpw(plain.encode(), _bcrypt.gensalt()).decode()
 
 
 def verify_password(plain: str, hashed: str) -> bool:
-    return bcrypt.checkpw(plain.encode(), hashed.encode())
+    return _bcrypt.checkpw(plain.encode(), hashed.encode())
 
 
 class LoginBody(BaseModel):
@@ -65,12 +65,22 @@ class SeedAdminBody(BaseModel):
 def setup_admin(body: SeedAdminBody, db: Session = Depends(get_db)):
     """One-time setup endpoint — creates the first admin + default pipeline/stages."""
     import os
+    from sqlalchemy import text
     expected = os.environ.get("SETUP_SECRET", "")
     if not expected or body.secret != expected:
         raise HTTPException(status_code=403, detail="Invalid setup secret")
 
+    # Ensure password_hash column exists (safe to run multiple times)
+    db.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS password_hash VARCHAR"))
+    db.commit()
+
     # Block if admin already exists
-    existing = db.query(User).filter(User.email == body.email.strip().lower()).first()
+    existing = db.execute(
+        text("SELECT id FROM users WHERE email = :email LIMIT 1"),
+        {"email": body.email.strip().lower()}
+    ).first()
+    if existing:
+        raise HTTPException(status_code=409, detail="Admin already exists")
     if existing:
         raise HTTPException(status_code=409, detail="Admin already exists")
 

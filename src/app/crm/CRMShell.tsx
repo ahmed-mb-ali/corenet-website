@@ -72,10 +72,27 @@ export default function CRMShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const [user, setUser] = useState<CRMUser | null>(null);
+  const [authChecked, setAuthChecked] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
-    crmApi.me().then(setUser).catch(() => router.push("/crm/login"));
+    const token = typeof window !== "undefined" ? localStorage.getItem("crm_token") : null;
+    if (!token) {
+      router.push("/crm/login");
+      return;
+    }
+    crmApi.me()
+      .then((u) => { setUser(u); setAuthChecked(true); })
+      .catch((err) => {
+        const status = (err as { status?: number }).status;
+        if (status === 401 || status === 403) {
+          localStorage.removeItem("crm_token");
+          router.push("/crm/login");
+        } else {
+          // Network error or server error — don't kick out, just mark checked
+          setAuthChecked(true);
+        }
+      });
   }, [router]);
 
   function logout() {
@@ -87,6 +104,14 @@ export default function CRMShell({ children }: { children: ReactNode }) {
     href === "/crm" ? pathname === "/crm" : pathname.startsWith(href);
 
   const visibleNav = navItems.filter(item => !item.adminOnly || user?.role === "admin");
+
+  if (!authChecked && !user) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-[#f7f8fc]">
+        <div className="w-6 h-6 border-2 border-[#335cff] border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-screen bg-[#f7f8fc] font-stolzl overflow-hidden">

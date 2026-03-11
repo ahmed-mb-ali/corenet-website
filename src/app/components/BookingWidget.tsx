@@ -152,7 +152,7 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
       <AnimatePresence mode="wait">
         {/* ── CALENDAR ── */}
         {step === "calendar" && (
-          <motion.div key="calendar" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25, ease }} className="p-8">
+          <motion.div key="calendar" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25, ease }} className="p-5">
             <div className="flex items-center justify-between mb-4">
               <button onClick={isRTL ? nextMonth : prevMonth} className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[#f4f4f4] transition-colors">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="#02022c" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -203,7 +203,7 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
 
         {/* ── TIME SLOTS ── */}
         {step === "time" && selectedDate && (
-          <motion.div key="time" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25, ease }} className="p-8">
+          <motion.div key="time" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25, ease }} className="p-5">
             <button onClick={() => setStep("calendar")} className="flex items-center gap-1.5 font-stolzl text-[13px] text-[#335cff] mb-4 hover:underline">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 11L5 7l4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
               {isRTL ? "تغيير التاريخ" : "Change date"}
@@ -239,7 +239,7 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
 
         {/* ── FORM ── */}
         {step === "form" && (
-          <motion.div key="form" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25, ease }} className="p-8">
+          <motion.div key="form" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25, ease }} className="p-5">
             <button onClick={() => setStep("time")} className="flex items-center gap-1.5 font-stolzl text-[13px] text-[#335cff] mb-4 hover:underline">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 11L5 7l4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
               {isRTL ? "تغيير الوقت" : "Change time"}
@@ -302,7 +302,7 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
 
         {/* ── SUCCESS ── */}
         {step === "success" && (
-          <motion.div key="success" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4, ease }} className="p-8 flex flex-col items-center text-center">
+          <motion.div key="success" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4, ease }} className="p-5 flex flex-col items-center text-center">
             <div className="w-16 h-16 rounded-full bg-[#3ab874]/15 flex items-center justify-center mb-5">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3ab874" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
             </div>
@@ -333,19 +333,19 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
 
   if (inline) {
     return (
-      <div className="w-full max-w-[680px] bg-white rounded-[28px] shadow-[0_8px_48px_rgba(2,2,44,0.18)] overflow-hidden flex flex-col" dir={isRTL ? "rtl" : "ltr"}>
+      <div className="w-full max-w-[520px] bg-white rounded-[24px] shadow-[0_8px_40px_rgba(2,2,44,0.18)] overflow-hidden flex flex-col" dir={isRTL ? "rtl" : "ltr"}>
         {/* Header */}
-        <div className="px-8 pt-8 pb-5 border-b border-[#ebebeb]">
-          <p className="font-stolzl text-[14px] text-[#5c5c5c]">
+        <div className="px-6 pt-6 pb-4 border-b border-[#ebebeb]">
+          <p className="font-stolzl text-[13px] text-[#5c5c5c]">
             {isRTL ? "احجز موعدك" : "Book a meeting"}
           </p>
-          <h2 className="font-stolzl text-[26px] font-bold text-[#02022c] leading-tight">
+          <h2 className="font-stolzl text-[20px] font-bold text-[#02022c] leading-tight">
             {isRTL ? "تحدث مع فريق المبيعات" : "Talk to our sales team"}
           </h2>
         </div>
         {/* Steps + body reuse — rendered below via shared JSX */}
         {step !== "success" && (
-          <div className="flex items-center gap-2 px-8 py-4 border-b border-[#ebebeb]">
+          <div className="flex items-center gap-2 px-6 py-3 border-b border-[#ebebeb]">
             {(["calendar", "time", "form"] as Step[]).map((s, i) => {
               const stepIdx = ["calendar", "time", "form"].indexOf(step);
               const done = i < stepIdx;
