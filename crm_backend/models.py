@@ -30,6 +30,7 @@ class User(Base):
     role = Column(String, default="rep")  # admin | manager | rep
     priority = Column(Integer, default=1)
     is_active = Column(Boolean, default=True)
+    password_hash = Column(String)
     gcal_id = Column(String)
     google_access_token = Column(Text)
     created_at = Column(DateTime(timezone=True), server_default=func.now())

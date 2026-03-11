@@ -3,6 +3,7 @@ uvicorn==0.34.0
 sqlalchemy==2.0.36
 psycopg2-binary==2.9.10
 python-jose==3.3.0
+bcrypt==4.2.1
 pydantic==2.10.4
 pydantic[email]
 python-dotenv>=1.0

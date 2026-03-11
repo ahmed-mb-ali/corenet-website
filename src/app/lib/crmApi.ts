@@ -26,10 +26,10 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
 }
 
 export const crmApi = {
-  login: (email: string) =>
+  login: (email: string, password: string) =>
     request<{ token: string; user: CRMUser }>("/auth/login", {
       method: "POST",
-      body: JSON.stringify({ email }),
+      body: JSON.stringify({ email, password }),
     }),
 
   me: () => request<CRMUser>("/auth/me"),
