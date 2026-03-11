@@ -1,13 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import SavingsCalculator from "./components/SavingsCalculator";
 import MissionVision from "./components/MissionVision";
 import ProductShowcase from "./components/ProductShowcase";
 import Navbar from "./components/Navbar";
 import HeroBackground from "./components/HeroBackground";
+import BookingWidget from "./components/BookingWidget";
 import { useLanguage } from "./context/LanguageContext";
 
 // Shared easing — premium deceleration curve
@@ -35,8 +36,10 @@ const staggerChild = {
 
 export default function Home() {
   const { t, isRTL } = useLanguage();
+  const [bookingOpen, setBookingOpen] = useState(false);
   return (
     <div className="relative w-full bg-white overflow-x-hidden">
+      <AnimatePresence>{bookingOpen && <BookingWidget onClose={() => setBookingOpen(false)} />}</AnimatePresence>
 
       {/* ========== NAVBAR ========== */}
       <Navbar />
@@ -102,18 +105,17 @@ export default function Home() {
             {t.hero.sub}
           </motion.p>
 
-          <Link href="/talk-to-sales">
-            <motion.span
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease, delay: 0.6 }}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className="inline-block w-fit bg-blue-brand text-white font-stolzl font-medium text-body-sm px-8 py-4 rounded-xl hover:bg-[#2a4fdd] transition-colors shadow-lg"
-            >
-              {t.hero.cta}
-            </motion.span>
-          </Link>
+          <motion.button
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease, delay: 0.6 }}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            onClick={() => setBookingOpen(true)}
+            className="w-fit bg-blue-brand text-white font-stolzl font-medium text-body-sm px-8 py-4 rounded-xl hover:bg-[#2a4fdd] transition-colors shadow-lg"
+          >
+            {t.hero.cta}
+          </motion.button>
         </div>
       </motion.section>
 
@@ -194,9 +196,9 @@ export default function Home() {
               ))}
             </div>
             <div style={{ textAlign: isRTL ? "right" : "left" }}>
-              <Link href="/talk-to-sales" className="inline-block bg-white text-text-secondary font-stolzl font-medium text-body-sm px-5 py-3 rounded-[var(--radius-button)] border border-border-subtle hover:bg-gray-50 transition-colors">
+              <button onClick={() => setBookingOpen(true)} className="inline-block bg-white text-text-secondary font-stolzl font-medium text-body-sm px-5 py-3 rounded-[var(--radius-button)] border border-border-subtle hover:bg-gray-50 transition-colors">
                 {t.cta.button}
-              </Link>
+              </button>
             </div>
           </div>
 
@@ -215,15 +217,14 @@ export default function Home() {
               <h2 className="font-stolzl text-[51px] font-bold text-white leading-[1.35] tracking-[-2.04px]">
                 {t.cta.title}
               </h2>
-              <Link href="/talk-to-sales">
-                <motion.span
-                  whileHover={{ scale: 1.04 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="inline-block w-fit bg-white text-text-secondary font-stolzl font-medium text-body-sm px-5 py-3 rounded-[var(--radius-button)] border border-border-subtle shadow-[0px_1px_2px_rgba(10,13,20,0.03)] hover:bg-gray-50 transition-colors"
-                >
-                  {t.cta.button}
-                </motion.span>
-              </Link>
+              <motion.button
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => setBookingOpen(true)}
+                className="w-fit bg-white text-text-secondary font-stolzl font-medium text-body-sm px-5 py-3 rounded-[var(--radius-button)] border border-border-subtle shadow-[0px_1px_2px_rgba(10,13,20,0.03)] hover:bg-gray-50 transition-colors"
+              >
+                {t.cta.button}
+              </motion.button>
             </motion.div>
 
             {/* Bordered card */}
