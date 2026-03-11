@@ -130,6 +130,7 @@ class BookingBody(BaseModel):
     message: Optional[str] = None
 
 
+@router.post("", status_code=201)
 @router.post("/", status_code=201)
 def create_booking(body: BookingBody, db: Session = Depends(get_db)):
     booking_date = date.fromisoformat(body.date)

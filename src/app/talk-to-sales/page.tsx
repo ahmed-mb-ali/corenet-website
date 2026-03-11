@@ -59,8 +59,7 @@ export default function TalkToSales() {
 
       <Navbar />
 
-      {/* Widget shifted up — pt-16 instead of pt-20, slight negative offset */}
-      <div className="relative flex min-h-screen items-center justify-center px-4 pt-14 pb-10 -mt-6">
+      <div className="relative flex min-h-screen items-center justify-center px-4 pt-24 pb-10">
         <BookingWidget onClose={() => {}} inline />
       </div>
     </div>
