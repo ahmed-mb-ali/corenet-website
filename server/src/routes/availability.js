@@ -1,12 +1,27 @@
 import { db } from "../config/database.js";
-import { authenticate } from "../middleware/auth.js";
+import { authenticate, requireAdmin } from "../middleware/auth.js";
 
 export default async function availabilityRoutes(fastify) {
   fastify.addHook("preHandler", authenticate);
 
-  // GET /api/availability
+  // Helper: resolve target userId (self or admin targeting another user)
+  function resolveUserId(request, reply) {
+    const targetId = request.query.user_id || request.body?.user_id;
+    if (targetId && targetId !== request.currentUser.id) {
+      if (request.currentUser.role !== "admin") {
+        reply.code(403).send({ error: "Admin only" });
+        return null;
+      }
+      return targetId;
+    }
+    return request.currentUser.id;
+  }
+
+  // GET /api/availability?user_id=optional
   fastify.get("/", async (request, reply) => {
-    const userId = request.currentUser.id;
+    const userId = resolveUserId(request, reply);
+    if (!userId) return;
+
     const [workingHours, blockedDates] = await Promise.all([
       db("availability").where({ user_id: userId, is_blocked: false }).orderBy("day_of_week"),
       db("availability").where({ user_id: userId, is_blocked: true }).orderBy("block_date"),
@@ -14,10 +29,12 @@ export default async function availabilityRoutes(fastify) {
     return reply.send({ workingHours, blockedDates });
   });
 
-  // PUT /api/availability/working-hours
+  // PUT /api/availability/working-hours  body: { user_id?: string, hours: [...] }
   fastify.put("/working-hours", async (request, reply) => {
-    const userId = request.currentUser.id;
-    const hours = request.body; // [{ dayOfWeek, startTime, endTime, enabled }]
+    const userId = resolveUserId(request, reply);
+    if (!userId) return;
+
+    const hours = request.body.hours ?? request.body; // support both { hours: [] } and []
 
     await db("availability").where({ user_id: userId, is_blocked: false }).del();
 
@@ -35,12 +52,15 @@ export default async function availabilityRoutes(fastify) {
     return reply.send({ success: true });
   });
 
-  // POST /api/availability/block
+  // POST /api/availability/block  body: { user_id?: string, date, reason }
   fastify.post("/block", async (request, reply) => {
+    const userId = resolveUserId(request, reply);
+    if (!userId) return;
+
     const { date, reason } = request.body;
     const [row] = await db("availability")
       .insert({
-        user_id: request.currentUser.id,
+        user_id: userId,
         is_blocked: true,
         block_date: date,
         block_reason: reason,
@@ -51,9 +71,12 @@ export default async function availabilityRoutes(fastify) {
 
   // DELETE /api/availability/block/:id
   fastify.delete("/block/:id", async (request, reply) => {
-    await db("availability")
-      .where({ id: request.params.id, user_id: request.currentUser.id, is_blocked: true })
-      .del();
+    // Admin can delete any block; rep can only delete their own
+    const query = db("availability").where({ id: request.params.id, is_blocked: true });
+    if (request.currentUser.role !== "admin") {
+      query.where({ user_id: request.currentUser.id });
+    }
+    await query.del();
     return reply.send({ success: true });
   });
 }
