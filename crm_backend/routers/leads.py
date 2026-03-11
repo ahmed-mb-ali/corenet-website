@@ -38,6 +38,7 @@ def lead_dict(lead: Lead, assigned_name=None, stage_name=None, stage_color=None,
     }
 
 
+@router.get("")
 @router.get("/")
 def list_leads(
     search: Optional[str] = Query(None),

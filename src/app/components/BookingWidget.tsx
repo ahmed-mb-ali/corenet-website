@@ -143,8 +143,8 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
   const calendarDays = buildCalendarDays();
   const timeSlots = selectedDate ? (availability[selectedDate] || []) : [];
 
-  const inputCls = "w-full bg-white border border-[#e0e0e0] rounded-xl px-4 py-3 text-[#02022c] placeholder:text-[rgba(92,92,92,0.6)] font-stolzl text-[15px] focus:outline-none focus:border-[#335cff] focus:ring-1 focus:ring-[#335cff] transition-colors";
-  const labelCls = "block font-stolzl text-[13px] text-[#5c5c5c] mb-1.5";
+  const inputCls = "w-full bg-white border border-[#e0e0e0] rounded-lg px-3 py-2 text-[#02022c] placeholder:text-[rgba(92,92,92,0.6)] font-stolzl text-[13px] focus:outline-none focus:border-[#335cff] focus:ring-1 focus:ring-[#335cff] transition-colors";
+  const labelCls = "block font-stolzl text-[12px] text-[#5c5c5c] mb-1";
   const errorCls = "font-stolzl text-[12px] text-red-500 mt-1";
 
   function renderBody() {
@@ -263,7 +263,7 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
                 <p className="font-stolzl text-[13px] text-red-600">{submitError}</p>
               </div>
             )}
-            <form onSubmit={handleSubmit} noValidate className="space-y-4">
+            <form onSubmit={handleSubmit} noValidate className="space-y-3">
               <div>
                 <label className={labelCls}>{isRTL ? "الاسم الكامل" : "Full name"} *</label>
                 <input type="text" value={form.name} onChange={e => setForm(f => ({...f, name: e.target.value}))} placeholder={isRTL ? "محمد أحمد" : "John Doe"} className={inputCls} />
@@ -285,10 +285,10 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
               </div>
               <div>
                 <label className={labelCls}>{isRTL ? "رسالة (اختياري)" : "Message (optional)"}</label>
-                <textarea value={form.message} onChange={e => setForm(f => ({...f, message: e.target.value}))} placeholder={isRTL ? "أخبرنا عن احتياجاتك..." : "Tell us about your needs..."} rows={3} className={`${inputCls} resize-none`} />
+                <textarea value={form.message} onChange={e => setForm(f => ({...f, message: e.target.value}))} placeholder={isRTL ? "أخبرنا عن احتياجاتك..." : "Tell us about your needs..."} rows={2} className={`${inputCls} resize-none`} />
               </div>
               <motion.button type="submit" disabled={submitting} whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}
-                className="w-full bg-[#335cff] text-white font-stolzl font-medium text-[15px] py-3.5 rounded-xl hover:bg-[#2a4fdd] transition-colors disabled:opacity-60 disabled:cursor-not-allowed">
+                className="w-full bg-[#335cff] text-white font-stolzl font-medium text-[14px] py-2.5 rounded-lg hover:bg-[#2a4fdd] transition-colors disabled:opacity-60 disabled:cursor-not-allowed">
                 {submitting ? (
                   <span className="flex items-center justify-center gap-2">
                     <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />

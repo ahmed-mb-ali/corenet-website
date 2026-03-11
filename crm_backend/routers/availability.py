@@ -22,6 +22,7 @@ def resolve_user_id(
     return str(current_user.id)
 
 
+@router.get("")
 @router.get("/")
 def get_availability(
     user_id: Optional[str] = Query(None),
