@@ -241,20 +241,20 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
         {/* ── FORM ── */}
         {step === "form" && (
           <motion.div key="form" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25, ease }} className="p-3 sm:p-5">
-            <button onClick={() => setStep("time")} className="flex items-center gap-1.5 font-stolzl text-[13px] text-[#335cff] mb-2 sm:mb-4 hover:underline">
+            <button onClick={() => setStep("time")} className="flex items-center gap-1.5 font-stolzl text-[12px] sm:text-[13px] text-[#335cff] mb-2 sm:mb-4 hover:underline">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 11L5 7l4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
               {isRTL ? "تغيير الوقت" : "Change time"}
             </button>
             {selectedDate && selectedTime && (
-              <div className="flex items-center gap-2 sm:gap-3 bg-[#f4f7ff] rounded-xl px-3 py-2 sm:px-4 sm:py-3 mb-3 sm:mb-5">
-                <div className="w-8 h-8 rounded-lg bg-[#335cff]/15 flex items-center justify-center shrink-0">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="2" stroke="#335cff" strokeWidth="1.3"/><path d="M5 2v2M11 2v2M2 7h12" stroke="#335cff" strokeWidth="1.3" strokeLinecap="round"/></svg>
+              <div className="flex items-center gap-2 sm:gap-3 bg-[#f4f7ff] rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-3 mb-3 sm:mb-5">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-md sm:rounded-lg bg-[#335cff]/15 flex items-center justify-center shrink-0">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="2" stroke="#335cff" strokeWidth="1.3"/><path d="M5 2v2M11 2v2M2 7h12" stroke="#335cff" strokeWidth="1.3" strokeLinecap="round"/></svg>
                 </div>
                 <div>
-                  <p className="font-stolzl text-[13px] font-semibold text-[#02022c]">{formatDisplayDate(selectedDate, isRTL)}</p>
-                  <p className="font-stolzl text-[12px] text-[#5c5c5c]">
+                  <p className="font-stolzl text-[12px] sm:text-[13px] font-semibold text-[#02022c]">{formatDisplayDate(selectedDate, isRTL)}</p>
+                  <p className="font-stolzl text-[10px] sm:text-[12px] text-[#5c5c5c]">
                     {(() => { const [h, m] = selectedTime.split(":").map(Number); const suffix = h >= 12 ? (isRTL ? "م" : "PM") : (isRTL ? "ص" : "AM"); return `${h % 12 || 12}:${pad(m)} ${suffix}`; })()}
-                    {" · "}{isRTL ? "30 دقيقة" : "30 min"}{" · "}Arabia Standard Time
+                    {" · "}{isRTL ? "30 دقيقة" : "30 min"}{" · "}AST
                   </p>
                 </div>
               </div>
@@ -335,19 +335,19 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
 
   if (inline) {
     return (
-      <div className="w-full sm:max-w-[420px] bg-white rounded-2xl sm:rounded-[20px] shadow-[0_8px_40px_rgba(2,2,44,0.18)] overflow-hidden flex flex-col" dir={isRTL ? "rtl" : "ltr"}>
+      <div className="w-full sm:max-w-[420px] max-h-[calc(100dvh-72px)] sm:max-h-none bg-white rounded-2xl sm:rounded-[20px] shadow-[0_8px_40px_rgba(2,2,44,0.18)] overflow-hidden flex flex-col" dir={isRTL ? "rtl" : "ltr"}>
         {/* Header */}
-        <div className="px-4 sm:px-5 pt-4 sm:pt-5 pb-2.5 sm:pb-3 border-b border-[#ebebeb]">
-          <p className="font-stolzl text-[12px] text-[#5c5c5c]">
+        <div className="px-4 sm:px-5 pt-3 sm:pt-5 pb-2 sm:pb-3 border-b border-[#ebebeb] shrink-0">
+          <p className="font-stolzl text-[11px] sm:text-[12px] text-[#5c5c5c]">
             {isRTL ? "احجز موعدك" : "Book a meeting"}
           </p>
-          <h2 className="font-stolzl text-[16px] sm:text-[17px] font-bold text-[#02022c] leading-tight">
+          <h2 className="font-stolzl text-[15px] sm:text-[17px] font-bold text-[#02022c] leading-tight">
             {isRTL ? "تحدث مع فريق المبيعات" : "Talk to our sales team"}
           </h2>
         </div>
         {/* Steps */}
         {step !== "success" && (
-          <div className="flex items-center gap-1.5 sm:gap-2 px-4 sm:px-5 py-2 sm:py-2.5 border-b border-[#ebebeb]">
+          <div className="flex items-center gap-1.5 sm:gap-2 px-4 sm:px-5 py-1.5 sm:py-2.5 border-b border-[#ebebeb] shrink-0">
             {(["calendar", "time", "form"] as Step[]).map((s, i) => {
               const stepIdx = ["calendar", "time", "form"].indexOf(step);
               const done = i < stepIdx;
@@ -366,7 +366,7 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
             </span>
           </div>
         )}
-        <div className="flex-1">{renderBody()}</div>
+        <div className="flex-1 overflow-y-auto">{renderBody()}</div>
       </div>
     );
   }
