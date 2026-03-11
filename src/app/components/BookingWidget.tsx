@@ -333,19 +333,19 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
 
   if (inline) {
     return (
-      <div className="w-full max-w-[520px] bg-white rounded-[24px] shadow-[0_8px_40px_rgba(2,2,44,0.18)] overflow-hidden flex flex-col" dir={isRTL ? "rtl" : "ltr"}>
+      <div className="w-full max-w-[420px] bg-white rounded-[20px] shadow-[0_8px_40px_rgba(2,2,44,0.18)] overflow-hidden flex flex-col" dir={isRTL ? "rtl" : "ltr"}>
         {/* Header */}
-        <div className="px-6 pt-6 pb-4 border-b border-[#ebebeb]">
-          <p className="font-stolzl text-[13px] text-[#5c5c5c]">
+        <div className="px-5 pt-5 pb-3 border-b border-[#ebebeb]">
+          <p className="font-stolzl text-[12px] text-[#5c5c5c]">
             {isRTL ? "احجز موعدك" : "Book a meeting"}
           </p>
-          <h2 className="font-stolzl text-[20px] font-bold text-[#02022c] leading-tight">
+          <h2 className="font-stolzl text-[17px] font-bold text-[#02022c] leading-tight">
             {isRTL ? "تحدث مع فريق المبيعات" : "Talk to our sales team"}
           </h2>
         </div>
         {/* Steps + body reuse — rendered below via shared JSX */}
         {step !== "success" && (
-          <div className="flex items-center gap-2 px-6 py-3 border-b border-[#ebebeb]">
+          <div className="flex items-center gap-2 px-5 py-2.5 border-b border-[#ebebeb]">
             {(["calendar", "time", "form"] as Step[]).map((s, i) => {
               const stepIdx = ["calendar", "time", "form"].indexOf(step);
               const done = i < stepIdx;
