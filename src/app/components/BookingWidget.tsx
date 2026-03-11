@@ -144,8 +144,8 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
   const calendarDays = buildCalendarDays();
   const timeSlots = selectedDate ? (availability[selectedDate] || []) : [];
 
-  const inputCls = "w-full bg-white border border-[#e0e0e0] rounded-lg px-3 py-2 text-[#02022c] placeholder:text-[rgba(92,92,92,0.6)] font-stolzl text-[13px] focus:outline-none focus:border-[#335cff] focus:ring-1 focus:ring-[#335cff] transition-colors";
-  const labelCls = "block font-stolzl text-[12px] text-[#5c5c5c] mb-1";
+  const inputCls = "w-full bg-white border border-[#e0e0e0] rounded-lg px-3 py-1.5 sm:py-2 text-[#02022c] placeholder:text-[rgba(92,92,92,0.6)] font-stolzl text-[13px] focus:outline-none focus:border-[#335cff] focus:ring-1 focus:ring-[#335cff] transition-colors";
+  const labelCls = "block font-stolzl text-[12px] text-[#5c5c5c] mb-0.5 sm:mb-1";
   const errorCls = "font-stolzl text-[12px] text-red-500 mt-1";
 
   function renderBody() {
@@ -240,13 +240,13 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
 
         {/* ── FORM ── */}
         {step === "form" && (
-          <motion.div key="form" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25, ease }} className="p-4 sm:p-5">
-            <button onClick={() => setStep("time")} className="flex items-center gap-1.5 font-stolzl text-[13px] text-[#335cff] mb-4 hover:underline">
+          <motion.div key="form" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25, ease }} className="p-3 sm:p-5">
+            <button onClick={() => setStep("time")} className="flex items-center gap-1.5 font-stolzl text-[13px] text-[#335cff] mb-2 sm:mb-4 hover:underline">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 11L5 7l4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
               {isRTL ? "تغيير الوقت" : "Change time"}
             </button>
             {selectedDate && selectedTime && (
-              <div className="flex items-center gap-3 bg-[#f4f7ff] rounded-xl px-4 py-3 mb-5">
+              <div className="flex items-center gap-2 sm:gap-3 bg-[#f4f7ff] rounded-xl px-3 py-2 sm:px-4 sm:py-3 mb-3 sm:mb-5">
                 <div className="w-8 h-8 rounded-lg bg-[#335cff]/15 flex items-center justify-center shrink-0">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="2" stroke="#335cff" strokeWidth="1.3"/><path d="M5 2v2M11 2v2M2 7h12" stroke="#335cff" strokeWidth="1.3" strokeLinecap="round"/></svg>
                 </div>
@@ -264,7 +264,7 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
                 <p className="font-stolzl text-[13px] text-red-600">{submitError}</p>
               </div>
             )}
-            <form onSubmit={handleSubmit} noValidate className="space-y-3">
+            <form onSubmit={handleSubmit} noValidate className="space-y-2 sm:space-y-3">
               <div>
                 <label className={labelCls}>{isRTL ? "الاسم الكامل" : "Full name"} *</label>
                 <input type="text" value={form.name} onChange={e => setForm(f => ({...f, name: e.target.value}))} placeholder={isRTL ? "محمد أحمد" : "John Doe"} className={inputCls} />
@@ -290,7 +290,7 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
                 <textarea value={form.message} onChange={e => setForm(f => ({...f, message: e.target.value}))} placeholder={isRTL ? "أخبرنا عن احتياجاتك..." : "Tell us about your needs..."} rows={2} className={`${inputCls} resize-none`} />
               </div>
               <motion.button type="submit" disabled={submitting} whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}
-                className="w-full bg-[#335cff] text-white font-stolzl font-medium text-[14px] py-2.5 rounded-lg hover:bg-[#2a4fdd] transition-colors disabled:opacity-60 disabled:cursor-not-allowed">
+                className="w-full bg-[#335cff] text-white font-stolzl font-medium text-[14px] py-2 sm:py-2.5 rounded-lg hover:bg-[#2a4fdd] transition-colors disabled:opacity-60 disabled:cursor-not-allowed">
                 {submitting ? (
                   <span className="flex items-center justify-center gap-2">
                     <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
