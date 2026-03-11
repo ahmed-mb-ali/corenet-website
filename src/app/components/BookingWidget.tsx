@@ -153,18 +153,18 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
       <AnimatePresence mode="wait">
         {/* ── CALENDAR ── */}
         {step === "calendar" && (
-          <motion.div key="calendar" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25, ease }} className="p-5">
+          <motion.div key="calendar" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25, ease }} className="p-4 sm:p-5">
             <div className="flex items-center justify-between mb-4">
               <button onClick={isRTL ? nextMonth : prevMonth} className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[#f4f4f4] transition-colors">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="#02022c" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </button>
-              <span className="font-stolzl text-[15px] font-semibold text-[#02022c]">{months[viewMonth]} {viewYear}</span>
+              <span className="font-stolzl text-[14px] sm:text-[15px] font-semibold text-[#02022c]">{months[viewMonth]} {viewYear}</span>
               <button onClick={isRTL ? prevMonth : nextMonth} className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[#f4f4f4] transition-colors">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#02022c" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </button>
             </div>
             <div className="grid grid-cols-7 mb-2">
-              {days.map((d) => <div key={d} className="text-center font-stolzl text-[12px] text-[#5c5c5c] py-1">{d}</div>)}
+              {days.map((d) => <div key={d} className="text-center font-stolzl text-[11px] sm:text-[12px] text-[#5c5c5c] py-1">{d}</div>)}
             </div>
             {loadingSlots ? (
               <div className="flex items-center justify-center h-40"><div className="w-6 h-6 border-2 border-[#335cff] border-t-transparent rounded-full animate-spin" /></div>
@@ -183,7 +183,7 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
                   const selected = selectedDate === dateStr;
                   return (
                     <button key={dateStr} disabled={past || !available} onClick={() => selectDate(dateStr)}
-                      className={`aspect-square flex items-center justify-center rounded-xl font-stolzl text-[14px] transition-all
+                      className={`aspect-square flex items-center justify-center rounded-lg sm:rounded-xl font-stolzl text-[13px] sm:text-[14px] transition-all
                         ${selected ? "bg-[#335cff] text-white font-semibold" : ""}
                         ${!selected && available && !past ? "hover:bg-[#335cff]/10 text-[#02022c] cursor-pointer" : ""}
                         ${past || !available ? "text-[#c3c3ca] cursor-not-allowed" : ""}
@@ -204,7 +204,7 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
 
         {/* ── TIME SLOTS ── */}
         {step === "time" && selectedDate && (
-          <motion.div key="time" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25, ease }} className="p-5">
+          <motion.div key="time" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25, ease }} className="p-4 sm:p-5">
             <button onClick={() => setStep("calendar")} className="flex items-center gap-1.5 font-stolzl text-[13px] text-[#335cff] mb-4 hover:underline">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 11L5 7l4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
               {isRTL ? "تغيير التاريخ" : "Change date"}
@@ -219,14 +219,14 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
             {timeSlots.length === 0 ? (
               <p className="font-stolzl text-[14px] text-[#5c5c5c] text-center py-8">{isRTL ? "لا توجد مواعيد متاحة" : "No slots available"}</p>
             ) : (
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
                 {timeSlots.map((time) => {
                   const [h, m] = time.split(":").map(Number);
                   const suffix = h >= 12 ? (isRTL ? "م" : "PM") : (isRTL ? "ص" : "AM");
                   const label = `${h % 12 || 12}:${pad(m)} ${suffix}`;
                   return (
                     <button key={time} onClick={() => selectTime(time)}
-                      className={`py-3 rounded-xl border font-stolzl text-[14px] transition-all
+                      className={`py-2.5 sm:py-3 rounded-lg sm:rounded-xl border font-stolzl text-[13px] sm:text-[14px] transition-all
                         ${selectedTime === time ? "bg-[#335cff] border-[#335cff] text-white font-semibold" : "border-[#e0e0e0] text-[#02022c] hover:border-[#335cff] hover:bg-[#335cff]/5"}
                       `}>
                       {label}
@@ -240,7 +240,7 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
 
         {/* ── FORM ── */}
         {step === "form" && (
-          <motion.div key="form" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25, ease }} className="p-5">
+          <motion.div key="form" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25, ease }} className="p-4 sm:p-5">
             <button onClick={() => setStep("time")} className="flex items-center gap-1.5 font-stolzl text-[13px] text-[#335cff] mb-4 hover:underline">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 11L5 7l4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
               {isRTL ? "تغيير الوقت" : "Change time"}
@@ -304,7 +304,7 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
 
         {/* ── SUCCESS ── */}
         {step === "success" && (
-          <motion.div key="success" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4, ease }} className="p-5 flex flex-col items-center text-center">
+          <motion.div key="success" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4, ease }} className="p-4 sm:p-5 flex flex-col items-center text-center">
             <div className="w-16 h-16 rounded-full bg-[#3ab874]/15 flex items-center justify-center mb-5">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3ab874" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
             </div>
@@ -335,33 +335,33 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
 
   if (inline) {
     return (
-      <div className="w-full max-w-[420px] bg-white rounded-[20px] shadow-[0_8px_40px_rgba(2,2,44,0.18)] overflow-hidden flex flex-col" dir={isRTL ? "rtl" : "ltr"}>
+      <div className="w-full sm:max-w-[420px] bg-white rounded-2xl sm:rounded-[20px] shadow-[0_8px_40px_rgba(2,2,44,0.18)] overflow-hidden flex flex-col" dir={isRTL ? "rtl" : "ltr"}>
         {/* Header */}
-        <div className="px-5 pt-5 pb-3 border-b border-[#ebebeb]">
+        <div className="px-4 sm:px-5 pt-4 sm:pt-5 pb-2.5 sm:pb-3 border-b border-[#ebebeb]">
           <p className="font-stolzl text-[12px] text-[#5c5c5c]">
             {isRTL ? "احجز موعدك" : "Book a meeting"}
           </p>
-          <h2 className="font-stolzl text-[17px] font-bold text-[#02022c] leading-tight">
+          <h2 className="font-stolzl text-[16px] sm:text-[17px] font-bold text-[#02022c] leading-tight">
             {isRTL ? "تحدث مع فريق المبيعات" : "Talk to our sales team"}
           </h2>
         </div>
-        {/* Steps + body reuse — rendered below via shared JSX */}
+        {/* Steps */}
         {step !== "success" && (
-          <div className="flex items-center gap-2 px-5 py-2.5 border-b border-[#ebebeb]">
+          <div className="flex items-center gap-1.5 sm:gap-2 px-4 sm:px-5 py-2 sm:py-2.5 border-b border-[#ebebeb]">
             {(["calendar", "time", "form"] as Step[]).map((s, i) => {
               const stepIdx = ["calendar", "time", "form"].indexOf(step);
               const done = i < stepIdx;
               const active = s === step;
               return (
-                <div key={s} className="flex items-center gap-2">
-                  <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-stolzl font-semibold transition-colors ${active ? "bg-[#335cff] text-white" : done ? "bg-[#3ab874] text-white" : "bg-[#f4f4f4] text-[#5c5c5c]"}`}>
-                    {done ? <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg> : i + 1}
+                <div key={s} className="flex items-center gap-1.5 sm:gap-2">
+                  <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center text-[10px] sm:text-[11px] font-stolzl font-semibold transition-colors ${active ? "bg-[#335cff] text-white" : done ? "bg-[#3ab874] text-white" : "bg-[#f4f4f4] text-[#5c5c5c]"}`}>
+                    {done ? <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg> : i + 1}
                   </div>
-                  {i < 2 && <div className={`h-px w-8 transition-colors ${done ? "bg-[#3ab874]" : "bg-[#e0e0e0]"}`} />}
+                  {i < 2 && <div className={`h-px w-5 sm:w-8 transition-colors ${done ? "bg-[#3ab874]" : "bg-[#e0e0e0]"}`} />}
                 </div>
               );
             })}
-            <span className="font-stolzl text-[13px] text-[#5c5c5c] ml-2">
+            <span className="font-stolzl text-[11px] sm:text-[13px] text-[#5c5c5c] ml-1.5 sm:ml-2">
               {step === "calendar" ? (isRTL ? "اختر التاريخ" : "Pick a date") : step === "time" ? (isRTL ? "اختر الوقت" : "Pick a time") : (isRTL ? "بياناتك" : "Your details")}
             </span>
           </div>

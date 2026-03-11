@@ -59,7 +59,7 @@ export default function TalkToSales() {
 
       <Navbar />
 
-      <div className="relative flex min-h-screen items-center justify-center px-4 pt-24 pb-10">
+      <div className="relative flex min-h-screen items-start sm:items-center justify-center px-3 sm:px-4 pt-20 sm:pt-24 pb-6 sm:pb-10">
         <BookingWidget onClose={() => {}} inline />
       </div>
     </div>
