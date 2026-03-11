@@ -13,11 +13,33 @@ export default function TalkToSales() {
       style={{ background: "#050535" }}
       dir={isRTL ? "rtl" : "ltr"}
     >
+      {/* Override navbar to gray on this page */}
+      <style>{`
+        .nav-bar {
+          background: rgba(42, 42, 60, 0.92) !important;
+          backdrop-filter: blur(14px) !important;
+          -webkit-backdrop-filter: blur(14px) !important;
+          box-shadow: 0 4px 24px rgba(0,0,0,0.28), 0 0 0 1px rgba(255,255,255,0.07) !important;
+        }
+        .nav-bar a, .nav-bar span, .nav-bar button {
+          color: rgba(255,255,255,0.88) !important;
+        }
+        .nav-bar button:hover, .nav-bar a:hover {
+          background: rgba(255,255,255,0.08) !important;
+        }
+        .nav-bar button[class*="border"] {
+          border-color: rgba(255,255,255,0.18) !important;
+        }
+        .nav-menu-panel .rounded-\\[20px\\] {
+          background: rgba(32,32,52,0.98) !important;
+        }
+        .nav-menu-panel a, .nav-menu-panel span {
+          color: rgba(255,255,255,0.88) !important;
+        }
+      `}</style>
+
       {/* Gradient strips — same language as hero/footer */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        aria-hidden="true"
-      >
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         {/* Right green glow strip */}
         <div
           className="absolute top-0 h-full"
@@ -55,16 +77,15 @@ export default function TalkToSales() {
           className="absolute bottom-0 left-0 right-0"
           style={{
             height: "35%",
-            background:
-              "linear-gradient(to top, rgba(5,5,53,0.9) 0%, transparent 100%)",
+            background: "linear-gradient(to top, rgba(5,5,53,0.9) 0%, transparent 100%)",
           }}
         />
       </div>
 
       <Navbar />
 
-      {/* Full-height centering — widget sits in the visual middle */}
-      <div className="relative flex min-h-screen items-center justify-center px-4 pt-20 pb-16">
+      {/* Widget shifted up — pt-16 instead of pt-20, slight negative offset */}
+      <div className="relative flex min-h-screen items-center justify-center px-4 pt-14 pb-10 -mt-6">
         <BookingWidget onClose={() => {}} inline />
       </div>
     </div>
