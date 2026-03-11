@@ -114,7 +114,7 @@ class Activity(Base):
     user_id = Column(UUID(as_uuid=False), ForeignKey("users.id"))
     type = Column(String, nullable=False)
     note = Column(Text)
-    metadata = Column(JSON)
+    meta = Column("metadata", JSON)  # 'metadata' is reserved by SQLAlchemy declarative API
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
 

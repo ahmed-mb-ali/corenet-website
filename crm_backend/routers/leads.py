@@ -110,7 +110,7 @@ def get_lead(
             "id": a.Activity.id,
             "type": a.Activity.type,
             "note": a.Activity.note,
-            "metadata": a.Activity.metadata,
+            "metadata": a.Activity.meta,
             "user_name": a.user_name,
             "created_at": a.Activity.created_at,
         }
@@ -168,7 +168,7 @@ def patch_lead(
             user_id=str(current_user.id),
             type="stage_changed",
             note=f"Moved to {stage.name if stage else body.stage_id}",
-            metadata={"from": str(old_stage_id), "to": body.stage_id},
+            meta={"from": str(old_stage_id), "to": body.stage_id},
         ))
 
     db.commit()

@@ -192,7 +192,7 @@ def create_booking(body: BookingBody, db: Session = Depends(get_db)):
         user_id=str(rep.id),
         type="booking_created",
         note=f"Meeting booked for {format_date(booking_date)} at {body.startTime}",
-        metadata={"bookingId": str(booking.id), "repId": str(rep.id)},
+        meta={"bookingId": str(booking.id), "repId": str(rep.id)},
     ))
 
     db.commit()
