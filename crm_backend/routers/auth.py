@@ -126,12 +126,12 @@ def setup_admin(body: SeedAdminBody, db: Session = Depends(get_db)):
         db.flush()
 
         stages = [
-            ("New Lead",      "#335cff", 1),
-            ("Contacted",     "#f59e0b", 2),
-            ("Demo Booked",   "#3ab874", 3),
-            ("Proposal Sent", "#8b5cf6", 4),
-            ("Won",           "#10b981", 5),
-            ("Lost",          "#ef4444", 6),
+            ("New",             "#3ab874", 1),
+            ("Contacted",       "#8b5cf6", 2),
+            ("Qualified",       "#06b6d4", 3),
+            ("Proposal",        "#f59e0b", 4),
+            ("Won",             "#10b981", 5),
+            ("Lost",            "#ef4444", 6),
         ]
         for name, color, pos in stages:
             db.add(Stage(pipeline_id=str(pipeline.id), name=name, color=color, position=pos))

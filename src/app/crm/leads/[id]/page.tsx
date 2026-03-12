@@ -8,7 +8,7 @@ import { crmApi, type Lead, type Activity, type Stage } from "../../../lib/crmAp
 
 const STAGE_COLORS: Record<string, string> = {
   "New":             "#3ab874",
-  "Meeting Booked":  "#8b5cf6",
+  "Contacted":       "#8b5cf6",
   "Qualified":       "#06b6d4",
   "Proposal":        "#f59e0b",
   "Won":             "#10b981",

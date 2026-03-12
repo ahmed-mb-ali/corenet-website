@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from pydantic import BaseModel
 
 from ..database import get_db
-from ..models import User, Availability
+from ..models import User, Availability, Pipeline, Stage
 from ..auth import get_current_user, require_admin
 from .auth import hash_password
 
@@ -156,6 +156,46 @@ def reset_password(
     user.password_hash = hash_password(body.password)
     db.commit()
     return {"success": True}
+
+
+@router.post("/pipeline/reset-stages")
+def reset_pipeline_stages(
+    current_user: User = Depends(require_admin),
+    db: Session = Depends(get_db),
+):
+    """Reset pipeline stages to the latest defaults."""
+    pipeline = db.query(Pipeline).filter(
+        Pipeline.tenant_id == current_user.tenant_id, Pipeline.is_default == True
+    ).first()
+    if not pipeline:
+        raise HTTPException(status_code=404, detail="No default pipeline found")
+
+    new_stages = [
+        ("New",             "#3ab874", 1),
+        ("Contacted",       "#8b5cf6", 2),
+        ("Qualified",       "#06b6d4", 3),
+        ("Proposal",        "#f59e0b", 4),
+        ("Won",             "#10b981", 5),
+        ("Lost",            "#ef4444", 6),
+    ]
+
+    existing = db.query(Stage).filter(Stage.pipeline_id == str(pipeline.id)).order_by(Stage.position).all()
+
+    # Update existing stages in-place (preserving IDs so lead.stage_id stays valid)
+    for i, (name, color, pos) in enumerate(new_stages):
+        if i < len(existing):
+            existing[i].name = name
+            existing[i].color = color
+            existing[i].position = pos
+        else:
+            db.add(Stage(pipeline_id=str(pipeline.id), name=name, color=color, position=pos))
+
+    # Remove extra stages if old had more
+    for extra in existing[len(new_stages):]:
+        db.delete(extra)
+
+    db.commit()
+    return {"success": True, "message": "Pipeline stages updated"}
 
 
 class ReorderItem(BaseModel):
