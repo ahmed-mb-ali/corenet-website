@@ -102,8 +102,9 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
     if (!form.name.trim()) errs.name = isRTL ? "مطلوب" : "Required";
     if (!form.email.trim()) errs.email = isRTL ? "مطلوب" : "Required";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errs.email = isRTL ? "بريد غير صالح" : "Invalid email";
-    if (!form.company.trim()) errs.company = isRTL ? "مطلوب" : "Required";
     if (!form.phone.trim()) errs.phone = isRTL ? "مطلوب" : "Required";
+    if (!form.company.trim()) errs.company = isRTL ? "مطلوب" : "Required";
+    if (!form.website.trim()) errs.website = isRTL ? "مطلوب" : "Required";
     setErrors(errs);
     return Object.keys(errs).length === 0;
   }
@@ -273,18 +274,19 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
                 {errors.email && <p className={errorCls}>{errors.email}</p>}
               </div>
               <div>
-                <label className={labelCls}>{isRTL ? "اسم الشركة" : "Company name"} *</label>
-                <input type="text" value={form.company} onChange={e => setForm(f => ({...f, company: e.target.value}))} placeholder={isRTL ? "شركتك" : "Your company"} className={inputCls} />
-                {errors.company && <p className={errorCls}>{errors.company}</p>}
-              </div>
-              <div>
                 <label className={labelCls}>{isRTL ? "رقم الهاتف" : "Phone"} *</label>
                 <input type="tel" value={form.phone} onChange={e => setForm(f => ({...f, phone: e.target.value}))} placeholder="+966 5XX XXX XXXX" className={inputCls} />
                 {errors.phone && <p className={errorCls}>{errors.phone}</p>}
               </div>
               <div>
-                <label className={labelCls}>{isRTL ? "الموقع الإلكتروني (اختياري)" : "Website (optional)"}</label>
+                <label className={labelCls}>{isRTL ? "اسم الشركة" : "Company name"} *</label>
+                <input type="text" value={form.company} onChange={e => setForm(f => ({...f, company: e.target.value}))} placeholder={isRTL ? "شركتك" : "Your company"} className={inputCls} />
+                {errors.company && <p className={errorCls}>{errors.company}</p>}
+              </div>
+              <div>
+                <label className={labelCls}>{isRTL ? "الموقع الإلكتروني" : "Website"} *</label>
                 <input type="url" value={form.website} onChange={e => setForm(f => ({...f, website: e.target.value}))} placeholder="https://yourcompany.com" className={inputCls} />
+                {errors.website && <p className={errorCls}>{errors.website}</p>}
               </div>
               <div>
                 <label className={labelCls}>{isRTL ? "رسالة (اختياري)" : "Message (optional)"}</label>
