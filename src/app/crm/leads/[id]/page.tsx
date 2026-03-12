@@ -92,7 +92,7 @@ export default function LeadDetailPage() {
     return (
       <CRMShell>
         <div className="flex items-center justify-center h-64">
-          <div className="w-6 h-6 border-2 border-[#335cff] border-t-transparent rounded-full animate-spin" />
+          <div className="w-6 h-6 border-2 border-[#3ab874] border-t-transparent rounded-full animate-spin" />
         </div>
       </CRMShell>
     );
@@ -103,7 +103,7 @@ export default function LeadDetailPage() {
       <CRMShell>
         <div className="p-6">
           <p className="font-stolzl text-[14px] text-[#5c5c5c]">Lead not found.</p>
-          <Link href="/crm/leads" className="font-stolzl text-[14px] text-[#335cff] hover:underline mt-2 inline-block">← Back to leads</Link>
+          <Link href="/crm/leads" className="font-stolzl text-[14px] text-[#3ab874] hover:underline mt-2 inline-block">← Back to leads</Link>
         </div>
       </CRMShell>
     );
@@ -113,7 +113,7 @@ export default function LeadDetailPage() {
     <CRMShell>
       <div className="p-6 max-w-[900px]">
         {/* Back */}
-        <Link href="/crm/leads" className="inline-flex items-center gap-1.5 font-stolzl text-[13px] text-[#5c5c5c] hover:text-[#335cff] mb-5 transition-colors">
+        <Link href="/crm/leads" className="inline-flex items-center gap-1.5 font-stolzl text-[13px] text-[#5c5c5c] hover:text-[#3ab874] mb-5 transition-colors">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
             <path d="M9 2L4 7l5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
@@ -126,7 +126,7 @@ export default function LeadDetailPage() {
             {/* Profile card */}
             <div className="bg-white rounded-2xl border border-[#ebebeb] p-5">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-full bg-[#335cff] flex items-center justify-center shrink-0">
+                <div className="w-12 h-12 rounded-full bg-[#3ab874] flex items-center justify-center shrink-0">
                   <span className="font-stolzl text-[18px] font-bold text-white">
                     {lead.first_name.charAt(0).toUpperCase()}
                   </span>
@@ -160,14 +160,14 @@ export default function LeadDetailPage() {
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0 mt-0.5">
                     <path d="M2 2h10v10H2V2zM2 5h10" stroke="#5c5c5c" strokeWidth="1.2" strokeLinecap="round" />
                   </svg>
-                  <a href={`mailto:${lead.email}`} className="font-stolzl text-[13px] text-[#335cff] hover:underline break-all">{lead.email}</a>
+                  <a href={`mailto:${lead.email}`} className="font-stolzl text-[13px] text-[#3ab874] hover:underline break-all">{lead.email}</a>
                 </div>
                 {lead.phone && (
                   <div className="flex items-center gap-2.5">
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0">
                       <path d="M2 2.5C2 2 2.5 1.5 3 1.5h2l1 3-1.5 1A8 8 0 0 0 8.5 9.5L10 8l3 1v2c0 .5-.5 1-1 1C5 12 2 7 2 2.5z" stroke="#5c5c5c" strokeWidth="1.2" />
                     </svg>
-                    <a href={`tel:${lead.phone}`} className="font-stolzl text-[13px] text-[#5c5c5c] hover:text-[#335cff]">{lead.phone}</a>
+                    <a href={`tel:${lead.phone}`} className="font-stolzl text-[13px] text-[#5c5c5c] hover:text-[#3ab874]">{lead.phone}</a>
                   </div>
                 )}
                 {lead.website && (
@@ -176,7 +176,7 @@ export default function LeadDetailPage() {
                       <circle cx="7" cy="7" r="5.5" stroke="#5c5c5c" strokeWidth="1.2" />
                       <path d="M1.5 7h11M7 1.5c-2 2-2 9 0 11M7 1.5c2 2 2 9 0 11" stroke="#5c5c5c" strokeWidth="1.2" />
                     </svg>
-                    <a href={lead.website.startsWith("http") ? lead.website : `https://${lead.website}`} target="_blank" rel="noopener noreferrer" className="font-stolzl text-[13px] text-[#335cff] hover:underline break-all">{lead.website.replace(/^https?:\/\//, "")}</a>
+                    <a href={lead.website.startsWith("http") ? lead.website : `https://${lead.website}`} target="_blank" rel="noopener noreferrer" className="font-stolzl text-[13px] text-[#3ab874] hover:underline break-all">{lead.website.replace(/^https?:\/\//, "")}</a>
                   </div>
                 )}
                 <div className="flex items-center gap-2.5">
@@ -197,8 +197,8 @@ export default function LeadDetailPage() {
                 <h3 className="font-stolzl text-[13px] font-semibold text-[#02022c] mb-3">Meeting Booked</h3>
                 <div className="flex items-center gap-2 mb-1.5">
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0">
-                    <rect x="1" y="2" width="12" height="11" rx="2" stroke="#335cff" strokeWidth="1.2" />
-                    <path d="M4 1v2M10 1v2M1 6h12" stroke="#335cff" strokeWidth="1.2" strokeLinecap="round" />
+                    <rect x="1" y="2" width="12" height="11" rx="2" stroke="#3ab874" strokeWidth="1.2" />
+                    <path d="M4 1v2M10 1v2M1 6h12" stroke="#3ab874" strokeWidth="1.2" strokeLinecap="round" />
                   </svg>
                   <span className="font-stolzl text-[13px] text-[#02022c] font-medium">
                     {new Date(lead.booking_date).toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "long" })}
@@ -209,7 +209,7 @@ export default function LeadDetailPage() {
                 )}
                 {lead.assigned_to_name && (
                   <div className="flex items-center gap-2 mt-2">
-                    <div className="w-5 h-5 rounded-full bg-[#335cff] flex items-center justify-center">
+                    <div className="w-5 h-5 rounded-full bg-[#3ab874] flex items-center justify-center">
                       <span className="font-stolzl text-[9px] font-bold text-white">{lead.assigned_to_name.charAt(0)}</span>
                     </div>
                     <span className="font-stolzl text-[12px] text-[#5c5c5c]">{lead.assigned_to_name}</span>
@@ -248,13 +248,13 @@ export default function LeadDetailPage() {
                   onChange={e => setNote(e.target.value)}
                   placeholder="Add a note..."
                   rows={3}
-                  className="w-full border border-[#ebebeb] rounded-xl px-3.5 py-2.5 font-stolzl text-[13px] text-[#02022c] placeholder-[#5c5c5c]/50 focus:outline-none focus:border-[#335cff]/60 resize-none"
+                  className="w-full border border-[#ebebeb] rounded-xl px-3.5 py-2.5 font-stolzl text-[13px] text-[#02022c] placeholder-[#5c5c5c]/50 focus:outline-none focus:border-[#3ab874]/60 resize-none"
                 />
                 <div className="flex justify-end mt-2">
                   <button
                     type="submit"
                     disabled={savingNote || !note.trim()}
-                    className="px-4 py-2 font-stolzl text-[13px] font-semibold text-white bg-[#335cff] rounded-xl hover:bg-[#2348e0] transition-colors disabled:opacity-50"
+                    className="px-4 py-2 font-stolzl text-[13px] font-semibold text-white bg-[#3ab874] rounded-xl hover:bg-[#2da062] transition-colors disabled:opacity-50"
                   >
                     {savingNote ? "Saving..." : "Add Note"}
                   </button>

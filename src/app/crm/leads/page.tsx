@@ -53,9 +53,9 @@ export default function LeadsPage() {
             value={searchInput}
             onChange={e => setSearchInput(e.target.value)}
             placeholder="Search by name, company, email..."
-            className="flex-1 bg-white border border-[#e0e0e0] rounded-xl px-4 py-2.5 font-stolzl text-[14px] text-[#02022c] placeholder:text-[#5c5c5c]/50 focus:outline-none focus:border-[#335cff] transition-colors"
+            className="flex-1 bg-white border border-[#e0e0e0] rounded-xl px-4 py-2.5 font-stolzl text-[14px] text-[#02022c] placeholder:text-[#5c5c5c]/50 focus:outline-none focus:border-[#3ab874] transition-colors"
           />
-          <button type="submit" className="px-5 py-2.5 bg-[#335cff] text-white font-stolzl text-[14px] rounded-xl hover:bg-[#2a4fdd] transition-colors">
+          <button type="submit" className="px-5 py-2.5 bg-[#3ab874] text-white font-stolzl text-[14px] rounded-xl hover:bg-[#2da062] transition-colors">
             Search
           </button>
           {search && (
@@ -69,7 +69,7 @@ export default function LeadsPage() {
         <div className="bg-white rounded-2xl border border-[#ebebeb] overflow-hidden">
           {loading ? (
             <div className="flex items-center justify-center h-48">
-              <div className="w-6 h-6 border-2 border-[#335cff] border-t-transparent rounded-full animate-spin" />
+              <div className="w-6 h-6 border-2 border-[#3ab874] border-t-transparent rounded-full animate-spin" />
             </div>
           ) : (
             <>
@@ -86,7 +86,7 @@ export default function LeadsPage() {
                     {leads.map(lead => (
                       <tr key={lead.id} className="border-b border-[#f4f4f4] hover:bg-[#f7f8fc] transition-colors">
                         <td className="px-5 py-3 whitespace-nowrap">
-                          <Link href={`/crm/leads/${lead.id}`} className="font-stolzl text-[14px] font-medium text-[#02022c] hover:text-[#335cff]">
+                          <Link href={`/crm/leads/${lead.id}`} className="font-stolzl text-[14px] font-medium text-[#02022c] hover:text-[#3ab874]">
                             {lead.first_name} {lead.last_name}
                           </Link>
                         </td>

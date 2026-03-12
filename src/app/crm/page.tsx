@@ -43,13 +43,13 @@ export default function CRMDashboard() {
 
         {loading ? (
           <div className="flex items-center justify-center h-40">
-            <div className="w-6 h-6 border-2 border-[#335cff] border-t-transparent rounded-full animate-spin" />
+            <div className="w-6 h-6 border-2 border-[#3ab874] border-t-transparent rounded-full animate-spin" />
           </div>
         ) : (
           <>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
               <StatCard label="Total Leads" value={total} color="text-[#02022c]" />
-              <StatCard label="New Leads" value={newLeads} color="text-[#335cff]" />
+              <StatCard label="New Leads" value={newLeads} color="text-[#3ab874]" />
               <StatCard label="Today's Meetings" value={todayBookings} color="text-[#3ab874]" />
               <StatCard label="This Month" value={leads.filter(l => l.created_at?.startsWith(new Date().toISOString().slice(0,7))).length} color="text-[#f59e0b]" />
             </div>
@@ -57,7 +57,7 @@ export default function CRMDashboard() {
             <div className="bg-white rounded-2xl border border-[#ebebeb] overflow-hidden">
               <div className="flex items-center justify-between px-5 py-4 border-b border-[#ebebeb]">
                 <h2 className="font-stolzl text-[16px] font-semibold text-[#02022c]">Recent Leads</h2>
-                <Link href="/crm/leads" className="font-stolzl text-[13px] text-[#335cff] hover:underline">View all</Link>
+                <Link href="/crm/leads" className="font-stolzl text-[13px] text-[#3ab874] hover:underline">View all</Link>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full">
@@ -72,13 +72,13 @@ export default function CRMDashboard() {
                     {recent.map(lead => (
                       <tr key={lead.id} className="border-b border-[#f4f4f4] hover:bg-[#f7f8fc] transition-colors">
                         <td className="px-5 py-3">
-                          <Link href={`/crm/leads/${lead.id}`} className="font-stolzl text-[14px] font-medium text-[#02022c] hover:text-[#335cff]">
+                          <Link href={`/crm/leads/${lead.id}`} className="font-stolzl text-[14px] font-medium text-[#02022c] hover:text-[#3ab874]">
                             {lead.first_name} {lead.last_name}
                           </Link>
                         </td>
                         <td className="px-5 py-3 font-stolzl text-[14px] text-[#5c5c5c]">{lead.company || "—"}</td>
                         <td className="px-5 py-3">
-                          <span className={`inline-block px-2.5 py-0.5 rounded-full font-stolzl text-[12px] font-medium ${lead.status === "new" ? "bg-[#335cff]/10 text-[#335cff]" : "bg-[#f4f4f4] text-[#5c5c5c]"}`}>
+                          <span className={`inline-block px-2.5 py-0.5 rounded-full font-stolzl text-[12px] font-medium ${lead.status === "new" ? "bg-[#3ab874]/10 text-[#3ab874]" : "bg-[#f4f4f4] text-[#5c5c5c]"}`}>
                             {lead.stage_name || lead.status}
                           </span>
                         </td>

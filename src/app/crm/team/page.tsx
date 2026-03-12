@@ -29,7 +29,7 @@ function RepRow({
         <button
           onClick={onMoveUp}
           disabled={index === 0}
-          className="w-5 h-5 flex items-center justify-center rounded hover:bg-[#f0f4ff] disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+          className="w-5 h-5 flex items-center justify-center rounded hover:bg-[#f0faf5] disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
         >
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
             <path d="M5 2L9 7H1L5 2Z" fill="#5c5c5c" />
@@ -38,7 +38,7 @@ function RepRow({
         <button
           onClick={onMoveDown}
           disabled={index === total - 1}
-          className="w-5 h-5 flex items-center justify-center rounded hover:bg-[#f0f4ff] disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+          className="w-5 h-5 flex items-center justify-center rounded hover:bg-[#f0faf5] disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
         >
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
             <path d="M5 8L1 3H9L5 8Z" fill="#5c5c5c" />
@@ -47,12 +47,12 @@ function RepRow({
       </div>
 
       {/* Priority badge */}
-      <div className="w-6 h-6 rounded-full bg-[#f0f4ff] flex items-center justify-center shrink-0">
-        <span className="font-stolzl text-[11px] font-bold text-[#335cff]">{rep.priority}</span>
+      <div className="w-6 h-6 rounded-full bg-[#f0faf5] flex items-center justify-center shrink-0">
+        <span className="font-stolzl text-[11px] font-bold text-[#3ab874]">{rep.priority}</span>
       </div>
 
       {/* Avatar */}
-      <div className="w-8 h-8 rounded-full bg-[#335cff] flex items-center justify-center shrink-0">
+      <div className="w-8 h-8 rounded-full bg-[#3ab874] flex items-center justify-center shrink-0">
         <span className="font-stolzl text-[13px] font-bold text-white">{rep.name.charAt(0).toUpperCase()}</span>
       </div>
 
@@ -61,7 +61,7 @@ function RepRow({
         <div className="flex items-center gap-2">
           <p className="font-stolzl text-[14px] font-semibold text-[#02022c] truncate">{rep.name}</p>
           {rep.role === "admin" && (
-            <span className="shrink-0 font-stolzl text-[10px] font-semibold text-[#335cff] bg-[#eef1ff] rounded-full px-1.5 py-0.5">Admin</span>
+            <span className="shrink-0 font-stolzl text-[10px] font-semibold text-[#3ab874] bg-[#eef8f3] rounded-full px-1.5 py-0.5">Admin</span>
           )}
           {!rep.is_active && (
             <span className="shrink-0 font-stolzl text-[10px] font-semibold text-[#5c5c5c] bg-[#f4f4f4] rounded-full px-1.5 py-0.5">Inactive</span>
@@ -75,7 +75,7 @@ function RepRow({
       <div className="flex items-center gap-1.5 shrink-0">
         <button
           onClick={() => onEdit(rep)}
-          className="px-3 py-1.5 font-stolzl text-[12px] text-[#335cff] border border-[#335cff]/30 rounded-lg hover:bg-[#f0f4ff] transition-colors"
+          className="px-3 py-1.5 font-stolzl text-[12px] text-[#3ab874] border border-[#3ab874]/30 rounded-lg hover:bg-[#f0faf5] transition-colors"
         >
           Edit
         </button>
@@ -135,7 +135,7 @@ function AddRepModal({
               value={form.name}
               onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
               placeholder="Full name"
-              className="w-full border border-[#ebebeb] rounded-xl px-3.5 py-2.5 font-stolzl text-[14px] text-[#02022c] placeholder-[#5c5c5c]/50 focus:outline-none focus:border-[#335cff]/60"
+              className="w-full border border-[#ebebeb] rounded-xl px-3.5 py-2.5 font-stolzl text-[14px] text-[#02022c] placeholder-[#5c5c5c]/50 focus:outline-none focus:border-[#3ab874]/60"
               required
             />
           </div>
@@ -146,7 +146,7 @@ function AddRepModal({
               value={form.email}
               onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
               placeholder="rep@corenet.sa"
-              className="w-full border border-[#ebebeb] rounded-xl px-3.5 py-2.5 font-stolzl text-[14px] text-[#02022c] placeholder-[#5c5c5c]/50 focus:outline-none focus:border-[#335cff]/60"
+              className="w-full border border-[#ebebeb] rounded-xl px-3.5 py-2.5 font-stolzl text-[14px] text-[#02022c] placeholder-[#5c5c5c]/50 focus:outline-none focus:border-[#3ab874]/60"
               required
             />
           </div>
@@ -157,7 +157,7 @@ function AddRepModal({
               value={form.password}
               onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
               placeholder="Min 6 characters"
-              className="w-full border border-[#ebebeb] rounded-xl px-3.5 py-2.5 font-stolzl text-[14px] text-[#02022c] placeholder-[#5c5c5c]/50 focus:outline-none focus:border-[#335cff]/60"
+              className="w-full border border-[#ebebeb] rounded-xl px-3.5 py-2.5 font-stolzl text-[14px] text-[#02022c] placeholder-[#5c5c5c]/50 focus:outline-none focus:border-[#3ab874]/60"
               required
               minLength={6}
             />
@@ -169,7 +169,7 @@ function AddRepModal({
               value={form.phone}
               onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
               placeholder="+966 5x xxx xxxx"
-              className="w-full border border-[#ebebeb] rounded-xl px-3.5 py-2.5 font-stolzl text-[14px] text-[#02022c] placeholder-[#5c5c5c]/50 focus:outline-none focus:border-[#335cff]/60"
+              className="w-full border border-[#ebebeb] rounded-xl px-3.5 py-2.5 font-stolzl text-[14px] text-[#02022c] placeholder-[#5c5c5c]/50 focus:outline-none focus:border-[#3ab874]/60"
             />
           </div>
           <div>
@@ -177,7 +177,7 @@ function AddRepModal({
             <select
               value={form.role}
               onChange={e => setForm(f => ({ ...f, role: e.target.value }))}
-              className="w-full border border-[#ebebeb] rounded-xl px-3.5 py-2.5 font-stolzl text-[14px] text-[#02022c] focus:outline-none focus:border-[#335cff]/60"
+              className="w-full border border-[#ebebeb] rounded-xl px-3.5 py-2.5 font-stolzl text-[14px] text-[#02022c] focus:outline-none focus:border-[#3ab874]/60"
             >
               <option value="rep">Sales Rep</option>
               <option value="admin">Admin</option>
@@ -199,7 +199,7 @@ function AddRepModal({
             <button
               type="submit"
               disabled={saving}
-              className="flex-1 py-2.5 font-stolzl text-[14px] font-semibold text-white bg-[#335cff] rounded-xl hover:bg-[#2348e0] transition-colors disabled:opacity-60"
+              className="flex-1 py-2.5 font-stolzl text-[14px] font-semibold text-white bg-[#3ab874] rounded-xl hover:bg-[#2da062] transition-colors disabled:opacity-60"
             >
               {saving ? "Adding..." : "Add Rep"}
             </button>
@@ -269,7 +269,7 @@ function EditRepModal({
               type="text"
               value={form.name}
               onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-              className="w-full border border-[#ebebeb] rounded-xl px-3.5 py-2.5 font-stolzl text-[14px] text-[#02022c] focus:outline-none focus:border-[#335cff]/60"
+              className="w-full border border-[#ebebeb] rounded-xl px-3.5 py-2.5 font-stolzl text-[14px] text-[#02022c] focus:outline-none focus:border-[#3ab874]/60"
               required
             />
           </div>
@@ -279,7 +279,7 @@ function EditRepModal({
               type="email"
               value={form.email}
               onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-              className="w-full border border-[#ebebeb] rounded-xl px-3.5 py-2.5 font-stolzl text-[14px] text-[#02022c] focus:outline-none focus:border-[#335cff]/60"
+              className="w-full border border-[#ebebeb] rounded-xl px-3.5 py-2.5 font-stolzl text-[14px] text-[#02022c] focus:outline-none focus:border-[#3ab874]/60"
               required
             />
           </div>
@@ -289,7 +289,7 @@ function EditRepModal({
               type="tel"
               value={form.phone}
               onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
-              className="w-full border border-[#ebebeb] rounded-xl px-3.5 py-2.5 font-stolzl text-[14px] text-[#02022c] focus:outline-none focus:border-[#335cff]/60"
+              className="w-full border border-[#ebebeb] rounded-xl px-3.5 py-2.5 font-stolzl text-[14px] text-[#02022c] focus:outline-none focus:border-[#3ab874]/60"
             />
           </div>
           <div>
@@ -297,7 +297,7 @@ function EditRepModal({
             <select
               value={form.role}
               onChange={e => setForm(f => ({ ...f, role: e.target.value }))}
-              className="w-full border border-[#ebebeb] rounded-xl px-3.5 py-2.5 font-stolzl text-[14px] text-[#02022c] focus:outline-none focus:border-[#335cff]/60"
+              className="w-full border border-[#ebebeb] rounded-xl px-3.5 py-2.5 font-stolzl text-[14px] text-[#02022c] focus:outline-none focus:border-[#3ab874]/60"
             >
               <option value="rep">Sales Rep</option>
               <option value="admin">Admin</option>
@@ -313,14 +313,14 @@ function EditRepModal({
                 value={newPassword}
                 onChange={e => { setNewPassword(e.target.value); setPwSuccess(false); }}
                 placeholder="New password (min 6 chars)"
-                className="flex-1 border border-[#ebebeb] rounded-xl px-3.5 py-2.5 font-stolzl text-[14px] text-[#02022c] placeholder-[#5c5c5c]/50 focus:outline-none focus:border-[#335cff]/60"
+                className="flex-1 border border-[#ebebeb] rounded-xl px-3.5 py-2.5 font-stolzl text-[14px] text-[#02022c] placeholder-[#5c5c5c]/50 focus:outline-none focus:border-[#3ab874]/60"
                 minLength={6}
               />
               <button
                 type="button"
                 onClick={handleResetPassword}
                 disabled={saving || newPassword.length < 6}
-                className="px-4 py-2.5 font-stolzl text-[13px] font-semibold text-[#335cff] border border-[#335cff]/30 rounded-xl hover:bg-[#f0f4ff] transition-colors disabled:opacity-40"
+                className="px-4 py-2.5 font-stolzl text-[13px] font-semibold text-[#3ab874] border border-[#3ab874]/30 rounded-xl hover:bg-[#f0faf5] transition-colors disabled:opacity-40"
               >
                 Reset
               </button>
@@ -345,7 +345,7 @@ function EditRepModal({
             <button
               type="submit"
               disabled={saving}
-              className="flex-1 py-2.5 font-stolzl text-[14px] font-semibold text-white bg-[#335cff] rounded-xl hover:bg-[#2348e0] transition-colors disabled:opacity-60"
+              className="flex-1 py-2.5 font-stolzl text-[14px] font-semibold text-white bg-[#3ab874] rounded-xl hover:bg-[#2da062] transition-colors disabled:opacity-60"
             >
               {saving ? "Saving..." : "Save Changes"}
             </button>
@@ -427,7 +427,7 @@ export default function TeamPage() {
           </div>
           <button
             onClick={() => setShowAdd(true)}
-            className="flex items-center gap-2 px-4 py-2.5 font-stolzl text-[14px] font-semibold text-white bg-[#335cff] rounded-xl hover:bg-[#2348e0] transition-colors"
+            className="flex items-center gap-2 px-4 py-2.5 font-stolzl text-[14px] font-semibold text-white bg-[#3ab874] rounded-xl hover:bg-[#2da062] transition-colors"
           >
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M7 1v12M1 7h12" stroke="white" strokeWidth="2" strokeLinecap="round" />
@@ -437,12 +437,12 @@ export default function TeamPage() {
         </div>
 
         {/* Priority note */}
-        <div className="flex items-start gap-2.5 bg-[#f0f4ff] rounded-xl p-3.5 mb-5">
+        <div className="flex items-start gap-2.5 bg-[#f0faf5] rounded-xl p-3.5 mb-5">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0 mt-0.5">
-            <circle cx="8" cy="8" r="7" stroke="#335cff" strokeWidth="1.5" />
-            <path d="M8 7v4M8 5.5v.5" stroke="#335cff" strokeWidth="1.5" strokeLinecap="round" />
+            <circle cx="8" cy="8" r="7" stroke="#3ab874" strokeWidth="1.5" />
+            <path d="M8 7v4M8 5.5v.5" stroke="#3ab874" strokeWidth="1.5" strokeLinecap="round" />
           </svg>
-          <p className="font-stolzl text-[12px] text-[#335cff]">
+          <p className="font-stolzl text-[12px] text-[#3ab874]">
             Priority determines booking order — Rep #1 gets assigned first when available. Use arrows to reorder.
             {saving && <span className="ml-2 opacity-60">Saving...</span>}
           </p>
@@ -450,7 +450,7 @@ export default function TeamPage() {
 
         {loading ? (
           <div className="flex items-center justify-center h-40">
-            <div className="w-6 h-6 border-2 border-[#335cff] border-t-transparent rounded-full animate-spin" />
+            <div className="w-6 h-6 border-2 border-[#3ab874] border-t-transparent rounded-full animate-spin" />
           </div>
         ) : (
           <>

@@ -108,7 +108,7 @@ export default function CRMShell({ children }: { children: ReactNode }) {
   if (!authChecked && !user) {
     return (
       <div className="flex h-screen items-center justify-center bg-[#f7f8fc]">
-        <div className="w-6 h-6 border-2 border-[#335cff] border-t-transparent rounded-full animate-spin" />
+        <div className="w-6 h-6 border-2 border-[#3ab874] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -121,11 +121,11 @@ export default function CRMShell({ children }: { children: ReactNode }) {
       )}
 
       {/* Sidebar */}
-      <aside className={`fixed lg:static inset-y-0 left-0 z-30 w-[220px] bg-[#02022c] flex flex-col transition-transform duration-300 ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
+      <aside className={`fixed lg:static inset-y-0 left-0 z-30 w-[220px] bg-white border-r border-[#ebebeb] flex flex-col transition-transform duration-300 ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
         {/* Logo */}
-        <div className="px-5 pt-6 pb-5 border-b border-white/8">
-          <Image src="/images/logo.png" alt="Corenet" width={80} height={46} className="object-contain brightness-0 invert" />
-          <p className="font-stolzl text-[11px] text-white/30 mt-1 tracking-wider uppercase">CRM</p>
+        <div className="px-5 pt-6 pb-5 border-b border-[#ebebeb]">
+          <Image src="/images/logo.png" alt="Corenet" width={80} height={46} className="object-contain" />
+          <p className="font-stolzl text-[11px] text-[#5c5c5c]/50 mt-1 tracking-wider uppercase">CRM</p>
         </div>
 
         {/* Nav */}
@@ -137,8 +137,8 @@ export default function CRMShell({ children }: { children: ReactNode }) {
               onClick={() => setSidebarOpen(false)}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-xl font-stolzl text-[14px] transition-colors ${
                 isActive(item.href)
-                  ? "bg-[#335cff] text-white"
-                  : "text-white/55 hover:text-white hover:bg-white/8"
+                  ? "bg-[#3ab874] text-white"
+                  : "text-[#5c5c5c] hover:text-[#02022c] hover:bg-[#f7f8fc]"
               }`}
             >
               {item.icon}
@@ -149,19 +149,19 @@ export default function CRMShell({ children }: { children: ReactNode }) {
 
         {/* User */}
         {user && (
-          <div className="px-4 py-4 border-t border-white/8">
+          <div className="px-4 py-4 border-t border-[#ebebeb]">
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-8 h-8 rounded-full bg-[#335cff] flex items-center justify-center text-white font-semibold text-[13px] shrink-0">
+              <div className="w-8 h-8 rounded-full bg-[#3ab874] flex items-center justify-center text-white font-semibold text-[13px] shrink-0">
                 {user.name.charAt(0).toUpperCase()}
               </div>
               <div className="min-w-0">
-                <p className="font-stolzl text-[13px] text-white font-medium truncate">{user.name}</p>
-                <p className="font-stolzl text-[11px] text-white/40 capitalize">{user.role}</p>
+                <p className="font-stolzl text-[13px] text-[#02022c] font-medium truncate">{user.name}</p>
+                <p className="font-stolzl text-[11px] text-[#5c5c5c] capitalize">{user.role}</p>
               </div>
             </div>
             <button
               onClick={logout}
-              className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-white/40 hover:text-white hover:bg-white/8 transition-colors font-stolzl text-[13px]"
+              className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-[#5c5c5c] hover:text-[#e53e3e] hover:bg-red-50 transition-colors font-stolzl text-[13px]"
             >
               <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
                 <path d="M5 13H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h2M10 10l3-2.5L10 5M13 7.5H6" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>

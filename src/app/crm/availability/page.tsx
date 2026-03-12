@@ -32,7 +32,7 @@ function TimeSelect({ value, onChange }: { value: string; onChange: (v: string) 
     <select
       value={value}
       onChange={e => onChange(e.target.value)}
-      className="border border-[#ebebeb] rounded-lg px-2.5 py-1.5 font-stolzl text-[13px] text-[#02022c] focus:outline-none focus:border-[#335cff]/60 bg-white"
+      className="border border-[#ebebeb] rounded-lg px-2.5 py-1.5 font-stolzl text-[13px] text-[#02022c] focus:outline-none focus:border-[#3ab874]/60 bg-white"
     >
       {TIME_OPTIONS.map(t => (
         <option key={t} value={t}>{t}</option>
@@ -150,11 +150,11 @@ export default function AvailabilityPage() {
                   onClick={() => setSelectedRepId(rep.id)}
                   className={`flex items-center gap-2 px-3 py-1.5 rounded-xl font-stolzl text-[13px] font-medium transition-all ${
                     selectedRepId === rep.id
-                      ? "bg-[#335cff] text-white"
-                      : "bg-[#f7f8fc] text-[#02022c] hover:bg-[#eef1ff] border border-[#ebebeb]"
+                      ? "bg-[#3ab874] text-white"
+                      : "bg-[#f7f8fc] text-[#02022c] hover:bg-[#eef8f3] border border-[#ebebeb]"
                   }`}
                 >
-                  <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${selectedRepId === rep.id ? "bg-white/20 text-white" : "bg-[#335cff] text-white"}`}>
+                  <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${selectedRepId === rep.id ? "bg-white/20 text-white" : "bg-[#3ab874] text-white"}`}>
                     {rep.name.charAt(0).toUpperCase()}
                   </div>
                   {rep.name}
@@ -166,7 +166,7 @@ export default function AvailabilityPage() {
 
         {loading ? (
           <div className="flex items-center justify-center h-40">
-            <div className="w-6 h-6 border-2 border-[#335cff] border-t-transparent rounded-full animate-spin" />
+            <div className="w-6 h-6 border-2 border-[#3ab874] border-t-transparent rounded-full animate-spin" />
           </div>
         ) : (
           <>
@@ -186,7 +186,7 @@ export default function AvailabilityPage() {
                     <button
                       onClick={() => toggleDay(i)}
                       className={`w-8 h-8 rounded-full shrink-0 flex items-center justify-center font-stolzl text-[11px] font-bold transition-colors ${
-                        h.enabled ? "bg-[#335cff] text-white" : "bg-[#f0f0f0] text-[#5c5c5c]"
+                        h.enabled ? "bg-[#3ab874] text-white" : "bg-[#f0f0f0] text-[#5c5c5c]"
                       }`}
                     >
                       {DAY_SHORT[i].charAt(0)}
@@ -211,7 +211,7 @@ export default function AvailabilityPage() {
                 <button
                   onClick={handleSaveHours}
                   disabled={saving}
-                  className="px-5 py-2.5 font-stolzl text-[14px] font-semibold text-white bg-[#335cff] rounded-xl hover:bg-[#2348e0] transition-colors disabled:opacity-60"
+                  className="px-5 py-2.5 font-stolzl text-[14px] font-semibold text-white bg-[#3ab874] rounded-xl hover:bg-[#2da062] transition-colors disabled:opacity-60"
                 >
                   {saving ? "Saving..." : "Save Hours"}
                 </button>
@@ -233,14 +233,14 @@ export default function AvailabilityPage() {
                   onChange={e => setBlockDate(e.target.value)}
                   min={new Date().toISOString().slice(0, 10)}
                   required
-                  className="border border-[#ebebeb] rounded-xl px-3.5 py-2 font-stolzl text-[13px] text-[#02022c] focus:outline-none focus:border-[#335cff]/60"
+                  className="border border-[#ebebeb] rounded-xl px-3.5 py-2 font-stolzl text-[13px] text-[#02022c] focus:outline-none focus:border-[#3ab874]/60"
                 />
                 <input
                   type="text"
                   value={blockReason}
                   onChange={e => setBlockReason(e.target.value)}
                   placeholder="Reason (optional)"
-                  className="flex-1 min-w-[140px] border border-[#ebebeb] rounded-xl px-3.5 py-2 font-stolzl text-[13px] text-[#02022c] placeholder-[#5c5c5c]/50 focus:outline-none focus:border-[#335cff]/60"
+                  className="flex-1 min-w-[140px] border border-[#ebebeb] rounded-xl px-3.5 py-2 font-stolzl text-[13px] text-[#02022c] placeholder-[#5c5c5c]/50 focus:outline-none focus:border-[#3ab874]/60"
                 />
                 <button
                   type="submit"

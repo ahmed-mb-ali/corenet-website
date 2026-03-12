@@ -18,7 +18,7 @@ function LeadCard({ lead, onDragStart, onDragEnd }: LeadCardProps) {
       draggable
       onDragStart={(e) => onDragStart(e, lead)}
       onDragEnd={onDragEnd}
-      className="bg-white border border-[#ebebeb] rounded-xl p-3.5 hover:border-[#335cff]/40 hover:shadow-sm transition-all cursor-grab active:cursor-grabbing"
+      className="bg-white border border-[#ebebeb] rounded-xl p-3.5 hover:border-[#3ab874]/40 hover:shadow-sm transition-all cursor-grab active:cursor-grabbing"
     >
       <Link href={`/crm/leads/${lead.id}`}>
         <p className="font-stolzl text-[14px] font-medium text-[#02022c] mb-0.5">
@@ -39,7 +39,7 @@ function LeadCard({ lead, onDragStart, onDragEnd }: LeadCardProps) {
       )}
       {lead.assigned_to_name && (
         <div className="flex items-center gap-1.5 mt-1.5">
-          <div className="w-4 h-4 rounded-full bg-[#335cff] flex items-center justify-center text-white font-bold text-[8px]">
+          <div className="w-4 h-4 rounded-full bg-[#3ab874] flex items-center justify-center text-white font-bold text-[8px]">
             {lead.assigned_to_name.charAt(0)}
           </div>
           <span className="font-stolzl text-[11px] text-[#5c5c5c]">{lead.assigned_to_name}</span>
@@ -137,7 +137,7 @@ export default function PipelinePage() {
 
         {loading ? (
           <div className="flex items-center justify-center h-48">
-            <div className="w-6 h-6 border-2 border-[#335cff] border-t-transparent rounded-full animate-spin" />
+            <div className="w-6 h-6 border-2 border-[#3ab874] border-t-transparent rounded-full animate-spin" />
           </div>
         ) : (
           <div className="flex gap-4 overflow-x-auto pb-4 flex-1">
@@ -161,7 +161,7 @@ export default function PipelinePage() {
                     onDrop={(e) => handleDrop(e, stage.id)}
                     className={`flex-1 min-h-[120px] rounded-xl p-2 space-y-2 overflow-y-auto max-h-[calc(100vh-240px)] transition-colors ${
                       isOver
-                        ? "bg-[#335cff]/10 border-2 border-dashed border-[#335cff]/40"
+                        ? "bg-[#3ab874]/10 border-2 border-dashed border-[#3ab874]/40"
                         : "bg-[#f7f8fc]"
                     }`}
                   >

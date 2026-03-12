@@ -55,7 +55,7 @@ export default function CRMLogin() {
               value={email}
               onChange={e => setEmail(e.target.value)}
               placeholder="you@corenet.sa"
-              className="w-full bg-white/10 border border-white/15 rounded-xl px-4 py-3 text-white placeholder:text-white/30 font-stolzl text-[14px] focus:outline-none focus:border-[#335cff] transition-colors"
+              className="w-full bg-white/10 border border-white/15 rounded-xl px-4 py-3 text-white placeholder:text-white/30 font-stolzl text-[14px] focus:outline-none focus:border-[#3ab874] transition-colors"
             />
           </div>
 
@@ -67,7 +67,7 @@ export default function CRMLogin() {
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full bg-white/10 border border-white/15 rounded-xl px-4 py-3 pr-11 text-white placeholder:text-white/30 font-stolzl text-[14px] focus:outline-none focus:border-[#335cff] transition-colors"
+                className="w-full bg-white/10 border border-white/15 rounded-xl px-4 py-3 pr-11 text-white placeholder:text-white/30 font-stolzl text-[14px] focus:outline-none focus:border-[#3ab874] transition-colors"
               />
               <button
                 type="button"
@@ -93,7 +93,7 @@ export default function CRMLogin() {
             disabled={loading}
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.99 }}
-            className="w-full bg-[#335cff] text-white font-stolzl font-medium text-[15px] py-3.5 rounded-xl hover:bg-[#2a4fdd] transition-colors disabled:opacity-60"
+            className="w-full bg-[#3ab874] text-white font-stolzl font-medium text-[15px] py-3.5 rounded-xl hover:bg-[#2da062] transition-colors disabled:opacity-60"
           >
             {loading ? "Signing in..." : "Sign in"}
           </motion.button>
