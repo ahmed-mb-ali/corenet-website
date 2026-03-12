@@ -67,6 +67,11 @@ export const crmApi = {
       request<{ success: boolean }>(`/api/availability/block/${id}`, { method: "DELETE" }),
   },
 
+  settings: {
+    resetStages: () =>
+      request<{ success: boolean }>("/api/settings/pipeline/reset-stages", { method: "POST" }),
+  },
+
   team: {
     list: () => request<CRMUser[]>("/api/settings/team"),
     create: (body: { name: string; email: string; password: string; phone?: string; role?: string }) =>

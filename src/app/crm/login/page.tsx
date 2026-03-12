@@ -48,12 +48,12 @@ export default function CRMLogin() {
             Manage your sales<br />pipeline with ease
           </h2>
           <p className="font-stolzl text-[14px] text-white/50 leading-relaxed max-w-[320px]">
-            Track leads, schedule meetings, and close deals — all in one place.
+            Track leads, schedule meetings, and close deals - all in one place.
           </p>
         </div>
 
         <p className="relative z-10 font-stolzl text-[11px] text-white/30">
-          Corenet Business Solutions
+          Lead the way with innovation
         </p>
       </div>
 
@@ -132,7 +132,7 @@ export default function CRMLogin() {
           </form>
 
           <p className="text-center font-stolzl text-[11px] text-[#5c5c5c]/40 mt-8">
-            Corenet Business Solutions
+            Lead the way with innovation
           </p>
         </motion.div>
       </div>
