@@ -13,6 +13,7 @@ export interface BookingPayload {
   email: string;
   company: string;
   phone?: string;
+  website?: string;
   message?: string;
 }
 

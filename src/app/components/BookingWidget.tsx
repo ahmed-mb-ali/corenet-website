@@ -22,8 +22,8 @@ function formatDisplayDate(dateStr: string, isRTL: boolean) {
 
 type Step = "calendar" | "time" | "form" | "success";
 
-interface FormState { name: string; email: string; company: string; phone: string; message: string; }
-const emptyForm: FormState = { name: "", email: "", company: "", phone: "", message: "" };
+interface FormState { name: string; email: string; company: string; phone: string; website: string; message: string; }
+const emptyForm: FormState = { name: "", email: "", company: "", phone: "", website: "", message: "" };
 
 interface Props { onClose: () => void; inline?: boolean; }
 
@@ -121,6 +121,7 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
         email: form.email,
         company: form.company,
         phone: form.phone || undefined,
+        website: form.website || undefined,
         message: form.message || undefined,
       };
       await submitBooking(payload);
@@ -286,6 +287,10 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
                 {errors.phone && <p className={errorCls}>{errors.phone}</p>}
               </div>
               <div>
+                <label className={labelCls}>{isRTL ? "الموقع الإلكتروني (اختياري)" : "Website (optional)"}</label>
+                <input type="url" value={form.website} onChange={e => setForm(f => ({...f, website: e.target.value}))} placeholder="https://yourcompany.com" className={inputCls} />
+              </div>
+              <div>
                 <label className={labelCls}>{isRTL ? "رسالة (اختياري)" : "Message (optional)"}</label>
                 <textarea value={form.message} onChange={e => setForm(f => ({...f, message: e.target.value}))} placeholder={isRTL ? "أخبرنا عن احتياجاتك..." : "Tell us about your needs..."} rows={2} className={`${inputCls} resize-none`} />
               </div>
@@ -335,7 +340,7 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
 
   if (inline) {
     return (
-      <div className="w-full sm:max-w-[420px] max-h-[calc(100dvh-72px)] sm:max-h-none bg-white rounded-2xl sm:rounded-[20px] shadow-[0_8px_40px_rgba(2,2,44,0.18)] overflow-hidden flex flex-col" dir={isRTL ? "rtl" : "ltr"}>
+      <div className="w-full sm:max-w-[420px] max-h-[calc(100dvh-88px)] sm:max-h-none bg-white rounded-2xl sm:rounded-[20px] shadow-[0_8px_40px_rgba(2,2,44,0.18)] overflow-hidden flex flex-col" dir={isRTL ? "rtl" : "ltr"}>
         {/* Header */}
         <div className="px-4 sm:px-5 pt-3 sm:pt-5 pb-2 sm:pb-3 border-b border-[#ebebeb] shrink-0">
           <p className="font-stolzl text-[11px] sm:text-[12px] text-[#5c5c5c]">
