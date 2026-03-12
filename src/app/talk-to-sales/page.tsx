@@ -59,7 +59,7 @@ export default function TalkToSales() {
 
       <Navbar />
 
-      <div className="relative flex h-[calc(100dvh-64px)] sm:min-h-screen sm:h-auto items-start sm:items-center justify-center px-2 sm:px-4 pt-4 sm:pt-24 pb-2 sm:pb-10 overflow-hidden sm:overflow-visible">
+      <div className="relative flex h-[calc(100dvh-64px)] sm:min-h-screen sm:h-auto items-start sm:items-center justify-center px-2 sm:px-4 pt-1 sm:pt-24 pb-1 sm:pb-10 overflow-hidden sm:overflow-visible">
         <BookingWidget onClose={() => {}} inline />
       </div>
     </div>

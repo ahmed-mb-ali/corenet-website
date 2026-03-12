@@ -145,9 +145,9 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
   const calendarDays = buildCalendarDays();
   const timeSlots = selectedDate ? (availability[selectedDate] || []) : [];
 
-  const inputCls = "w-full bg-white border border-[#e0e0e0] rounded-lg px-3 py-1.5 sm:py-2 text-[#02022c] placeholder:text-[rgba(92,92,92,0.6)] font-stolzl text-[13px] focus:outline-none focus:border-[#335cff] focus:ring-1 focus:ring-[#335cff] transition-colors";
-  const labelCls = "block font-stolzl text-[12px] text-[#5c5c5c] mb-0.5 sm:mb-1";
-  const errorCls = "font-stolzl text-[12px] text-red-500 mt-1";
+  const inputCls = "w-full bg-white border border-[#e0e0e0] rounded-lg px-3 py-1 sm:py-2 text-[#02022c] placeholder:text-[rgba(92,92,92,0.6)] font-stolzl text-[13px] focus:outline-none focus:border-[#335cff] focus:ring-1 focus:ring-[#335cff] transition-colors";
+  const labelCls = "block font-stolzl text-[11px] sm:text-[12px] text-[#5c5c5c] mb-0 sm:mb-1";
+  const errorCls = "font-stolzl text-[11px] sm:text-[12px] text-red-500 mt-0.5";
 
   function renderBody() {
     return (
@@ -241,21 +241,17 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
 
         {/* ── FORM ── */}
         {step === "form" && (
-          <motion.div key="form" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25, ease }} className="p-3 sm:p-5">
-            <button onClick={() => setStep("time")} className="flex items-center gap-1.5 font-stolzl text-[12px] sm:text-[13px] text-[#335cff] mb-2 sm:mb-4 hover:underline">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 11L5 7l4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              {isRTL ? "تغيير الوقت" : "Change time"}
-            </button>
+          <motion.div key="form" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25, ease }} className="p-2.5 sm:p-5">
             {selectedDate && selectedTime && (
-              <div className="flex items-center gap-2 sm:gap-3 bg-[#f4f7ff] rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-3 mb-3 sm:mb-5">
-                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-md sm:rounded-lg bg-[#335cff]/15 flex items-center justify-center shrink-0">
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="2" stroke="#335cff" strokeWidth="1.3"/><path d="M5 2v2M11 2v2M2 7h12" stroke="#335cff" strokeWidth="1.3" strokeLinecap="round"/></svg>
-                </div>
-                <div>
-                  <p className="font-stolzl text-[12px] sm:text-[13px] font-semibold text-[#02022c]">{formatDisplayDate(selectedDate, isRTL)}</p>
-                  <p className="font-stolzl text-[10px] sm:text-[12px] text-[#5c5c5c]">
+              <div className="flex items-center gap-2 bg-[#f4f7ff] rounded-lg sm:rounded-xl px-2.5 sm:px-4 py-1.5 sm:py-3 mb-2 sm:mb-5">
+                <button onClick={() => setStep("time")} className="font-stolzl text-[11px] sm:text-[13px] text-[#335cff] hover:underline shrink-0">
+                  <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className="inline mr-0.5"><path d="M9 11L5 7l4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </button>
+                <div className="flex items-center gap-1.5 sm:gap-2 flex-1 min-w-0">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="shrink-0 hidden sm:block"><rect x="2" y="3" width="12" height="11" rx="2" stroke="#335cff" strokeWidth="1.3"/><path d="M5 2v2M11 2v2M2 7h12" stroke="#335cff" strokeWidth="1.3" strokeLinecap="round"/></svg>
+                  <p className="font-stolzl text-[11px] sm:text-[13px] font-semibold text-[#02022c] truncate">
+                    {formatDisplayDate(selectedDate, isRTL)}{" · "}
                     {(() => { const [h, m] = selectedTime.split(":").map(Number); const suffix = h >= 12 ? (isRTL ? "م" : "PM") : (isRTL ? "ص" : "AM"); return `${h % 12 || 12}:${pad(m)} ${suffix}`; })()}
-                    {" · "}{isRTL ? "30 دقيقة" : "30 min"}{" · "}AST
                   </p>
                 </div>
               </div>
@@ -265,7 +261,7 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
                 <p className="font-stolzl text-[13px] text-red-600">{submitError}</p>
               </div>
             )}
-            <form onSubmit={handleSubmit} noValidate className="space-y-2 sm:space-y-3">
+            <form onSubmit={handleSubmit} noValidate className="space-y-1.5 sm:space-y-3">
               <div>
                 <label className={labelCls}>{isRTL ? "الاسم الكامل" : "Full name"} *</label>
                 <input type="text" value={form.name} onChange={e => setForm(f => ({...f, name: e.target.value}))} placeholder={isRTL ? "محمد أحمد" : "John Doe"} className={inputCls} />
@@ -292,7 +288,7 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
               </div>
               <div>
                 <label className={labelCls}>{isRTL ? "رسالة (اختياري)" : "Message (optional)"}</label>
-                <textarea value={form.message} onChange={e => setForm(f => ({...f, message: e.target.value}))} placeholder={isRTL ? "أخبرنا عن احتياجاتك..." : "Tell us about your needs..."} rows={2} className={`${inputCls} resize-none`} />
+                <textarea value={form.message} onChange={e => setForm(f => ({...f, message: e.target.value}))} placeholder={isRTL ? "أخبرنا عن احتياجاتك..." : "Tell us about your needs..."} rows={1} className={`${inputCls} resize-none sm:min-h-[60px]`} />
               </div>
               <motion.button type="submit" disabled={submitting} whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}
                 className="w-full bg-[#335cff] text-white font-stolzl font-medium text-[14px] py-2 sm:py-2.5 rounded-lg hover:bg-[#2a4fdd] transition-colors disabled:opacity-60 disabled:cursor-not-allowed">
@@ -340,9 +336,9 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
 
   if (inline) {
     return (
-      <div className="w-full sm:max-w-[420px] max-h-[calc(100dvh-88px)] sm:max-h-none bg-white rounded-2xl sm:rounded-[20px] shadow-[0_8px_40px_rgba(2,2,44,0.18)] overflow-hidden flex flex-col" dir={isRTL ? "rtl" : "ltr"}>
-        {/* Header */}
-        <div className="px-4 sm:px-5 pt-3 sm:pt-5 pb-2 sm:pb-3 border-b border-[#ebebeb] shrink-0">
+      <div className="w-full sm:max-w-[420px] max-h-[calc(100dvh-80px)] sm:max-h-none bg-white rounded-2xl sm:rounded-[20px] shadow-[0_8px_40px_rgba(2,2,44,0.18)] overflow-hidden flex flex-col" dir={isRTL ? "rtl" : "ltr"}>
+        {/* Header — hidden on mobile for form step to save space */}
+        <div className={`px-4 sm:px-5 pt-3 sm:pt-5 pb-2 sm:pb-3 border-b border-[#ebebeb] shrink-0 ${step === "form" ? "hidden sm:block" : ""}`}>
           <p className="font-stolzl text-[11px] sm:text-[12px] text-[#5c5c5c]">
             {isRTL ? "احجز موعدك" : "Book a meeting"}
           </p>
