@@ -100,6 +100,7 @@ export interface Lead {
   email: string;
   phone?: string;
   company?: string;
+  website?: string;
   message?: string;
   source: string;
   status: string;

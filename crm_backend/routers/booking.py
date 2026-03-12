@@ -127,6 +127,7 @@ class BookingBody(BaseModel):
     email: EmailStr
     company: str
     phone: Optional[str] = None
+    website: Optional[str] = None
     message: Optional[str] = None
 
 
@@ -163,6 +164,7 @@ def create_booking(body: BookingBody, db: Session = Depends(get_db)):
         email=body.email,
         phone=body.phone,
         company=body.company,
+        website=body.website,
         message=body.message,
         source="booking_widget",
         status="new",

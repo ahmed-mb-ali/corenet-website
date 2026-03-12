@@ -170,6 +170,15 @@ export default function LeadDetailPage() {
                     <a href={`tel:${lead.phone}`} className="font-stolzl text-[13px] text-[#5c5c5c] hover:text-[#335cff]">{lead.phone}</a>
                   </div>
                 )}
+                {lead.website && (
+                  <div className="flex items-center gap-2.5">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0">
+                      <circle cx="7" cy="7" r="5.5" stroke="#5c5c5c" strokeWidth="1.2" />
+                      <path d="M1.5 7h11M7 1.5c-2 2-2 9 0 11M7 1.5c2 2 2 9 0 11" stroke="#5c5c5c" strokeWidth="1.2" />
+                    </svg>
+                    <a href={lead.website.startsWith("http") ? lead.website : `https://${lead.website}`} target="_blank" rel="noopener noreferrer" className="font-stolzl text-[13px] text-[#335cff] hover:underline break-all">{lead.website.replace(/^https?:\/\//, "")}</a>
+                  </div>
+                )}
                 <div className="flex items-center gap-2.5">
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0">
                     <circle cx="7" cy="7" r="5.5" stroke="#5c5c5c" strokeWidth="1.2" />

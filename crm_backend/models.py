@@ -66,6 +66,7 @@ class Lead(Base):
     email = Column(String, nullable=False)
     phone = Column(String)
     company = Column(String, nullable=False)
+    website = Column(String)
     message = Column(Text)
     source = Column(String, default="booking_widget")
     status = Column(String, default="new")
