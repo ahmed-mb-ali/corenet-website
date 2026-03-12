@@ -146,7 +146,7 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
   const calendarDays = buildCalendarDays();
   const timeSlots = selectedDate ? (availability[selectedDate] || []) : [];
 
-  const inputCls = "w-full bg-white border border-[#e0e0e0] rounded-lg px-3 py-2 sm:py-2.5 text-[#02022c] placeholder:text-[rgba(92,92,92,0.6)] font-stolzl text-[16px] sm:text-[13px] focus:outline-none focus:border-[#335cff] focus:ring-1 focus:ring-[#335cff] transition-colors";
+  const inputCls = "w-full bg-white border border-[#e0e0e0] rounded-lg px-3 py-2 sm:py-2.5 text-[#02022c] placeholder:text-[rgba(92,92,92,0.6)] font-stolzl text-[13px] focus:outline-none focus:border-[#335cff] focus:ring-1 focus:ring-[#335cff] transition-colors";
   const labelCls = "block font-stolzl text-[11px] sm:text-[12px] text-[#5c5c5c] mb-0 sm:mb-1";
   const errorCls = "font-stolzl text-[11px] sm:text-[12px] text-red-500 mt-0.5";
 
