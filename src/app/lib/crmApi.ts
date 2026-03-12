@@ -69,10 +69,12 @@ export const crmApi = {
 
   team: {
     list: () => request<CRMUser[]>("/api/settings/team"),
-    create: (body: { name: string; email: string; phone?: string; role?: string }) =>
+    create: (body: { name: string; email: string; password: string; phone?: string; role?: string }) =>
       request<CRMUser>("/api/settings/team", { method: "POST", body: JSON.stringify(body) }),
     update: (id: string, body: Partial<CRMUser>) =>
       request<CRMUser>(`/api/settings/team/${id}`, { method: "PATCH", body: JSON.stringify(body) }),
+    resetPassword: (id: string, password: string) =>
+      request<{ success: boolean }>(`/api/settings/team/${id}/password`, { method: "PATCH", body: JSON.stringify({ password }) }),
     deactivate: (id: string) =>
       request<{ success: boolean }>(`/api/settings/team/${id}`, { method: "DELETE" }),
     reorder: (order: { id: string; priority: number }[]) =>

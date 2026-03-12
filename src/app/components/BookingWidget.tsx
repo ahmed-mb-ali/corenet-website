@@ -340,7 +340,7 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
     return (
       <div className="w-full sm:max-w-[420px] max-h-[calc(100dvh-80px)] sm:max-h-none bg-white rounded-2xl sm:rounded-[20px] shadow-[0_8px_40px_rgba(2,2,44,0.18)] overflow-hidden flex flex-col" dir={isRTL ? "rtl" : "ltr"}>
         {/* Header — hidden on mobile for form step to save space */}
-        <div className={`px-4 sm:px-5 pt-3 sm:pt-5 pb-2 sm:pb-3 border-b border-[#ebebeb] shrink-0 ${step === "form" ? "hidden sm:block" : ""}`}>
+        <div className="px-4 sm:px-5 pt-3 sm:pt-5 pb-2 sm:pb-3 border-b border-[#ebebeb] shrink-0">
           <p className="font-stolzl text-[11px] sm:text-[12px] text-[#5c5c5c]">
             {isRTL ? "احجز موعدك" : "Book a meeting"}
           </p>

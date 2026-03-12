@@ -99,15 +99,15 @@ function AddRepModal({
   onSave,
 }: {
   onClose: () => void;
-  onSave: (data: { name: string; email: string; phone: string; role: string }) => Promise<void>;
+  onSave: (data: { name: string; email: string; password: string; phone: string; role: string }) => Promise<void>;
 }) {
-  const [form, setForm] = useState({ name: "", email: "", phone: "", role: "rep" });
+  const [form, setForm] = useState({ name: "", email: "", password: "", phone: "", role: "rep" });
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!form.name.trim() || !form.email.trim()) return;
+    if (!form.name.trim() || !form.email.trim() || !form.password.trim()) return;
     setSaving(true);
     setError("");
     try {
@@ -148,6 +148,18 @@ function AddRepModal({
               placeholder="rep@corenet.sa"
               className="w-full border border-[#ebebeb] rounded-xl px-3.5 py-2.5 font-stolzl text-[14px] text-[#02022c] placeholder-[#5c5c5c]/50 focus:outline-none focus:border-[#335cff]/60"
               required
+            />
+          </div>
+          <div>
+            <label className="font-stolzl text-[12px] font-semibold text-[#02022c] mb-1.5 block">Password *</label>
+            <input
+              type="password"
+              value={form.password}
+              onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
+              placeholder="Min 6 characters"
+              className="w-full border border-[#ebebeb] rounded-xl px-3.5 py-2.5 font-stolzl text-[14px] text-[#02022c] placeholder-[#5c5c5c]/50 focus:outline-none focus:border-[#335cff]/60"
+              required
+              minLength={6}
             />
           </div>
           <div>
@@ -208,8 +220,10 @@ function EditRepModal({
   onSave: (data: Partial<CRMUser>) => Promise<void>;
 }) {
   const [form, setForm] = useState({ name: rep.name, email: rep.email, phone: rep.phone || "", role: rep.role });
+  const [newPassword, setNewPassword] = useState("");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [pwSuccess, setPwSuccess] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -219,6 +233,23 @@ function EditRepModal({
       await onSave(form);
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Failed to update rep";
+      setError(msg);
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function handleResetPassword() {
+    if (!newPassword.trim() || newPassword.length < 6) return;
+    setSaving(true);
+    setError("");
+    setPwSuccess(false);
+    try {
+      await crmApi.team.resetPassword(rep.id, newPassword);
+      setNewPassword("");
+      setPwSuccess(true);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Failed to reset password";
       setError(msg);
     } finally {
       setSaving(false);
@@ -273,6 +304,32 @@ function EditRepModal({
             </select>
           </div>
 
+          {/* Reset Password section */}
+          <div className="border-t border-[#ebebeb] pt-4">
+            <label className="font-stolzl text-[12px] font-semibold text-[#02022c] mb-1.5 block">Reset Password</label>
+            <div className="flex gap-2">
+              <input
+                type="password"
+                value={newPassword}
+                onChange={e => { setNewPassword(e.target.value); setPwSuccess(false); }}
+                placeholder="New password (min 6 chars)"
+                className="flex-1 border border-[#ebebeb] rounded-xl px-3.5 py-2.5 font-stolzl text-[14px] text-[#02022c] placeholder-[#5c5c5c]/50 focus:outline-none focus:border-[#335cff]/60"
+                minLength={6}
+              />
+              <button
+                type="button"
+                onClick={handleResetPassword}
+                disabled={saving || newPassword.length < 6}
+                className="px-4 py-2.5 font-stolzl text-[13px] font-semibold text-[#335cff] border border-[#335cff]/30 rounded-xl hover:bg-[#f0f4ff] transition-colors disabled:opacity-40"
+              >
+                Reset
+              </button>
+            </div>
+            {pwSuccess && (
+              <p className="font-stolzl text-[12px] text-[#3ab874] mt-1.5">Password updated successfully</p>
+            )}
+          </div>
+
           {error && (
             <p className="font-stolzl text-[13px] text-[#e53e3e] bg-red-50 rounded-xl px-3.5 py-2.5">{error}</p>
           )}
@@ -314,7 +371,7 @@ export default function TeamPage() {
       .finally(() => setLoading(false));
   }, [router]);
 
-  async function handleAdd(data: { name: string; email: string; phone: string; role: string }) {
+  async function handleAdd(data: { name: string; email: string; password: string; phone: string; role: string }) {
     const newRep = await crmApi.team.create(data);
     setReps(prev => [...prev, newRep]);
     setShowAdd(false);

@@ -7,6 +7,7 @@ from pydantic import BaseModel
 from ..database import get_db
 from ..models import User, Availability
 from ..auth import get_current_user, require_admin
+from .auth import hash_password
 
 router = APIRouter()
 
@@ -36,6 +37,7 @@ def list_team(
 class CreateRepBody(BaseModel):
     name: str
     email: str
+    password: str
     phone: Optional[str] = None
     role: str = "rep"
 
@@ -60,6 +62,7 @@ def create_rep(
         tenant_id=current_user.tenant_id,
         name=body.name,
         email=body.email,
+        password_hash=hash_password(body.password),
         phone=body.phone,
         role=body.role,
         priority=max_priority + 1,
@@ -129,6 +132,28 @@ def deactivate_rep(
         raise HTTPException(status_code=404, detail="User not found")
 
     user.is_active = False
+    db.commit()
+    return {"success": True}
+
+
+class ResetPasswordBody(BaseModel):
+    password: str
+
+
+@router.patch("/team/{user_id}/password")
+def reset_password(
+    user_id: str,
+    body: ResetPasswordBody,
+    current_user: User = Depends(require_admin),
+    db: Session = Depends(get_db),
+):
+    user = db.query(User).filter(
+        User.id == user_id, User.tenant_id == current_user.tenant_id
+    ).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    user.password_hash = hash_password(body.password)
     db.commit()
     return {"success": True}
 
