@@ -123,9 +123,9 @@ export default function CRMShell({ children }: { children: ReactNode }) {
       {/* Sidebar */}
       <aside className={`fixed lg:static inset-y-0 left-0 z-30 w-[220px] bg-[#0f3d2e] flex flex-col transition-transform duration-300 ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
         {/* Logo */}
-        <div className="px-5 pt-6 pb-5 border-b border-white/10">
+        <div className="px-5 pt-6 pb-5 border-b border-white/10 flex items-center gap-3">
           <Image src="/images/logo.png" alt="Corenet" width={80} height={46} className="object-contain brightness-0 invert" />
-          <p className="font-stolzl text-[11px] text-white/30 mt-1 tracking-wider uppercase">CRM</p>
+          <p className="font-stolzl text-[11px] text-white/30 tracking-wider uppercase">CRM</p>
         </div>
 
         {/* Nav */}

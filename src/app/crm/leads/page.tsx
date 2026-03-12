@@ -73,54 +73,52 @@ export default function LeadsPage() {
             </div>
           ) : (
             <>
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b border-[#ebebeb] bg-[#f7f8fc]">
-                      {["Name", "Company", "Email", "Phone", "Website", "Stage", "Assigned To", "Booked", "Date"].map(h => (
-                        <th key={h} className="px-5 py-3 text-left font-stolzl text-[12px] text-[#5c5c5c] font-medium whitespace-nowrap">{h}</th>
-                      ))}
+              <table className="w-full table-fixed">
+                <thead>
+                  <tr className="border-b border-[#ebebeb] bg-[#f7f8fc]">
+                    <th className="w-[18%] px-4 py-3 text-left font-stolzl text-[12px] text-[#5c5c5c] font-medium">Name</th>
+                    <th className="w-[12%] px-4 py-3 text-left font-stolzl text-[12px] text-[#5c5c5c] font-medium">Company</th>
+                    <th className="w-[20%] px-4 py-3 text-left font-stolzl text-[12px] text-[#5c5c5c] font-medium">Email</th>
+                    <th className="w-[11%] px-4 py-3 text-left font-stolzl text-[12px] text-[#5c5c5c] font-medium">Phone</th>
+                    <th className="w-[12%] px-4 py-3 text-left font-stolzl text-[12px] text-[#5c5c5c] font-medium">Stage</th>
+                    <th className="w-[12%] px-4 py-3 text-left font-stolzl text-[12px] text-[#5c5c5c] font-medium">Assigned To</th>
+                    <th className="w-[8%] px-4 py-3 text-left font-stolzl text-[12px] text-[#5c5c5c] font-medium">Booked</th>
+                    <th className="w-[7%] px-4 py-3 text-left font-stolzl text-[12px] text-[#5c5c5c] font-medium">Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {leads.map(lead => (
+                    <tr key={lead.id} className="border-b border-[#f4f4f4] hover:bg-[#f7f8fc] transition-colors">
+                      <td className="px-4 py-3">
+                        <Link href={`/crm/leads/${lead.id}`} className="font-stolzl text-[13px] font-medium text-[#02022c] hover:text-[#3ab874] truncate block">
+                          {lead.first_name} {lead.last_name}
+                        </Link>
+                      </td>
+                      <td className="px-4 py-3 font-stolzl text-[13px] text-[#5c5c5c] truncate">{lead.company || "—"}</td>
+                      <td className="px-4 py-3 font-stolzl text-[13px] text-[#5c5c5c] truncate">{lead.email}</td>
+                      <td className="px-4 py-3 font-stolzl text-[13px] text-[#5c5c5c] truncate">{lead.phone || "—"}</td>
+                      <td className="px-4 py-3">
+                        {lead.stage_name ? (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-stolzl text-[11px]" style={{ backgroundColor: `${lead.stage_color}20`, color: lead.stage_color }}>
+                            <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: lead.stage_color }} />
+                            {lead.stage_name}
+                          </span>
+                        ) : "—"}
+                      </td>
+                      <td className="px-4 py-3 font-stolzl text-[13px] text-[#5c5c5c] truncate">{lead.assigned_to_name || "—"}</td>
+                      <td className="px-4 py-3 font-stolzl text-[12px] text-[#5c5c5c]">
+                        {lead.booking_date ? new Date(lead.booking_date).toLocaleDateString("en-GB", { day: "numeric", month: "short" }) : "—"}
+                      </td>
+                      <td className="px-4 py-3 font-stolzl text-[12px] text-[#5c5c5c]">
+                        {new Date(lead.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {leads.map(lead => (
-                      <tr key={lead.id} className="border-b border-[#f4f4f4] hover:bg-[#f7f8fc] transition-colors">
-                        <td className="px-5 py-3 whitespace-nowrap">
-                          <Link href={`/crm/leads/${lead.id}`} className="font-stolzl text-[14px] font-medium text-[#02022c] hover:text-[#3ab874]">
-                            {lead.first_name} {lead.last_name}
-                          </Link>
-                        </td>
-                        <td className="px-5 py-3 font-stolzl text-[14px] text-[#5c5c5c] whitespace-nowrap">{lead.company || "—"}</td>
-                        <td className="px-5 py-3 font-stolzl text-[13px] text-[#5c5c5c]">{lead.email}</td>
-                        <td className="px-5 py-3 font-stolzl text-[13px] text-[#5c5c5c] whitespace-nowrap">{lead.phone || "—"}</td>
-                        <td className="px-5 py-3 font-stolzl text-[13px] whitespace-nowrap max-w-[160px] truncate">
-                          {lead.website ? (
-                            <a href={lead.website.startsWith("http") ? lead.website : `https://${lead.website}`} target="_blank" rel="noopener noreferrer" className="text-[#3ab874] hover:underline">{lead.website.replace(/^https?:\/\//, "")}</a>
-                          ) : "—"}
-                        </td>
-                        <td className="px-5 py-3">
-                          {lead.stage_name ? (
-                            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-stolzl text-[12px]" style={{ backgroundColor: `${lead.stage_color}20`, color: lead.stage_color }}>
-                              <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: lead.stage_color }} />
-                              {lead.stage_name}
-                            </span>
-                          ) : "—"}
-                        </td>
-                        <td className="px-5 py-3 font-stolzl text-[14px] text-[#5c5c5c] whitespace-nowrap">{lead.assigned_to_name || "—"}</td>
-                        <td className="px-5 py-3 font-stolzl text-[13px] text-[#5c5c5c] whitespace-nowrap">
-                          {lead.booking_date ? new Date(lead.booking_date).toLocaleDateString("en-GB", { day: "numeric", month: "short" }) : "—"}
-                        </td>
-                        <td className="px-5 py-3 font-stolzl text-[13px] text-[#5c5c5c] whitespace-nowrap">
-                          {new Date(lead.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}
-                        </td>
-                      </tr>
-                    ))}
-                    {leads.length === 0 && (
-                      <tr><td colSpan={9} className="px-5 py-12 text-center font-stolzl text-[14px] text-[#5c5c5c]">No leads found</td></tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
+                  ))}
+                  {leads.length === 0 && (
+                    <tr><td colSpan={8} className="px-4 py-12 text-center font-stolzl text-[14px] text-[#5c5c5c]">No leads found</td></tr>
+                  )}
+                </tbody>
+              </table>
 
               {totalPages > 1 && (
                 <div className="flex items-center justify-between px-5 py-4 border-t border-[#ebebeb]">
