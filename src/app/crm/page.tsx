@@ -8,9 +8,9 @@ import { crmApi, type Lead } from "../lib/crmApi";
 
 function StatCard({ label, value, color }: { label: string; value: number; color: string }) {
   return (
-    <div className="bg-white rounded-2xl p-5 border border-[#ebebeb]">
-      <p className="font-stolzl text-[13px] text-[#5c5c5c] mb-1">{label}</p>
-      <p className={`font-stolzl text-[32px] font-bold ${color}`}>{value}</p>
+    <div className="bg-white rounded-2xl p-4 lg:p-5 border border-[#ebebeb]">
+      <p className="font-stolzl text-[12px] lg:text-[13px] text-[#5c5c5c] mb-0.5 lg:mb-1">{label}</p>
+      <p className={`font-stolzl text-[24px] lg:text-[32px] font-bold ${color}`}>{value}</p>
     </div>
   );
 }
@@ -35,10 +35,10 @@ export default function CRMDashboard() {
 
   return (
     <CRMShell>
-      <div className="p-6 max-w-[1200px] mx-auto">
-        <div className="mb-6">
-          <h1 className="font-stolzl text-[24px] font-bold text-[#02022c]">Dashboard</h1>
-          <p className="font-stolzl text-[14px] text-[#5c5c5c]">Welcome back. Here&apos;s what&apos;s happening.</p>
+      <div className="p-4 lg:p-6 max-w-[1200px] mx-auto">
+        <div className="mb-5 lg:mb-6">
+          <h1 className="font-stolzl text-[20px] lg:text-[24px] font-bold text-[#02022c]">Dashboard</h1>
+          <p className="font-stolzl text-[13px] lg:text-[14px] text-[#5c5c5c]">Welcome back. Here&apos;s what&apos;s happening.</p>
         </div>
 
         {loading ? (
@@ -47,7 +47,7 @@ export default function CRMDashboard() {
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 mb-6 lg:mb-8">
               <StatCard label="Total Leads" value={total} color="text-[#02022c]" />
               <StatCard label="New Leads" value={newLeads} color="text-[#3ab874]" />
               <StatCard label="Today's Meetings" value={todayBookings} color="text-[#3ab874]" />
@@ -55,11 +55,13 @@ export default function CRMDashboard() {
             </div>
 
             <div className="bg-white rounded-2xl border border-[#ebebeb] overflow-hidden">
-              <div className="flex items-center justify-between px-5 py-4 border-b border-[#ebebeb]">
-                <h2 className="font-stolzl text-[16px] font-semibold text-[#02022c]">Recent Leads</h2>
+              <div className="flex items-center justify-between px-4 lg:px-5 py-3 lg:py-4 border-b border-[#ebebeb]">
+                <h2 className="font-stolzl text-[15px] lg:text-[16px] font-semibold text-[#02022c]">Recent Leads</h2>
                 <Link href="/crm/leads" className="font-stolzl text-[13px] text-[#3ab874] hover:underline">View all</Link>
               </div>
-              <div className="overflow-x-auto">
+
+              {/* Desktop table */}
+              <div className="hidden lg:block">
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-[#ebebeb]">
@@ -93,6 +95,27 @@ export default function CRMDashboard() {
                     )}
                   </tbody>
                 </table>
+              </div>
+
+              {/* Mobile card list */}
+              <div className="lg:hidden divide-y divide-[#f4f4f4]">
+                {recent.map(lead => (
+                  <Link key={lead.id} href={`/crm/leads/${lead.id}`} className="flex items-center gap-3 px-4 py-3 hover:bg-[#f7f8fc] transition-colors">
+                    <div className="w-9 h-9 rounded-full bg-[#3ab874] flex items-center justify-center shrink-0">
+                      <span className="font-stolzl text-[13px] font-bold text-white">{lead.first_name.charAt(0)}</span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-stolzl text-[13px] font-medium text-[#02022c] truncate">{lead.first_name} {lead.last_name}</p>
+                      <p className="font-stolzl text-[11px] text-[#5c5c5c] truncate">{lead.company || lead.email}</p>
+                    </div>
+                    <span className={`shrink-0 inline-block px-2 py-0.5 rounded-full font-stolzl text-[10px] font-medium ${lead.status === "new" ? "bg-[#3ab874]/10 text-[#3ab874]" : "bg-[#f4f4f4] text-[#5c5c5c]"}`}>
+                      {lead.stage_name || lead.status}
+                    </span>
+                  </Link>
+                ))}
+                {recent.length === 0 && (
+                  <p className="px-4 py-10 text-center font-stolzl text-[13px] text-[#5c5c5c]">No leads yet</p>
+                )}
               </div>
             </div>
           </>

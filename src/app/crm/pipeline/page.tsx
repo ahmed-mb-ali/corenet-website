@@ -45,11 +45,11 @@ export default function PipelinePage() {
 
   return (
     <CRMShell>
-      <div className="p-6">
+      <div className="p-4 lg:p-6">
         {/* Header */}
-        <div className="mb-6">
-          <h1 className="font-stolzl text-[24px] font-bold text-[#02022c]">Pipeline</h1>
-          <p className="font-stolzl text-[14px] text-[#5c5c5c]">
+        <div className="mb-4 lg:mb-6">
+          <h1 className="font-stolzl text-[20px] lg:text-[24px] font-bold text-[#02022c]">Pipeline</h1>
+          <p className="font-stolzl text-[13px] lg:text-[14px] text-[#5c5c5c]">
             {totalLeads} total lead{totalLeads !== 1 ? "s" : ""} across {stages.length} stages
           </p>
         </div>
@@ -61,8 +61,8 @@ export default function PipelinePage() {
         ) : (
           <>
             {/* Funnel stages */}
-            <div className="bg-white rounded-2xl border border-[#ebebeb] p-4 mb-5">
-              <div className="flex items-center gap-1 flex-wrap">
+            <div className="bg-white rounded-2xl border border-[#ebebeb] p-3 lg:p-4 mb-4 lg:mb-5">
+              <div className="flex items-center gap-1 overflow-x-auto lg:flex-wrap no-scrollbar">
                 {/* All button */}
                 <button
                   onClick={() => setActiveStage(null)}
@@ -116,7 +116,7 @@ export default function PipelinePage() {
 
             {/* Leads table */}
             <div className="bg-white rounded-2xl border border-[#ebebeb]">
-              <div className="px-5 py-3.5 border-b border-[#f4f4f4] flex items-center justify-between">
+              <div className="px-4 lg:px-5 py-3 lg:py-3.5 border-b border-[#f4f4f4] flex items-center justify-between">
                 <h2 className="font-stolzl text-[14px] font-semibold text-[#02022c]">
                   {activeLabel} {activeStage ? `(${filteredLeads.length})` : ""}
                 </h2>
@@ -127,69 +127,113 @@ export default function PipelinePage() {
                   <p className="font-stolzl text-[13px] text-[#5c5c5c]/60">No leads in this stage</p>
                 </div>
               ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b border-[#f4f4f4]">
-                        {["Name", "Company", "Stage", "Assigned To", "Date", "Move to"].map(h => (
-                          <th key={h} className="px-5 py-3 text-left font-stolzl text-[11px] font-semibold text-[#5c5c5c] uppercase tracking-wider">{h}</th>
+                <>
+                  {/* Desktop table */}
+                  <div className="hidden lg:block overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b border-[#f4f4f4]">
+                          {["Name", "Company", "Stage", "Assigned To", "Date", "Move to"].map(h => (
+                            <th key={h} className="px-5 py-3 text-left font-stolzl text-[11px] font-semibold text-[#5c5c5c] uppercase tracking-wider">{h}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {filteredLeads.map(lead => (
+                          <tr key={lead.id} className="border-b border-[#f4f4f4] last:border-0 hover:bg-[#fafbfd] transition-colors">
+                            <td className="px-5 py-3.5">
+                              <Link href={`/crm/leads/${lead.id}`} className="font-stolzl text-[13px] font-medium text-[#02022c] hover:text-[#3ab874] transition-colors">
+                                {lead.first_name} {lead.last_name}
+                              </Link>
+                            </td>
+                            <td className="px-5 py-3.5">
+                              <span className="font-stolzl text-[13px] text-[#5c5c5c]">{lead.company || "—"}</span>
+                            </td>
+                            <td className="px-5 py-3.5">
+                              <span
+                                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-stolzl text-[11px] font-medium"
+                                style={{ backgroundColor: `${lead._stageColor}15`, color: lead._stageColor }}
+                              >
+                                <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: lead._stageColor }} />
+                                {lead._stageName}
+                              </span>
+                            </td>
+                            <td className="px-5 py-3.5">
+                              {lead.assigned_to_name ? (
+                                <div className="flex items-center gap-2">
+                                  <div className="w-5 h-5 rounded-full bg-[#3ab874] flex items-center justify-center">
+                                    <span className="font-stolzl text-[9px] font-bold text-white">{lead.assigned_to_name.charAt(0)}</span>
+                                  </div>
+                                  <span className="font-stolzl text-[13px] text-[#5c5c5c]">{lead.assigned_to_name}</span>
+                                </div>
+                              ) : (
+                                <span className="font-stolzl text-[13px] text-[#5c5c5c]/40">—</span>
+                              )}
+                            </td>
+                            <td className="px-5 py-3.5">
+                              <span className="font-stolzl text-[12px] text-[#5c5c5c]">
+                                {new Date(lead.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}
+                              </span>
+                            </td>
+                            <td className="px-5 py-3.5">
+                              <select
+                                value={lead.stage_id || ""}
+                                onChange={e => moveToStage(lead, e.target.value)}
+                                disabled={movingLead === lead.id}
+                                className="border border-[#ebebeb] rounded-lg px-2.5 py-1.5 font-stolzl text-[12px] text-[#02022c] focus:outline-none focus:border-[#3ab874]/60 bg-white disabled:opacity-50 cursor-pointer"
+                              >
+                                {stages.map(s => (
+                                  <option key={s.id} value={s.id}>{s.name}</option>
+                                ))}
+                              </select>
+                            </td>
+                          </tr>
                         ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {filteredLeads.map(lead => (
-                        <tr key={lead.id} className="border-b border-[#f4f4f4] last:border-0 hover:bg-[#fafbfd] transition-colors">
-                          <td className="px-5 py-3.5">
-                            <Link href={`/crm/leads/${lead.id}`} className="font-stolzl text-[13px] font-medium text-[#02022c] hover:text-[#3ab874] transition-colors">
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Mobile card list */}
+                  <div className="lg:hidden divide-y divide-[#f4f4f4]">
+                    {filteredLeads.map(lead => (
+                      <div key={lead.id} className="px-4 py-3">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: `${lead._stageColor}20` }}>
+                            <span className="font-stolzl text-[12px] font-bold" style={{ color: lead._stageColor }}>{lead.first_name.charAt(0)}</span>
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <Link href={`/crm/leads/${lead.id}`} className="font-stolzl text-[13px] font-medium text-[#02022c] truncate block">
                               {lead.first_name} {lead.last_name}
                             </Link>
-                          </td>
-                          <td className="px-5 py-3.5">
-                            <span className="font-stolzl text-[13px] text-[#5c5c5c]">{lead.company || "—"}</span>
-                          </td>
-                          <td className="px-5 py-3.5">
-                            <span
-                              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-stolzl text-[11px] font-medium"
-                              style={{ backgroundColor: `${lead._stageColor}15`, color: lead._stageColor }}
-                            >
-                              <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: lead._stageColor }} />
-                              {lead._stageName}
-                            </span>
-                          </td>
-                          <td className="px-5 py-3.5">
-                            {lead.assigned_to_name ? (
-                              <div className="flex items-center gap-2">
-                                <div className="w-5 h-5 rounded-full bg-[#3ab874] flex items-center justify-center">
-                                  <span className="font-stolzl text-[9px] font-bold text-white">{lead.assigned_to_name.charAt(0)}</span>
-                                </div>
-                                <span className="font-stolzl text-[13px] text-[#5c5c5c]">{lead.assigned_to_name}</span>
-                              </div>
-                            ) : (
-                              <span className="font-stolzl text-[13px] text-[#5c5c5c]/40">—</span>
-                            )}
-                          </td>
-                          <td className="px-5 py-3.5">
-                            <span className="font-stolzl text-[12px] text-[#5c5c5c]">
-                              {new Date(lead.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}
-                            </span>
-                          </td>
-                          <td className="px-5 py-3.5">
-                            <select
-                              value={lead.stage_id || ""}
-                              onChange={e => moveToStage(lead, e.target.value)}
-                              disabled={movingLead === lead.id}
-                              className="border border-[#ebebeb] rounded-lg px-2.5 py-1.5 font-stolzl text-[12px] text-[#02022c] focus:outline-none focus:border-[#3ab874]/60 bg-white disabled:opacity-50 cursor-pointer"
-                            >
-                              {stages.map(s => (
-                                <option key={s.id} value={s.id}>{s.name}</option>
-                              ))}
-                            </select>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                            <p className="font-stolzl text-[11px] text-[#5c5c5c] truncate">{lead.company || "—"}</p>
+                          </div>
+                          <span
+                            className="shrink-0 inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-stolzl text-[10px] font-medium"
+                            style={{ backgroundColor: `${lead._stageColor}15`, color: lead._stageColor }}
+                          >
+                            <span className="w-1 h-1 rounded-full" style={{ backgroundColor: lead._stageColor }} />
+                            {lead._stageName}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2 ml-11">
+                          <select
+                            value={lead.stage_id || ""}
+                            onChange={e => moveToStage(lead, e.target.value)}
+                            disabled={movingLead === lead.id}
+                            className="flex-1 border border-[#ebebeb] rounded-lg px-2.5 py-1.5 font-stolzl text-[12px] text-[#02022c] focus:outline-none focus:border-[#3ab874]/60 bg-white disabled:opacity-50"
+                          >
+                            {stages.map(s => (
+                              <option key={s.id} value={s.id}>{s.name}</option>
+                            ))}
+                          </select>
+                          <span className="font-stolzl text-[11px] text-[#5c5c5c] shrink-0">
+                            {new Date(lead.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </>
               )}
             </div>
           </>

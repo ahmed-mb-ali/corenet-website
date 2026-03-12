@@ -115,17 +115,12 @@ export default function CRMShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="flex h-screen bg-[#f7f8fc] font-stolzl overflow-hidden">
-      {/* Mobile overlay */}
-      {sidebarOpen && (
-        <div className="fixed inset-0 bg-black/40 z-20 lg:hidden" onClick={() => setSidebarOpen(false)} />
-      )}
-
-      {/* Sidebar */}
-      <aside className={`fixed lg:static inset-y-0 left-0 z-30 w-[220px] bg-[#0f3d2e] flex flex-col transition-transform duration-300 ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
+      {/* Desktop sidebar */}
+      <aside className="hidden lg:flex w-[220px] bg-[#0f3d2e] flex-col shrink-0">
         {/* Logo */}
-        <div className="px-5 pt-6 pb-5 border-b border-white/10 flex items-center gap-3">
-          <Image src="/images/logo.png" alt="Corenet" width={80} height={46} className="object-contain brightness-0 invert" />
-          <p className="font-stolzl text-[11px] text-white/30 tracking-wider uppercase">CRM</p>
+        <div className="px-5 pt-6 pb-5 border-b border-white/10 flex items-center gap-2.5">
+          <Image src="/images/logo.png" alt="Corenet" width={72} height={32} className="h-8 w-auto object-contain brightness-0 invert" />
+          <span className="font-stolzl text-[15px] font-medium text-white/40 tracking-wide uppercase">CRM</span>
         </div>
 
         {/* Nav */}
@@ -134,7 +129,6 @@ export default function CRMShell({ children }: { children: ReactNode }) {
             <Link
               key={item.href}
               href={item.href}
-              onClick={() => setSidebarOpen(false)}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-xl font-stolzl text-[14px] transition-colors ${
                 isActive(item.href)
                   ? "bg-[#3ab874] text-white"
@@ -174,19 +168,45 @@ export default function CRMShell({ children }: { children: ReactNode }) {
 
       {/* Main */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        {/* Top bar (mobile) */}
-        <header className="lg:hidden flex items-center gap-3 px-4 py-3 bg-white border-b border-[#ebebeb] shrink-0">
-          <button onClick={() => setSidebarOpen(true)} className="p-2 rounded-lg hover:bg-[#f4f4f4] transition-colors">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path d="M2 4h14M2 9h14M2 14h14" stroke="#02022c" strokeWidth="1.5" strokeLinecap="round"/>
-            </svg>
-          </button>
-          <Image src="/images/logo.png" alt="Corenet" width={64} height={37} className="object-contain" />
+        {/* Mobile top bar */}
+        <header className="lg:hidden flex items-center justify-between px-4 py-3 bg-white border-b border-[#ebebeb] shrink-0">
+          <div className="flex items-center gap-2">
+            <Image src="/images/logo.png" alt="Corenet" width={56} height={32} className="object-contain" />
+            <span className="font-stolzl text-[10px] text-[#5c5c5c]/50 tracking-wider uppercase">CRM</span>
+          </div>
+          {user && (
+            <button
+              onClick={logout}
+              className="p-2 rounded-lg hover:bg-[#f4f4f4] transition-colors"
+            >
+              <svg width="16" height="16" viewBox="0 0 15 15" fill="none">
+                <path d="M5 13H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h2M10 10l3-2.5L10 5M13 7.5H6" stroke="#5c5c5c" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+          )}
         </header>
 
-        <main className="flex-1 overflow-y-auto">
+        <main className="flex-1 overflow-y-auto pb-[72px] lg:pb-0">
           {children}
         </main>
+
+        {/* Mobile bottom nav bar */}
+        <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-[#ebebeb] flex items-center justify-around px-1 py-1.5 safe-bottom">
+          {visibleNav.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-xl min-w-[56px] transition-colors ${
+                isActive(item.href)
+                  ? "text-[#3ab874]"
+                  : "text-[#5c5c5c]/60"
+              }`}
+            >
+              {item.icon}
+              <span className="font-stolzl text-[10px] font-medium">{item.label}</span>
+            </Link>
+          ))}
+        </nav>
       </div>
     </div>
   );

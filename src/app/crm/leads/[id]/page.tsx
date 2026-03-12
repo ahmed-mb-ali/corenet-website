@@ -162,9 +162,9 @@ export default function LeadDetailPage() {
 
   return (
     <CRMShell>
-      <div className="p-6 max-w-[900px]">
+      <div className="p-4 lg:p-6 max-w-[900px]">
         {/* Back */}
-        <Link href="/crm/leads" className="inline-flex items-center gap-1.5 font-stolzl text-[13px] text-[#5c5c5c] hover:text-[#3ab874] mb-5 transition-colors">
+        <Link href="/crm/leads" className="inline-flex items-center gap-1.5 font-stolzl text-[13px] text-[#5c5c5c] hover:text-[#3ab874] mb-4 lg:mb-5 transition-colors">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
             <path d="M9 2L4 7l5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>

@@ -132,11 +132,11 @@ export default function AvailabilityPage() {
 
   return (
     <CRMShell>
-      <div className="p-6 max-w-2xl">
+      <div className="p-4 lg:p-6 max-w-2xl">
         {/* Header */}
-        <div className="mb-6">
-          <h1 className="font-stolzl text-[24px] font-bold text-[#02022c]">Availability</h1>
-          <p className="font-stolzl text-[14px] text-[#5c5c5c]">Set working hours and blocked dates for booking slots</p>
+        <div className="mb-4 lg:mb-6">
+          <h1 className="font-stolzl text-[20px] lg:text-[24px] font-bold text-[#02022c]">Availability</h1>
+          <p className="font-stolzl text-[13px] lg:text-[14px] text-[#5c5c5c]">Set working hours and blocked dates for booking slots</p>
         </div>
 
         {/* Rep selector (admin only) */}
@@ -181,23 +181,23 @@ export default function AvailabilityPage() {
 
               <div className="space-y-2">
                 {hours.map((h, i) => (
-                  <div key={i} className={`flex items-center gap-3 py-2 px-3 rounded-xl transition-colors ${h.enabled ? "bg-[#f7f8fc]" : "opacity-50"}`}>
+                  <div key={i} className={`flex items-center gap-2 lg:gap-3 py-2 px-2 lg:px-3 rounded-xl transition-colors ${h.enabled ? "bg-[#f7f8fc]" : "opacity-50"}`}>
                     {/* Day toggle */}
                     <button
                       onClick={() => toggleDay(i)}
-                      className={`w-8 h-8 rounded-full shrink-0 flex items-center justify-center font-stolzl text-[11px] font-bold transition-colors ${
+                      className={`w-7 h-7 lg:w-8 lg:h-8 rounded-full shrink-0 flex items-center justify-center font-stolzl text-[10px] lg:text-[11px] font-bold transition-colors ${
                         h.enabled ? "bg-[#3ab874] text-white" : "bg-[#f0f0f0] text-[#5c5c5c]"
                       }`}
                     >
                       {DAY_SHORT[i].charAt(0)}
                     </button>
 
-                    <span className="font-stolzl text-[13px] text-[#02022c] w-[80px] shrink-0">{DAYS[i]}</span>
+                    <span className="font-stolzl text-[12px] lg:text-[13px] text-[#02022c] w-[56px] lg:w-[80px] shrink-0">{DAY_SHORT[i]}<span className="hidden lg:inline">{DAYS[i].slice(3)}</span></span>
 
                     {h.enabled ? (
-                      <div className="flex items-center gap-2 flex-1">
+                      <div className="flex items-center gap-1.5 lg:gap-2 flex-1">
                         <TimeSelect value={h.startTime} onChange={v => updateHour(i, "startTime", v)} />
-                        <span className="font-stolzl text-[12px] text-[#5c5c5c]">to</span>
+                        <span className="font-stolzl text-[11px] lg:text-[12px] text-[#5c5c5c]">to</span>
                         <TimeSelect value={h.endTime} onChange={v => updateHour(i, "endTime", v)} />
                       </div>
                     ) : (

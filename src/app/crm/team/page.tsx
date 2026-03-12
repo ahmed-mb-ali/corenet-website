@@ -23,71 +23,82 @@ function RepRow({
   onMoveDown: () => void;
 }) {
   return (
-    <div className={`flex items-center gap-3 p-3.5 rounded-xl border transition-all ${rep.is_active ? "bg-white border-[#ebebeb]" : "bg-[#f7f8fc] border-[#ebebeb] opacity-60"}`}>
-      {/* Priority handle / arrows */}
-      <div className="flex flex-col gap-0.5 shrink-0">
-        <button
-          onClick={onMoveUp}
-          disabled={index === 0}
-          className="w-5 h-5 flex items-center justify-center rounded hover:bg-[#f0faf5] disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
-        >
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-            <path d="M5 2L9 7H1L5 2Z" fill="#5c5c5c" />
-          </svg>
-        </button>
-        <button
-          onClick={onMoveDown}
-          disabled={index === total - 1}
-          className="w-5 h-5 flex items-center justify-center rounded hover:bg-[#f0faf5] disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
-        >
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-            <path d="M5 8L1 3H9L5 8Z" fill="#5c5c5c" />
-          </svg>
-        </button>
-      </div>
-
-      {/* Priority badge */}
-      <div className="w-6 h-6 rounded-full bg-[#f0faf5] flex items-center justify-center shrink-0">
-        <span className="font-stolzl text-[11px] font-bold text-[#3ab874]">{rep.priority}</span>
-      </div>
-
-      {/* Avatar */}
-      <div className="w-8 h-8 rounded-full bg-[#3ab874] flex items-center justify-center shrink-0">
-        <span className="font-stolzl text-[13px] font-bold text-white">{rep.name.charAt(0).toUpperCase()}</span>
-      </div>
-
-      {/* Info */}
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2">
-          <p className="font-stolzl text-[14px] font-semibold text-[#02022c] truncate">{rep.name}</p>
-          {rep.role === "admin" && (
-            <span className="shrink-0 font-stolzl text-[10px] font-semibold text-[#3ab874] bg-[#eef8f3] rounded-full px-1.5 py-0.5">Admin</span>
-          )}
-          {!rep.is_active && (
-            <span className="shrink-0 font-stolzl text-[10px] font-semibold text-[#5c5c5c] bg-[#f4f4f4] rounded-full px-1.5 py-0.5">Inactive</span>
-          )}
+    <div className={`rounded-xl border transition-all ${rep.is_active ? "bg-white border-[#ebebeb]" : "bg-[#f7f8fc] border-[#ebebeb] opacity-60"}`}>
+      <div className="flex items-center gap-2 lg:gap-3 p-3 lg:p-3.5">
+        {/* Priority handle / arrows */}
+        <div className="flex flex-col gap-0.5 shrink-0">
+          <button
+            onClick={onMoveUp}
+            disabled={index === 0}
+            className="w-5 h-5 flex items-center justify-center rounded hover:bg-[#f0faf5] disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+          >
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+              <path d="M5 2L9 7H1L5 2Z" fill="#5c5c5c" />
+            </svg>
+          </button>
+          <button
+            onClick={onMoveDown}
+            disabled={index === total - 1}
+            className="w-5 h-5 flex items-center justify-center rounded hover:bg-[#f0faf5] disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+          >
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+              <path d="M5 8L1 3H9L5 8Z" fill="#5c5c5c" />
+            </svg>
+          </button>
         </div>
-        <p className="font-stolzl text-[12px] text-[#5c5c5c] truncate">{rep.email}</p>
-        {rep.phone && <p className="font-stolzl text-[11px] text-[#5c5c5c]/70 truncate">{rep.phone}</p>}
-      </div>
 
-      {/* Actions */}
-      <div className="flex items-center gap-1.5 shrink-0">
+        {/* Priority badge */}
+        <div className="w-6 h-6 rounded-full bg-[#f0faf5] flex items-center justify-center shrink-0">
+          <span className="font-stolzl text-[11px] font-bold text-[#3ab874]">{rep.priority}</span>
+        </div>
+
+        {/* Avatar */}
+        <div className="w-8 h-8 rounded-full bg-[#3ab874] flex items-center justify-center shrink-0">
+          <span className="font-stolzl text-[13px] font-bold text-white">{rep.name.charAt(0).toUpperCase()}</span>
+        </div>
+
+        {/* Info */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2">
+            <p className="font-stolzl text-[13px] lg:text-[14px] font-semibold text-[#02022c] truncate">{rep.name}</p>
+            {rep.role === "admin" && (
+              <span className="shrink-0 font-stolzl text-[10px] font-semibold text-[#3ab874] bg-[#eef8f3] rounded-full px-1.5 py-0.5">Admin</span>
+            )}
+            {!rep.is_active && (
+              <span className="shrink-0 font-stolzl text-[10px] font-semibold text-[#5c5c5c] bg-[#f4f4f4] rounded-full px-1.5 py-0.5">Inactive</span>
+            )}
+          </div>
+          <p className="font-stolzl text-[11px] lg:text-[12px] text-[#5c5c5c] truncate">{rep.email}</p>
+        </div>
+
+        {/* Actions - desktop */}
+        <div className="hidden sm:flex items-center gap-1.5 shrink-0">
+          <button
+            onClick={() => onEdit(rep)}
+            className="px-3 py-1.5 font-stolzl text-[12px] text-[#3ab874] border border-[#3ab874]/30 rounded-lg hover:bg-[#f0faf5] transition-colors"
+          >
+            Edit
+          </button>
+          <button
+            onClick={() => onToggle(rep)}
+            className={`px-3 py-1.5 font-stolzl text-[12px] rounded-lg transition-colors ${
+              rep.is_active
+                ? "text-[#e53e3e] border border-[#e53e3e]/30 hover:bg-red-50"
+                : "text-[#3ab874] border border-[#3ab874]/30 hover:bg-green-50"
+            }`}
+          >
+            {rep.is_active ? "Deactivate" : "Activate"}
+          </button>
+        </div>
+
+        {/* Actions - mobile: just Edit icon */}
         <button
           onClick={() => onEdit(rep)}
-          className="px-3 py-1.5 font-stolzl text-[12px] text-[#3ab874] border border-[#3ab874]/30 rounded-lg hover:bg-[#f0faf5] transition-colors"
+          className="sm:hidden shrink-0 w-8 h-8 flex items-center justify-center rounded-lg border border-[#3ab874]/30 text-[#3ab874]"
         >
-          Edit
-        </button>
-        <button
-          onClick={() => onToggle(rep)}
-          className={`px-3 py-1.5 font-stolzl text-[12px] rounded-lg transition-colors ${
-            rep.is_active
-              ? "text-[#e53e3e] border border-[#e53e3e]/30 hover:bg-red-50"
-              : "text-[#3ab874] border border-[#3ab874]/30 hover:bg-green-50"
-          }`}
-        >
-          {rep.is_active ? "Deactivate" : "Activate"}
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+            <path d="M10.5 1.5l2 2L4.5 11.5l-3 1 1-3 8-8z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
+          </svg>
         </button>
       </div>
     </div>
@@ -416,23 +427,24 @@ export default function TeamPage() {
 
   return (
     <CRMShell>
-      <div className="p-6 max-w-2xl">
+      <div className="p-4 lg:p-6 max-w-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-4 lg:mb-6">
           <div>
-            <h1 className="font-stolzl text-[24px] font-bold text-[#02022c]">Team</h1>
-            <p className="font-stolzl text-[14px] text-[#5c5c5c]">
+            <h1 className="font-stolzl text-[20px] lg:text-[24px] font-bold text-[#02022c]">Team</h1>
+            <p className="font-stolzl text-[13px] lg:text-[14px] text-[#5c5c5c]">
               Manage sales reps and their booking priority
             </p>
           </div>
           <button
             onClick={() => setShowAdd(true)}
-            className="flex items-center gap-2 px-4 py-2.5 font-stolzl text-[14px] font-semibold text-white bg-[#3ab874] rounded-xl hover:bg-[#2da062] transition-colors"
+            className="flex items-center gap-2 px-3 lg:px-4 py-2 lg:py-2.5 font-stolzl text-[13px] lg:text-[14px] font-semibold text-white bg-[#3ab874] rounded-xl hover:bg-[#2da062] transition-colors"
           >
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M7 1v12M1 7h12" stroke="white" strokeWidth="2" strokeLinecap="round" />
             </svg>
-            Add Rep
+            <span className="hidden sm:inline">Add Rep</span>
+            <span className="sm:hidden">Add</span>
           </button>
         </div>
 
