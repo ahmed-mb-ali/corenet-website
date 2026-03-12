@@ -185,7 +185,7 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
                   const selected = selectedDate === dateStr;
                   return (
                     <button key={dateStr} disabled={past || !available} onClick={() => selectDate(dateStr)}
-                      className={`aspect-square flex items-center justify-center rounded-lg sm:rounded-xl font-stolzl text-[13px] sm:text-[14px] transition-all
+                      className={`relative aspect-square flex items-center justify-center rounded-lg sm:rounded-xl font-stolzl text-[13px] sm:text-[14px] transition-all
                         ${selected ? "bg-[#335cff] text-white font-semibold" : ""}
                         ${!selected && available && !past ? "hover:bg-[#335cff]/10 text-[#02022c] cursor-pointer" : ""}
                         ${past || !available ? "text-[#c3c3ca] cursor-not-allowed" : ""}

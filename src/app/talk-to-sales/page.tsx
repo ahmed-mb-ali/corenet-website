@@ -9,7 +9,7 @@ export default function TalkToSales() {
 
   return (
     <div
-      className="relative min-h-screen overflow-hidden"
+      className="relative min-h-screen overflow-x-hidden"
       style={{ background: "#050535" }}
       dir={isRTL ? "rtl" : "ltr"}
     >
@@ -59,7 +59,7 @@ export default function TalkToSales() {
 
       <Navbar />
 
-      <div className="relative flex h-[calc(100dvh-64px)] sm:min-h-screen sm:h-auto items-start sm:items-center justify-center px-2 sm:px-4 mt-[64px] sm:mt-0 pt-2 sm:pt-24 pb-1 sm:pb-10 overflow-hidden sm:overflow-visible">
+      <div className="relative flex min-h-[calc(100dvh-64px)] sm:min-h-screen sm:h-auto items-start sm:items-center justify-center px-2 sm:px-4 mt-[64px] sm:mt-0 pt-2 sm:pt-24 pb-4 sm:pb-10">
         <BookingWidget onClose={() => {}} inline />
       </div>
     </div>
