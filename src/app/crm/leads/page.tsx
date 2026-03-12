@@ -77,7 +77,7 @@ export default function LeadsPage() {
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-[#ebebeb] bg-[#f7f8fc]">
-                      {["Name", "Company", "Email", "Phone", "Stage", "Assigned To", "Booked", "Date"].map(h => (
+                      {["Name", "Company", "Email", "Phone", "Website", "Stage", "Assigned To", "Booked", "Date"].map(h => (
                         <th key={h} className="px-5 py-3 text-left font-stolzl text-[12px] text-[#5c5c5c] font-medium whitespace-nowrap">{h}</th>
                       ))}
                     </tr>
@@ -93,6 +93,11 @@ export default function LeadsPage() {
                         <td className="px-5 py-3 font-stolzl text-[14px] text-[#5c5c5c] whitespace-nowrap">{lead.company || "—"}</td>
                         <td className="px-5 py-3 font-stolzl text-[13px] text-[#5c5c5c]">{lead.email}</td>
                         <td className="px-5 py-3 font-stolzl text-[13px] text-[#5c5c5c] whitespace-nowrap">{lead.phone || "—"}</td>
+                        <td className="px-5 py-3 font-stolzl text-[13px] whitespace-nowrap max-w-[160px] truncate">
+                          {lead.website ? (
+                            <a href={lead.website.startsWith("http") ? lead.website : `https://${lead.website}`} target="_blank" rel="noopener noreferrer" className="text-[#3ab874] hover:underline">{lead.website.replace(/^https?:\/\//, "")}</a>
+                          ) : "—"}
+                        </td>
                         <td className="px-5 py-3">
                           {lead.stage_name ? (
                             <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-stolzl text-[12px]" style={{ backgroundColor: `${lead.stage_color}20`, color: lead.stage_color }}>
@@ -111,7 +116,7 @@ export default function LeadsPage() {
                       </tr>
                     ))}
                     {leads.length === 0 && (
-                      <tr><td colSpan={8} className="px-5 py-12 text-center font-stolzl text-[14px] text-[#5c5c5c]">No leads found</td></tr>
+                      <tr><td colSpan={9} className="px-5 py-12 text-center font-stolzl text-[14px] text-[#5c5c5c]">No leads found</td></tr>
                     )}
                   </tbody>
                 </table>
