@@ -121,7 +121,7 @@ export default function CRMShell({ children }: { children: ReactNode }) {
       )}
 
       {/* Sidebar */}
-      <aside className={`fixed lg:static inset-y-0 left-0 z-30 w-[220px] bg-[#1a6b47] flex flex-col transition-transform duration-300 ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
+      <aside className={`fixed lg:static inset-y-0 left-0 z-30 w-[220px] bg-[#0f3d2e] flex flex-col transition-transform duration-300 ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
         {/* Logo */}
         <div className="px-5 pt-6 pb-5 border-b border-white/10">
           <Image src="/images/logo.png" alt="Corenet" width={80} height={46} className="object-contain brightness-0 invert" />
@@ -137,8 +137,8 @@ export default function CRMShell({ children }: { children: ReactNode }) {
               onClick={() => setSidebarOpen(false)}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-xl font-stolzl text-[14px] transition-colors ${
                 isActive(item.href)
-                  ? "bg-white/20 text-white"
-                  : "text-white/60 hover:text-white hover:bg-white/10"
+                  ? "bg-[#3ab874] text-white"
+                  : "text-white/60 hover:text-white hover:bg-white/8"
               }`}
             >
               {item.icon}
@@ -151,7 +151,7 @@ export default function CRMShell({ children }: { children: ReactNode }) {
         {user && (
           <div className="px-4 py-4 border-t border-white/10">
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white font-semibold text-[13px] shrink-0">
+              <div className="w-8 h-8 rounded-full bg-[#3ab874] flex items-center justify-center text-white font-semibold text-[13px] shrink-0">
                 {user.name.charAt(0).toUpperCase()}
               </div>
               <div className="min-w-0">
