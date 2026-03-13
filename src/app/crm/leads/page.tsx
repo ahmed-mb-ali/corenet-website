@@ -38,7 +38,7 @@ export default function LeadsPage() {
 
   return (
     <CRMShell>
-      <div className="p-4 lg:p-6 max-w-[1200px] mx-auto">
+      <div className="p-4 lg:p-6">
         <div className="flex items-center justify-between mb-4 lg:mb-6">
           <div>
             <h1 className="font-stolzl text-[20px] lg:text-[24px] font-bold text-[#02022c]">Leads</h1>
@@ -74,27 +74,33 @@ export default function LeadsPage() {
           ) : (
             <>
               {/* Desktop table */}
-              <div className="hidden lg:block overflow-x-auto">
-                <table className="w-full">
+              <div className="hidden lg:block">
+                <table className="w-full table-fixed">
                   <thead>
                     <tr className="border-b border-[#ebebeb] bg-[#f7f8fc]">
-                      {["Name", "Company", "Email", "Phone", "Website", "Stage", "Assigned To", "Booked", "Date"].map(h => (
-                        <th key={h} className="px-4 py-3 text-left font-stolzl text-[12px] text-[#5c5c5c] font-medium whitespace-nowrap">{h}</th>
-                      ))}
+                      <th className="w-[14%] px-4 py-3 text-left font-stolzl text-[12px] text-[#5c5c5c] font-medium">Name</th>
+                      <th className="w-[11%] px-4 py-3 text-left font-stolzl text-[12px] text-[#5c5c5c] font-medium">Company</th>
+                      <th className="w-[18%] px-4 py-3 text-left font-stolzl text-[12px] text-[#5c5c5c] font-medium">Email</th>
+                      <th className="w-[10%] px-4 py-3 text-left font-stolzl text-[12px] text-[#5c5c5c] font-medium">Phone</th>
+                      <th className="w-[12%] px-4 py-3 text-left font-stolzl text-[12px] text-[#5c5c5c] font-medium">Website</th>
+                      <th className="w-[10%] px-4 py-3 text-left font-stolzl text-[12px] text-[#5c5c5c] font-medium">Stage</th>
+                      <th className="w-[11%] px-4 py-3 text-left font-stolzl text-[12px] text-[#5c5c5c] font-medium">Assigned To</th>
+                      <th className="w-[7%] px-4 py-3 text-left font-stolzl text-[12px] text-[#5c5c5c] font-medium">Booked</th>
+                      <th className="w-[7%] px-4 py-3 text-left font-stolzl text-[12px] text-[#5c5c5c] font-medium">Date</th>
                     </tr>
                   </thead>
                   <tbody>
                     {leads.map(lead => (
                       <tr key={lead.id} className="border-b border-[#f4f4f4] hover:bg-[#f7f8fc] transition-colors">
-                        <td className="px-4 py-3 whitespace-nowrap">
-                          <Link href={`/crm/leads/${lead.id}`} className="font-stolzl text-[13px] font-medium text-[#02022c] hover:text-[#3ab874]">
+                        <td className="px-4 py-3">
+                          <Link href={`/crm/leads/${lead.id}`} className="font-stolzl text-[13px] font-medium text-[#02022c] hover:text-[#3ab874] truncate block">
                             {lead.first_name} {lead.last_name}
                           </Link>
                         </td>
-                        <td className="px-4 py-3 font-stolzl text-[13px] text-[#5c5c5c] whitespace-nowrap">{lead.company || "—"}</td>
-                        <td className="px-4 py-3 font-stolzl text-[13px] text-[#5c5c5c]">{lead.email}</td>
-                        <td className="px-4 py-3 font-stolzl text-[13px] text-[#5c5c5c] whitespace-nowrap">{lead.phone || "—"}</td>
-                        <td className="px-4 py-3 font-stolzl text-[13px] max-w-[160px] truncate">
+                        <td className="px-4 py-3 font-stolzl text-[13px] text-[#5c5c5c] truncate">{lead.company || "—"}</td>
+                        <td className="px-4 py-3 font-stolzl text-[13px] text-[#5c5c5c] truncate">{lead.email}</td>
+                        <td className="px-4 py-3 font-stolzl text-[13px] text-[#5c5c5c] truncate">{lead.phone || "—"}</td>
+                        <td className="px-4 py-3 font-stolzl text-[13px] truncate">
                           {lead.website ? (
                             <a href={lead.website.startsWith("http") ? lead.website : `https://${lead.website}`} target="_blank" rel="noopener noreferrer" className="text-[#3ab874] hover:underline">{lead.website.replace(/^https?:\/\//, "")}</a>
                           ) : "—"}
@@ -107,11 +113,11 @@ export default function LeadsPage() {
                             </span>
                           ) : "—"}
                         </td>
-                        <td className="px-4 py-3 font-stolzl text-[13px] text-[#5c5c5c] whitespace-nowrap">{lead.assigned_to_name || "—"}</td>
-                        <td className="px-4 py-3 font-stolzl text-[12px] text-[#5c5c5c] whitespace-nowrap">
+                        <td className="px-4 py-3 font-stolzl text-[13px] text-[#5c5c5c] truncate">{lead.assigned_to_name || "—"}</td>
+                        <td className="px-4 py-3 font-stolzl text-[12px] text-[#5c5c5c]">
                           {lead.booking_date ? new Date(lead.booking_date).toLocaleDateString("en-GB", { day: "numeric", month: "short" }) : "—"}
                         </td>
-                        <td className="px-4 py-3 font-stolzl text-[12px] text-[#5c5c5c] whitespace-nowrap">
+                        <td className="px-4 py-3 font-stolzl text-[12px] text-[#5c5c5c]">
                           {new Date(lead.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}
                         </td>
                       </tr>
