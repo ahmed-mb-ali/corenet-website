@@ -325,15 +325,10 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
                   {" · "}Arabia Standard Time
                 </p>
                 {bookingDetails.meetUrl && (
-                  <a
-                    href={bookingDetails.meetUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-3 inline-flex items-center gap-2 bg-[#3ab874] text-white font-stolzl text-[13px] font-semibold px-4 py-2.5 rounded-xl hover:bg-[#2da062] transition-colors"
-                  >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-                    {isRTL ? "انضم إلى Google Meet" : "Join Google Meet"}
-                  </a>
+                  <p className="mt-2 flex items-center gap-2 font-stolzl text-[13px] text-[#3ab874]">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                    {isRTL ? "تم إرسال رابط Google Meet إلى بريدك الإلكتروني" : "Google Meet link sent to your email"}
+                  </p>
                 )}
               </div>
             )}
