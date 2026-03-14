@@ -23,6 +23,8 @@ function ActivityItem({ activity }: { activity: Activity }) {
     email: "📧",
     booking: "📅",
     booking_created: "📅",
+    booking_cancelled: "❌",
+    booking_rescheduled: "🔄",
     stage_change: "🔄",
     stage_changed: "🔄",
     created: "✨",
@@ -73,6 +75,15 @@ export default function LeadDetailPage() {
   });
   const [savingEdit, setSavingEdit] = useState(false);
 
+  // Booking actions
+  const [cancellingBooking, setCancellingBooking] = useState(false);
+  const [showCancelConfirm, setShowCancelConfirm] = useState(false);
+  const [showReschedule, setShowReschedule] = useState(false);
+  const [rescheduleDate, setRescheduleDate] = useState("");
+  const [rescheduleTime, setRescheduleTime] = useState("");
+  const [rescheduling, setRescheduling] = useState(false);
+  const [availableSlots, setAvailableSlots] = useState<Record<string, string[]>>({});
+
   useEffect(() => {
     Promise.all([
       crmApi.leads.get(id),
@@ -121,6 +132,56 @@ export default function LeadDetailPage() {
       setEditing(false);
     } finally {
       setSavingEdit(false);
+    }
+  }
+
+  async function handleCancelBooking() {
+    if (!lead?.booking_id) return;
+    setCancellingBooking(true);
+    try {
+      await crmApi.bookings.cancel(lead.booking_id);
+      const d = await crmApi.leads.get(id);
+      setLead(d.lead);
+      setActivities(d.activities);
+      setShowCancelConfirm(false);
+    } finally {
+      setCancellingBooking(false);
+    }
+  }
+
+  async function openReschedule() {
+    setShowReschedule(true);
+    setRescheduleDate("");
+    setRescheduleTime("");
+    // Load availability for current month
+    const now = new Date();
+    const month = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/booking/availability?month=${month}`);
+      const data = await res.json();
+      setAvailableSlots(data.slots || {});
+    } catch { /* ignore */ }
+  }
+
+  async function loadMonthSlots(monthStr: string) {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/booking/availability?month=${monthStr}`);
+      const data = await res.json();
+      setAvailableSlots(prev => ({ ...prev, ...(data.slots || {}) }));
+    } catch { /* ignore */ }
+  }
+
+  async function handleReschedule() {
+    if (!lead?.booking_id || !rescheduleDate || !rescheduleTime) return;
+    setRescheduling(true);
+    try {
+      await crmApi.bookings.reschedule(lead.booking_id, rescheduleDate, rescheduleTime);
+      const d = await crmApi.leads.get(id);
+      setLead(d.lead);
+      setActivities(d.activities);
+      setShowReschedule(false);
+    } finally {
+      setRescheduling(false);
     }
   }
 
@@ -349,7 +410,7 @@ export default function LeadDetailPage() {
                     {lead.booking_status}
                   </span>
                 )}
-                {lead.google_meet_url && (
+                {lead.google_meet_url && lead.booking_status !== "cancelled" && (
                   <a
                     href={lead.google_meet_url}
                     target="_blank"
@@ -359,6 +420,117 @@ export default function LeadDetailPage() {
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
                     Join Google Meet
                   </a>
+                )}
+
+                {/* Cancel / Reschedule buttons */}
+                {lead.booking_id && lead.booking_status !== "cancelled" && (
+                  <div className="flex gap-2 mt-3 pt-3 border-t border-[#ebebeb]">
+                    <button
+                      onClick={openReschedule}
+                      className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 font-stolzl text-[12px] font-semibold text-[#f59e0b] bg-[#f59e0b]/10 rounded-xl hover:bg-[#f59e0b]/20 transition-colors"
+                    >
+                      <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M1 7a6 6 0 1 1 1.5 3.9" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/><path d="M1 11V8h3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                      Reschedule
+                    </button>
+                    <button
+                      onClick={() => setShowCancelConfirm(true)}
+                      className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 font-stolzl text-[12px] font-semibold text-[#e53e3e] bg-[#e53e3e]/10 rounded-xl hover:bg-[#e53e3e]/20 transition-colors"
+                    >
+                      <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 4h10M5 4V3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1M11 4v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                      Cancel
+                    </button>
+                  </div>
+                )}
+
+                {/* Cancel confirmation dialog */}
+                {showCancelConfirm && (
+                  <div className="mt-3 p-3 bg-red-50 rounded-xl border border-red-200">
+                    <p className="font-stolzl text-[12px] text-red-700 mb-3">
+                      Cancel this meeting? The calendar event will be deleted and the client will be notified.
+                    </p>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={handleCancelBooking}
+                        disabled={cancellingBooking}
+                        className="flex-1 px-3 py-2 font-stolzl text-[12px] font-semibold text-white bg-[#e53e3e] rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50"
+                      >
+                        {cancellingBooking ? "Cancelling..." : "Yes, Cancel"}
+                      </button>
+                      <button
+                        onClick={() => setShowCancelConfirm(false)}
+                        className="flex-1 px-3 py-2 font-stolzl text-[12px] font-semibold text-[#5c5c5c] bg-white border border-[#ebebeb] rounded-lg hover:bg-[#f4f4f4] transition-colors"
+                      >
+                        Keep Meeting
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Reschedule modal */}
+                {showReschedule && (
+                  <div className="mt-3 p-3 bg-amber-50 rounded-xl border border-amber-200">
+                    <p className="font-stolzl text-[12px] font-semibold text-amber-700 mb-3">Reschedule Meeting</p>
+                    <div className="space-y-2">
+                      <div>
+                        <label className="font-stolzl text-[11px] text-[#5c5c5c] mb-1 block">Date</label>
+                        <input
+                          type="date"
+                          value={rescheduleDate}
+                          min={new Date().toISOString().split("T")[0]}
+                          onChange={e => {
+                            setRescheduleDate(e.target.value);
+                            setRescheduleTime("");
+                            // Load slots for the selected month
+                            if (e.target.value) {
+                              const month = e.target.value.substring(0, 7);
+                              if (!availableSlots[e.target.value]) {
+                                loadMonthSlots(month);
+                              }
+                            }
+                          }}
+                          className="w-full border border-[#ebebeb] rounded-lg px-3 py-2 font-stolzl text-[13px] text-[#02022c] focus:outline-none focus:border-amber-400"
+                        />
+                      </div>
+                      {rescheduleDate && availableSlots[rescheduleDate] && (
+                        <div>
+                          <label className="font-stolzl text-[11px] text-[#5c5c5c] mb-1 block">Time</label>
+                          <div className="grid grid-cols-3 gap-1.5">
+                            {availableSlots[rescheduleDate].map(slot => (
+                              <button
+                                key={slot}
+                                onClick={() => setRescheduleTime(slot)}
+                                className={`px-2 py-1.5 rounded-lg font-stolzl text-[12px] border transition-colors ${
+                                  rescheduleTime === slot
+                                    ? "bg-amber-500 text-white border-amber-500"
+                                    : "bg-white text-[#02022c] border-[#ebebeb] hover:border-amber-400"
+                                }`}
+                              >
+                                {slot}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      {rescheduleDate && !availableSlots[rescheduleDate] && (
+                        <p className="font-stolzl text-[12px] text-[#5c5c5c]">No available slots on this date</p>
+                      )}
+                      <div className="flex gap-2 pt-1">
+                        <button
+                          onClick={handleReschedule}
+                          disabled={rescheduling || !rescheduleDate || !rescheduleTime}
+                          className="flex-1 px-3 py-2 font-stolzl text-[12px] font-semibold text-white bg-amber-500 rounded-lg hover:bg-amber-600 transition-colors disabled:opacity-50"
+                        >
+                          {rescheduling ? "Rescheduling..." : "Confirm"}
+                        </button>
+                        <button
+                          onClick={() => setShowReschedule(false)}
+                          className="flex-1 px-3 py-2 font-stolzl text-[12px] font-semibold text-[#5c5c5c] bg-white border border-[#ebebeb] rounded-lg hover:bg-[#f4f4f4] transition-colors"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 )}
               </div>
             )}

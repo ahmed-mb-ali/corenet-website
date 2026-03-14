@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import CRMShell from "../CRMShell";
-import { crmApi, type Lead } from "../../lib/crmApi";
+import { crmApi, type Lead, type CRMUser } from "../../lib/crmApi";
 
 export default function LeadsPage() {
   const router = useRouter();
@@ -14,6 +14,10 @@ export default function LeadsPage() {
   const [search, setSearch] = useState("");
   const [searchInput, setSearchInput] = useState("");
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<CRMUser | null>(null);
+  const [menuOpen, setMenuOpen] = useState<string | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState(false);
   const limit = 20;
 
   const load = useCallback(() => {
@@ -27,6 +31,23 @@ export default function LeadsPage() {
   }, [page, search, router]);
 
   useEffect(() => { load(); }, [load]);
+
+  useEffect(() => {
+    crmApi.me().then(u => setUser(u)).catch(() => {});
+  }, []);
+
+  const isAdmin = user?.role === "admin";
+
+  async function handleDeleteLead(leadId: string) {
+    setDeleting(true);
+    try {
+      await crmApi.leads.delete(leadId);
+      load();
+      setConfirmDelete(null);
+    } finally {
+      setDeleting(false);
+    }
+  }
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
@@ -87,6 +108,7 @@ export default function LeadsPage() {
                       <th className="w-[11%] px-4 py-3 text-left font-stolzl text-[12px] text-[#5c5c5c] font-medium">Assigned To</th>
                       <th className="w-[7%] px-4 py-3 text-left font-stolzl text-[12px] text-[#5c5c5c] font-medium">Booked</th>
                       <th className="w-[7%] px-4 py-3 text-left font-stolzl text-[12px] text-[#5c5c5c] font-medium">Date</th>
+                      {isAdmin && <th className="w-[4%] px-4 py-3"></th>}
                     </tr>
                   </thead>
                   <tbody>
@@ -120,10 +142,32 @@ export default function LeadsPage() {
                         <td className="px-4 py-3 font-stolzl text-[12px] text-[#5c5c5c]">
                           {new Date(lead.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}
                         </td>
+                        {isAdmin && (
+                          <td className="px-4 py-3">
+                            <div className="relative">
+                              <button
+                                onClick={() => setMenuOpen(menuOpen === lead.id ? null : lead.id)}
+                                className="p-1.5 rounded-lg hover:bg-[#f4f4f4] transition-colors"
+                              >
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="3" r="1" fill="#5c5c5c"/><circle cx="7" cy="7" r="1" fill="#5c5c5c"/><circle cx="7" cy="11" r="1" fill="#5c5c5c"/></svg>
+                              </button>
+                              {menuOpen === lead.id && (
+                                <div className="absolute right-0 top-8 z-20 bg-white rounded-xl shadow-lg border border-[#ebebeb] py-1 min-w-[140px]">
+                                  <button
+                                    onClick={() => { setConfirmDelete(lead.id); setMenuOpen(null); }}
+                                    className="w-full text-left px-4 py-2 font-stolzl text-[13px] text-[#e53e3e] hover:bg-[#f4f4f4] transition-colors"
+                                  >
+                                    Delete Lead
+                                  </button>
+                                </div>
+                              )}
+                            </div>
+                          </td>
+                        )}
                       </tr>
                     ))}
                     {leads.length === 0 && (
-                      <tr><td colSpan={9} className="px-4 py-12 text-center font-stolzl text-[14px] text-[#5c5c5c]">No leads found</td></tr>
+                      <tr><td colSpan={isAdmin ? 10 : 9} className="px-4 py-12 text-center font-stolzl text-[14px] text-[#5c5c5c]">No leads found</td></tr>
                     )}
                   </tbody>
                 </table>
@@ -171,6 +215,32 @@ export default function LeadsPage() {
             </>
           )}
         </div>
+        {/* Delete confirmation modal */}
+        {confirmDelete && (
+          <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4" onClick={() => setConfirmDelete(null)}>
+            <div className="bg-white rounded-2xl p-6 max-w-sm w-full" onClick={e => e.stopPropagation()}>
+              <h3 className="font-stolzl text-[15px] font-bold text-[#02022c] mb-2">Delete Lead?</h3>
+              <p className="font-stolzl text-[13px] text-[#5c5c5c] mb-5">
+                This will permanently delete the lead, all activities, and cancel any associated meetings.
+              </p>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => handleDeleteLead(confirmDelete)}
+                  disabled={deleting}
+                  className="flex-1 px-4 py-2.5 font-stolzl text-[13px] font-semibold text-white bg-[#e53e3e] rounded-xl hover:bg-red-600 transition-colors disabled:opacity-50"
+                >
+                  {deleting ? "Deleting..." : "Yes, Delete"}
+                </button>
+                <button
+                  onClick={() => setConfirmDelete(null)}
+                  className="flex-1 px-4 py-2.5 font-stolzl text-[13px] font-semibold text-[#5c5c5c] bg-[#f4f4f4] rounded-xl hover:bg-[#ebebeb] transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </CRMShell>
   );

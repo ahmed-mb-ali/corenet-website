@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import CRMShell from "../CRMShell";
-import { crmApi, type StageWithLeads, type Lead } from "../../lib/crmApi";
+import { crmApi, type StageWithLeads, type Lead, type CRMUser } from "../../lib/crmApi";
 
 export default function PipelinePage() {
   const router = useRouter();
@@ -12,10 +12,17 @@ export default function PipelinePage() {
   const [loading, setLoading] = useState(true);
   const [activeStage, setActiveStage] = useState<string | null>(null); // null = "All"
   const [movingLead, setMovingLead] = useState<string | null>(null);
+  const [user, setUser] = useState<CRMUser | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState(false);
+  const [menuOpen, setMenuOpen] = useState<string | null>(null);
 
   useEffect(() => {
-    crmApi.pipeline.get()
-      .then(d => setStages(d.stages))
+    Promise.all([
+      crmApi.pipeline.get(),
+      crmApi.me(),
+    ])
+      .then(([d, u]) => { setStages(d.stages); setUser(u); })
       .catch(() => router.push("/crm/login"))
       .finally(() => setLoading(false));
   }, [router]);
@@ -29,6 +36,20 @@ export default function PipelinePage() {
   const activeLabel = activeStage
     ? stages.find(s => s.id === activeStage)?.name || "All"
     : "All";
+
+  async function handleDeleteLead(leadId: string) {
+    setDeleting(true);
+    try {
+      await crmApi.leads.delete(leadId);
+      const d = await crmApi.pipeline.get();
+      setStages(d.stages);
+      setConfirmDelete(null);
+    } finally {
+      setDeleting(false);
+    }
+  }
+
+  const isAdmin = user?.role === "admin";
 
   async function moveToStage(lead: Lead & { _stageName: string; _stageColor: string }, targetStageId: string) {
     if (lead.stage_id === targetStageId) return;
@@ -133,8 +154,8 @@ export default function PipelinePage() {
                     <table className="w-full">
                       <thead>
                         <tr className="border-b border-[#f4f4f4]">
-                          {["Name", "Company", "Stage", "Assigned To", "Date", "Move to"].map(h => (
-                            <th key={h} className="px-5 py-3 text-left font-stolzl text-[11px] font-semibold text-[#5c5c5c] uppercase tracking-wider">{h}</th>
+                          {["Name", "Company", "Stage", "Assigned To", "Date", "Move to", ...(isAdmin ? [""] : [])].map((h, i) => (
+                            <th key={i} className="px-5 py-3 text-left font-stolzl text-[11px] font-semibold text-[#5c5c5c] uppercase tracking-wider">{h}</th>
                           ))}
                         </tr>
                       </thead>
@@ -187,6 +208,34 @@ export default function PipelinePage() {
                                 ))}
                               </select>
                             </td>
+                            {isAdmin && (
+                              <td className="px-5 py-3.5">
+                                <div className="relative">
+                                  <button
+                                    onClick={() => setMenuOpen(menuOpen === lead.id ? null : lead.id)}
+                                    className="p-1.5 rounded-lg hover:bg-[#f4f4f4] transition-colors"
+                                  >
+                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="3" r="1" fill="#5c5c5c"/><circle cx="7" cy="7" r="1" fill="#5c5c5c"/><circle cx="7" cy="11" r="1" fill="#5c5c5c"/></svg>
+                                  </button>
+                                  {menuOpen === lead.id && (
+                                    <div className="absolute right-0 top-8 z-20 bg-white rounded-xl shadow-lg border border-[#ebebeb] py-1 min-w-[140px]">
+                                      <button
+                                        onClick={() => { router.push(`/crm/leads/${lead.id}`); setMenuOpen(null); }}
+                                        className="w-full text-left px-4 py-2 font-stolzl text-[13px] text-[#02022c] hover:bg-[#f4f4f4] transition-colors"
+                                      >
+                                        View Lead
+                                      </button>
+                                      <button
+                                        onClick={() => { setConfirmDelete(lead.id); setMenuOpen(null); }}
+                                        className="w-full text-left px-4 py-2 font-stolzl text-[13px] text-[#e53e3e] hover:bg-[#f4f4f4] transition-colors"
+                                      >
+                                        Delete Lead
+                                      </button>
+                                    </div>
+                                  )}
+                                </div>
+                              </td>
+                            )}
                           </tr>
                         ))}
                       </tbody>
@@ -237,6 +286,33 @@ export default function PipelinePage() {
               )}
             </div>
           </>
+        )}
+
+        {/* Delete confirmation modal */}
+        {confirmDelete && (
+          <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4" onClick={() => setConfirmDelete(null)}>
+            <div className="bg-white rounded-2xl p-6 max-w-sm w-full" onClick={e => e.stopPropagation()}>
+              <h3 className="font-stolzl text-[15px] font-bold text-[#02022c] mb-2">Delete Lead?</h3>
+              <p className="font-stolzl text-[13px] text-[#5c5c5c] mb-5">
+                This will permanently delete the lead, all activities, and cancel any associated meetings.
+              </p>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => handleDeleteLead(confirmDelete)}
+                  disabled={deleting}
+                  className="flex-1 px-4 py-2.5 font-stolzl text-[13px] font-semibold text-white bg-[#e53e3e] rounded-xl hover:bg-red-600 transition-colors disabled:opacity-50"
+                >
+                  {deleting ? "Deleting..." : "Yes, Delete"}
+                </button>
+                <button
+                  onClick={() => setConfirmDelete(null)}
+                  className="flex-1 px-4 py-2.5 font-stolzl text-[13px] font-semibold text-[#5c5c5c] bg-[#f4f4f4] rounded-xl hover:bg-[#ebebeb] transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
         )}
       </div>
     </CRMShell>

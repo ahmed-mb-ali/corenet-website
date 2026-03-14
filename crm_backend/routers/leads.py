@@ -6,13 +6,14 @@ from pydantic import BaseModel
 
 from ..database import get_db
 from ..models import Lead, User, Stage, Booking, Activity
-from ..auth import get_current_user
+from ..auth import get_current_user, require_admin
 
 router = APIRouter()
 
 
 def lead_dict(lead: Lead, assigned_name=None, stage_name=None, stage_color=None,
-              booking_date=None, booking_start=None, booking_status=None):
+              booking_date=None, booking_start=None, booking_status=None,
+              google_meet_url=None, booking_id=None):
     return {
         "id": lead.id,
         "tenant_id": lead.tenant_id,
@@ -34,6 +35,8 @@ def lead_dict(lead: Lead, assigned_name=None, stage_name=None, stage_color=None,
         "booking_date": str(booking_date) if booking_date else None,
         "booking_start": str(booking_start) if booking_start else None,
         "booking_status": booking_status,
+        "google_meet_url": google_meet_url,
+        "booking_id": str(booking_id) if booking_id else None,
         "created_at": lead.created_at,
         "updated_at": lead.updated_at,
     }
@@ -54,9 +57,11 @@ def list_leads(
     offset = (page - 1) * limit
 
     q = (
-        db.query(Lead, User.name.label("assigned_name"), Stage.name.label("stage_name"), Stage.color.label("stage_color"))
+        db.query(Lead, User.name.label("assigned_name"), Stage.name.label("stage_name"), Stage.color.label("stage_color"),
+                 Booking.date.label("booking_date"), Booking.google_meet_url.label("google_meet_url"))
         .outerjoin(User, Lead.assigned_to == User.id)
         .outerjoin(Stage, Lead.stage_id == Stage.id)
+        .outerjoin(Booking, Booking.lead_id == Lead.id)
         .filter(Lead.tenant_id == tenant_id)
     )
 
@@ -77,7 +82,7 @@ def list_leads(
     total = q.count()
     rows = q.order_by(Lead.created_at.desc()).offset(offset).limit(limit).all()
 
-    leads = [lead_dict(r.Lead, r.assigned_name, r.stage_name, r.stage_color) for r in rows]
+    leads = [lead_dict(r.Lead, r.assigned_name, r.stage_name, r.stage_color, r.booking_date, google_meet_url=r.google_meet_url) for r in rows]
     return {"leads": leads, "total": total, "page": page, "limit": limit}
 
 
@@ -90,7 +95,9 @@ def get_lead(
     row = (
         db.query(Lead, User.name.label("assigned_name"), Stage.name.label("stage_name"),
                  Stage.color.label("stage_color"), Booking.date.label("booking_date"),
-                 Booking.start_time.label("booking_start"), Booking.status.label("booking_status"))
+                 Booking.start_time.label("booking_start"), Booking.status.label("booking_status"),
+                 Booking.google_meet_url.label("google_meet_url"),
+                 Booking.id.label("booking_id"))
         .outerjoin(User, Lead.assigned_to == User.id)
         .outerjoin(Stage, Lead.stage_id == Stage.id)
         .outerjoin(Booking, Booking.lead_id == Lead.id)
@@ -121,12 +128,19 @@ def get_lead(
 
     return {
         "lead": lead_dict(row.Lead, row.assigned_name, row.stage_name, row.stage_color,
-                          row.booking_date, row.booking_start, row.booking_status),
+                          row.booking_date, row.booking_start, row.booking_status,
+                          row.google_meet_url, row.booking_id),
         "activities": activities,
     }
 
 
 class PatchLeadBody(BaseModel):
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    company: Optional[str] = None
+    website: Optional[str] = None
     stage_id: Optional[str] = None
     assigned_to: Optional[str] = None
     status: Optional[str] = None
@@ -145,6 +159,12 @@ def patch_lead(
         raise HTTPException(status_code=404, detail="Lead not found")
 
     old_stage_id = lead.stage_id
+
+    # Profile fields
+    for field in ("first_name", "last_name", "email", "phone", "company", "website"):
+        val = getattr(body, field, None)
+        if val is not None:
+            setattr(lead, field, val)
 
     if body.stage_id is not None:
         lead.stage_id = body.stage_id
@@ -176,3 +196,32 @@ def patch_lead(
     db.commit()
     db.refresh(lead)
     return lead_dict(lead)
+
+
+@router.delete("/{lead_id}")
+def delete_lead(
+    lead_id: str,
+    current_user: User = Depends(require_admin),
+    db: Session = Depends(get_db),
+):
+    lead = db.query(Lead).filter(Lead.id == lead_id, Lead.tenant_id == current_user.tenant_id).first()
+    if not lead:
+        raise HTTPException(status_code=404, detail="Lead not found")
+
+    # Cancel any active bookings and delete Google Calendar events
+    bookings = db.query(Booking).filter(Booking.lead_id == lead_id).all()
+    for booking in bookings:
+        if booking.status != "cancelled" and booking.google_event_id:
+            rep = db.query(User).filter(User.id == booking.assigned_to).first()
+            if rep:
+                from ..services.google_calendar import delete_event
+                delete_event(rep.email, booking.google_event_id)
+        db.delete(booking)
+
+    # Delete activities
+    db.query(Activity).filter(Activity.lead_id == lead_id).delete()
+
+    db.delete(lead)
+    db.commit()
+
+    return {"success": True, "message": "Lead deleted"}

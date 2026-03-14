@@ -42,6 +42,21 @@ export const crmApi = {
     get: (id: string) => request<{ lead: Lead; activities: Activity[] }>(`/api/leads/${id}`),
     update: (id: string, body: Partial<Lead> & { note?: string }) =>
       request<Lead>(`/api/leads/${id}`, { method: "PATCH", body: JSON.stringify(body) }),
+    delete: (id: string) =>
+      request<{ success: boolean }>(`/api/leads/${id}`, { method: "DELETE" }),
+  },
+
+  bookings: {
+    list: (params?: Record<string, string>) => {
+      const q = params ? "?" + new URLSearchParams(params).toString() : "";
+      return request<{ meetings: Meeting[] }>(`/api/booking/meetings${q}`);
+    },
+    cancel: (id: string) =>
+      request<{ success: boolean }>(`/api/booking/${id}`, { method: "DELETE" }),
+    reschedule: (id: string, date: string, startTime: string) =>
+      request<{ success: boolean; details: { date: string; startTime: string; endTime: string; meetUrl?: string } }>(
+        `/api/booking/${id}`, { method: "PATCH", body: JSON.stringify({ date, startTime }) }
+      ),
   },
 
   pipeline: {
@@ -121,6 +136,7 @@ export interface Lead {
   booking_start?: string;
   booking_status?: string;
   google_meet_url?: string;
+  booking_id?: string;
   created_at: string;
   updated_at: string;
 }
@@ -172,4 +188,18 @@ export interface HourEntry {
   startTime: string;
   endTime: string;
   enabled: boolean;
+}
+
+export interface Meeting {
+  id: string;
+  lead_id: string;
+  client_name: string;
+  client_email: string;
+  client_company?: string;
+  date: string;
+  start_time: string;
+  end_time: string;
+  status: string;
+  rep_name: string;
+  google_meet_url?: string;
 }

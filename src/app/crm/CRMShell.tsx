@@ -41,6 +41,17 @@ const navItems = [
     ),
   },
   {
+    href: "/crm/meetings",
+    label: "Meetings",
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <rect x="2" y="3" width="14" height="13" rx="2" stroke="currentColor" strokeWidth="1.4"/>
+        <path d="M5 1v3M13 1v3M2 8h14" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+        <path d="M6 11l2 2 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+  },
+  {
     href: "/crm/team",
     label: "Team",
     icon: (
