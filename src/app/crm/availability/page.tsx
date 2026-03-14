@@ -15,16 +15,55 @@ for (let h = 7; h <= 21; h++) {
   if (h < 21) TIME_OPTIONS.push(`${String(h).padStart(2, "0")}:30`);
 }
 
-function buildDefaultHours(workingHours: WorkingHour[]): HourEntry[] {
+interface DaySchedule {
+  dayOfWeek: number;
+  enabled: boolean;
+  blocks: { startTime: string; endTime: string }[];
+}
+
+function buildDaySchedules(workingHours: WorkingHour[]): DaySchedule[] {
   return DAYS.map((_, i) => {
-    const existing = workingHours.find(w => w.day_of_week === i);
+    const existing = workingHours.filter(w => w.day_of_week === i);
+    if (existing.length > 0) {
+      return {
+        dayOfWeek: i,
+        enabled: true,
+        blocks: existing.map(w => ({
+          startTime: w.start_time?.slice(0, 5) ?? "09:00",
+          endTime: w.end_time?.slice(0, 5) ?? "17:00",
+        })).sort((a, b) => a.startTime.localeCompare(b.startTime)),
+      };
+    }
     return {
       dayOfWeek: i,
-      startTime: existing?.start_time?.slice(0, 5) ?? "09:00",
-      endTime: existing?.end_time?.slice(0, 5) ?? "17:00",
-      enabled: !!existing,
+      enabled: false,
+      blocks: [{ startTime: "09:00", endTime: "17:00" }],
     };
   });
+}
+
+function schedulesToHourEntries(schedules: DaySchedule[]): HourEntry[] {
+  const entries: HourEntry[] = [];
+  for (const day of schedules) {
+    for (const block of day.blocks) {
+      entries.push({
+        dayOfWeek: day.dayOfWeek,
+        startTime: block.startTime,
+        endTime: block.endTime,
+        enabled: day.enabled,
+      });
+    }
+  }
+  return entries;
+}
+
+function formatTime12h(t: string): string {
+  const [hStr, mStr] = t.split(":");
+  let h = parseInt(hStr);
+  const ampm = h >= 12 ? "PM" : "AM";
+  if (h === 0) h = 12;
+  else if (h > 12) h -= 12;
+  return `${h}:${mStr} ${ampm}`;
 }
 
 function TimeSelect({ value, onChange }: { value: string; onChange: (v: string) => void }) {
@@ -32,10 +71,10 @@ function TimeSelect({ value, onChange }: { value: string; onChange: (v: string) 
     <select
       value={value}
       onChange={e => onChange(e.target.value)}
-      className="border border-[#ebebeb] rounded-lg px-2.5 py-1.5 font-stolzl text-[13px] text-[#02022c] focus:outline-none focus:border-[#3ab874]/60 bg-white"
+      className="border border-[#ebebeb] rounded-lg px-2 py-1.5 font-stolzl text-[12px] text-[#02022c] focus:outline-none focus:border-[#3ab874]/60 bg-white cursor-pointer"
     >
       {TIME_OPTIONS.map(t => (
-        <option key={t} value={t}>{t}</option>
+        <option key={t} value={t}>{formatTime12h(t)}</option>
       ))}
     </select>
   );
@@ -47,7 +86,7 @@ export default function AvailabilityPage() {
   const [reps, setReps] = useState<CRMUser[]>([]);
   const [selectedRepId, setSelectedRepId] = useState<string>("");
 
-  const [hours, setHours] = useState<HourEntry[]>([]);
+  const [schedules, setSchedules] = useState<DaySchedule[]>([]);
   const [blockedDates, setBlockedDates] = useState<BlockedDate[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -75,7 +114,7 @@ export default function AvailabilityPage() {
     setLoading(true);
     try {
       const data = await crmApi.availability.get(userId === me?.id ? undefined : userId);
-      setHours(buildDefaultHours(data.workingHours));
+      setSchedules(buildDaySchedules(data.workingHours));
       setBlockedDates(data.blockedDates);
     } finally {
       setLoading(false);
@@ -91,7 +130,7 @@ export default function AvailabilityPage() {
     setSaveMsg("");
     try {
       const targetId = selectedRepId !== me?.id ? selectedRepId : undefined;
-      await crmApi.availability.saveHours(hours, targetId);
+      await crmApi.availability.saveHours(schedulesToHourEntries(schedules), targetId);
       setSaveMsg("Saved!");
       setTimeout(() => setSaveMsg(""), 2000);
     } finally {
@@ -119,16 +158,46 @@ export default function AvailabilityPage() {
     setBlockedDates(prev => prev.filter(b => b.id !== id));
   }
 
-  function toggleDay(i: number) {
-    setHours(prev => prev.map((h, idx) => idx === i ? { ...h, enabled: !h.enabled } : h));
+  function toggleDay(dayIdx: number) {
+    setSchedules(prev => prev.map(s =>
+      s.dayOfWeek === dayIdx ? { ...s, enabled: !s.enabled } : s
+    ));
   }
 
-  function updateHour(i: number, field: "startTime" | "endTime", val: string) {
-    setHours(prev => prev.map((h, idx) => idx === i ? { ...h, [field]: val } : h));
+  function updateBlock(dayIdx: number, blockIdx: number, field: "startTime" | "endTime", val: string) {
+    setSchedules(prev => prev.map(s => {
+      if (s.dayOfWeek !== dayIdx) return s;
+      const newBlocks = s.blocks.map((b, i) => i === blockIdx ? { ...b, [field]: val } : b);
+      return { ...s, blocks: newBlocks };
+    }));
+  }
+
+  function addBlock(dayIdx: number) {
+    setSchedules(prev => prev.map(s => {
+      if (s.dayOfWeek !== dayIdx) return s;
+      // Find the last block's end time to use as the new block's start
+      const lastBlock = s.blocks[s.blocks.length - 1];
+      const newStart = lastBlock?.endTime ?? "13:00";
+      // Default the new block end to 2 hours after start, capped at 21:00
+      const [h] = newStart.split(":").map(Number);
+      const newEnd = `${String(Math.min(h + 2, 21)).padStart(2, "0")}:00`;
+      return { ...s, blocks: [...s.blocks, { startTime: newStart, endTime: newEnd }] };
+    }));
+  }
+
+  function removeBlock(dayIdx: number, blockIdx: number) {
+    setSchedules(prev => prev.map(s => {
+      if (s.dayOfWeek !== dayIdx) return s;
+      if (s.blocks.length <= 1) return s; // Keep at least one block
+      return { ...s, blocks: s.blocks.filter((_, i) => i !== blockIdx) };
+    }));
   }
 
   const selectedRep = reps.find(r => r.id === selectedRepId) ?? me;
   const isAdmin = me?.role === "admin";
+
+  const enabledCount = schedules.filter(s => s.enabled).length;
+  const totalBlocks = schedules.reduce((sum, s) => sum + (s.enabled ? s.blocks.length : 0), 0);
 
   return (
     <CRMShell>
@@ -136,7 +205,9 @@ export default function AvailabilityPage() {
         {/* Header */}
         <div className="mb-4 lg:mb-6">
           <h1 className="font-stolzl text-[20px] lg:text-[24px] font-bold text-[#02022c]">Availability</h1>
-          <p className="font-stolzl text-[13px] lg:text-[14px] text-[#5c5c5c]">Set working hours and blocked dates for booking slots</p>
+          <p className="font-stolzl text-[13px] lg:text-[14px] text-[#5c5c5c]">
+            Set working hours and blocked dates for booking slots
+          </p>
         </div>
 
         {/* Rep selector (admin only) */}
@@ -171,37 +242,119 @@ export default function AvailabilityPage() {
         ) : (
           <>
             {/* Working hours */}
-            <div className="bg-white rounded-2xl border border-[#ebebeb] p-5 mb-5">
+            <div className="bg-white rounded-2xl border border-[#ebebeb] p-4 lg:p-5 mb-5">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="font-stolzl text-[15px] font-bold text-[#02022c]">Working Hours</h2>
+                <div>
+                  <h2 className="font-stolzl text-[15px] font-bold text-[#02022c]">Working Hours</h2>
+                  <p className="font-stolzl text-[11px] text-[#5c5c5c] mt-0.5">
+                    {enabledCount} day{enabledCount !== 1 ? "s" : ""} active · {totalBlocks} time block{totalBlocks !== 1 ? "s" : ""}
+                  </p>
+                </div>
                 {selectedRep && (
                   <span className="font-stolzl text-[12px] text-[#5c5c5c]">{selectedRep.name}</span>
                 )}
               </div>
 
-              <div className="space-y-2">
-                {hours.map((h, i) => (
-                  <div key={i} className={`flex items-center gap-2 lg:gap-3 py-2 px-2 lg:px-3 rounded-xl transition-colors ${h.enabled ? "bg-[#f7f8fc]" : "opacity-50"}`}>
-                    {/* Day toggle */}
-                    <button
-                      onClick={() => toggleDay(i)}
-                      className={`w-7 h-7 lg:w-8 lg:h-8 rounded-full shrink-0 flex items-center justify-center font-stolzl text-[10px] lg:text-[11px] font-bold transition-colors ${
-                        h.enabled ? "bg-[#3ab874] text-white" : "bg-[#f0f0f0] text-[#5c5c5c]"
-                      }`}
-                    >
-                      {DAY_SHORT[i].charAt(0)}
-                    </button>
+              <div className="space-y-1">
+                {schedules.map((day) => (
+                  <div
+                    key={day.dayOfWeek}
+                    className={`rounded-xl transition-colors ${day.enabled ? "bg-[#f7f8fc]" : "bg-[#fafafa]"}`}
+                  >
+                    {/* Day header row */}
+                    <div className="flex items-center gap-2 lg:gap-3 px-2.5 lg:px-3 py-2">
+                      {/* Toggle switch */}
+                      <button
+                        onClick={() => toggleDay(day.dayOfWeek)}
+                        className={`relative w-9 h-5 rounded-full shrink-0 transition-colors ${
+                          day.enabled ? "bg-[#3ab874]" : "bg-[#d0d0d0]"
+                        }`}
+                      >
+                        <div className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow-sm transition-transform ${
+                          day.enabled ? "left-[18px]" : "left-0.5"
+                        }`} />
+                      </button>
 
-                    <span className="font-stolzl text-[12px] lg:text-[13px] text-[#02022c] w-[56px] lg:w-[80px] shrink-0">{DAY_SHORT[i]}<span className="hidden lg:inline">{DAYS[i].slice(3)}</span></span>
+                      <span className={`font-stolzl text-[13px] w-[80px] shrink-0 ${
+                        day.enabled ? "text-[#02022c] font-medium" : "text-[#5c5c5c]/60"
+                      }`}>
+                        {DAYS[day.dayOfWeek]}
+                      </span>
 
-                    {h.enabled ? (
-                      <div className="flex items-center gap-1.5 lg:gap-2 flex-1">
-                        <TimeSelect value={h.startTime} onChange={v => updateHour(i, "startTime", v)} />
-                        <span className="font-stolzl text-[11px] lg:text-[12px] text-[#5c5c5c]">to</span>
-                        <TimeSelect value={h.endTime} onChange={v => updateHour(i, "endTime", v)} />
+                      {day.enabled ? (
+                        <div className="flex-1 flex items-center gap-1.5 flex-wrap">
+                          {/* First block inline */}
+                          <div className="flex items-center gap-1.5">
+                            <TimeSelect
+                              value={day.blocks[0].startTime}
+                              onChange={v => updateBlock(day.dayOfWeek, 0, "startTime", v)}
+                            />
+                            <span className="font-stolzl text-[11px] text-[#5c5c5c]">–</span>
+                            <TimeSelect
+                              value={day.blocks[0].endTime}
+                              onChange={v => updateBlock(day.dayOfWeek, 0, "endTime", v)}
+                            />
+                          </div>
+
+                          {day.blocks.length === 1 && (
+                            <button
+                              onClick={() => addBlock(day.dayOfWeek)}
+                              className="ml-1 w-6 h-6 rounded-full flex items-center justify-center bg-[#3ab874]/10 hover:bg-[#3ab874]/20 transition-colors"
+                              title="Add time block"
+                            >
+                              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                                <path d="M5 1v8M1 5h8" stroke="#3ab874" strokeWidth="1.5" strokeLinecap="round" />
+                              </svg>
+                            </button>
+                          )}
+                        </div>
+                      ) : (
+                        <span className="font-stolzl text-[13px] text-[#5c5c5c]/40 flex-1">Day off</span>
+                      )}
+                    </div>
+
+                    {/* Additional blocks */}
+                    {day.enabled && day.blocks.length > 1 && (
+                      <div className="pb-2 pl-[118px] lg:pl-[126px] pr-3 space-y-1.5">
+                        {day.blocks.slice(1).map((block, bIdx) => (
+                          <div key={bIdx + 1} className="flex items-center gap-1.5">
+                            <TimeSelect
+                              value={block.startTime}
+                              onChange={v => updateBlock(day.dayOfWeek, bIdx + 1, "startTime", v)}
+                            />
+                            <span className="font-stolzl text-[11px] text-[#5c5c5c]">–</span>
+                            <TimeSelect
+                              value={block.endTime}
+                              onChange={v => updateBlock(day.dayOfWeek, bIdx + 1, "endTime", v)}
+                            />
+                            <button
+                              onClick={() => removeBlock(day.dayOfWeek, bIdx + 1)}
+                              className="w-5 h-5 rounded-full flex items-center justify-center hover:bg-red-100 transition-colors"
+                              title="Remove block"
+                            >
+                              <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
+                                <path d="M1 4h6" stroke="#e53e3e" strokeWidth="1.5" strokeLinecap="round" />
+                              </svg>
+                            </button>
+                          </div>
+                        ))}
+                        <button
+                          onClick={() => addBlock(day.dayOfWeek)}
+                          className="flex items-center gap-1.5 font-stolzl text-[11px] text-[#3ab874] hover:text-[#2da062] transition-colors"
+                        >
+                          <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
+                            <path d="M4 0v8M0 4h8" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+                          </svg>
+                          Add break block
+                        </button>
                       </div>
-                    ) : (
-                      <span className="font-stolzl text-[13px] text-[#5c5c5c]/50 flex-1">Off</span>
+                    )}
+
+                    {/* Remove first block button when multiple exist */}
+                    {day.enabled && day.blocks.length > 1 && (
+                      <div className="pl-[118px] lg:pl-[126px] pb-1 -mt-1">
+                        {/* visual connector handled by spacing */}
+                      </div>
                     )}
                   </div>
                 ))}
@@ -211,19 +364,24 @@ export default function AvailabilityPage() {
                 <button
                   onClick={handleSaveHours}
                   disabled={saving}
-                  className="px-5 py-2.5 font-stolzl text-[14px] font-semibold text-white bg-[#3ab874] rounded-xl hover:bg-[#2da062] transition-colors disabled:opacity-60"
+                  className="px-5 py-2.5 font-stolzl text-[13px] font-semibold text-white bg-[#3ab874] rounded-xl hover:bg-[#2da062] transition-colors disabled:opacity-60"
                 >
-                  {saving ? "Saving..." : "Save Hours"}
+                  {saving ? "Saving..." : "Save Schedule"}
                 </button>
                 {saveMsg && (
-                  <span className="font-stolzl text-[13px] text-[#3ab874] font-semibold">{saveMsg}</span>
+                  <span className="font-stolzl text-[13px] text-[#3ab874] font-semibold animate-pulse">{saveMsg}</span>
                 )}
               </div>
             </div>
 
             {/* Blocked dates */}
-            <div className="bg-white rounded-2xl border border-[#ebebeb] p-5">
-              <h2 className="font-stolzl text-[15px] font-bold text-[#02022c] mb-4">Blocked Dates</h2>
+            <div className="bg-white rounded-2xl border border-[#ebebeb] p-4 lg:p-5">
+              <div className="mb-4">
+                <h2 className="font-stolzl text-[15px] font-bold text-[#02022c]">Blocked Dates</h2>
+                <p className="font-stolzl text-[11px] text-[#5c5c5c] mt-0.5">
+                  Block full days from receiving bookings
+                </p>
+              </div>
 
               {/* Add block form */}
               <form onSubmit={handleAddBlock} className="flex gap-2 mb-4 flex-wrap">
