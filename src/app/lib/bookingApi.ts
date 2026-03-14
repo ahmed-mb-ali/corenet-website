@@ -15,6 +15,7 @@ export interface BookingPayload {
   phone?: string;
   website?: string;
   message?: string;
+  lang?: string;
 }
 
 export interface BookingResponse {
@@ -26,6 +27,7 @@ export interface BookingResponse {
     startTime: string;
     endTime: string;
     timezone: string;
+    meetUrl?: string;
   };
 }
 

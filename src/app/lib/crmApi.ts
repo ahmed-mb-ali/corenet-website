@@ -120,6 +120,7 @@ export interface Lead {
   booking_date?: string;
   booking_start?: string;
   booking_status?: string;
+  google_meet_url?: string;
   created_at: string;
   updated_at: string;
 }

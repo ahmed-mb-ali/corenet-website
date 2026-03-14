@@ -46,7 +46,7 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
   const [errors, setErrors] = useState<Partial<FormState>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [bookingDetails, setBookingDetails] = useState<{ date: string; time: string } | null>(null);
+  const [bookingDetails, setBookingDetails] = useState<{ date: string; time: string; meetUrl?: string } | null>(null);
 
   const loadMonth = useCallback(async (y: number, m: number) => {
     const key = toMonthKey(y, m);
@@ -124,9 +124,10 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
         phone: form.phone || undefined,
         website: form.website || undefined,
         message: form.message || undefined,
+        lang: isRTL ? "ar" : "en",
       };
-      await submitBooking(payload);
-      setBookingDetails({ date: selectedDate, time: selectedTime });
+      const result = await submitBooking(payload);
+      setBookingDetails({ date: selectedDate, time: selectedTime, meetUrl: result.details?.meetUrl });
       setStep("success");
     } catch (err: unknown) {
       const e = err as { status?: number; data?: { error?: string }; message?: string };
@@ -323,6 +324,17 @@ export default function BookingWidget({ onClose, inline = false }: Props) {
                   {(() => { const [h, m] = bookingDetails.time.split(":").map(Number); const suffix = h >= 12 ? (isRTL ? "م" : "PM") : (isRTL ? "ص" : "AM"); return `${h % 12 || 12}:${pad(m)} ${suffix}`; })()}
                   {" · "}Arabia Standard Time
                 </p>
+                {bookingDetails.meetUrl && (
+                  <a
+                    href={bookingDetails.meetUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-flex items-center gap-2 bg-[#3ab874] text-white font-stolzl text-[13px] font-semibold px-4 py-2.5 rounded-xl hover:bg-[#2da062] transition-colors"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                    {isRTL ? "انضم إلى Google Meet" : "Join Google Meet"}
+                  </a>
+                )}
               </div>
             )}
             {!inline && (
